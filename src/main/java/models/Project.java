@@ -30,7 +30,6 @@ public class Project {
     private String apiKey;
 
     @ManyToOne(optional = false)
-    @Column(nullable = false)
     @NotNull
     private Client client;
 

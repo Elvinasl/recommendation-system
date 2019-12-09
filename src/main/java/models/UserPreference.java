@@ -19,12 +19,10 @@ public class UserPreference extends Weight {
     private Long id;
 
     @ManyToOne(optional = false)
-    @Column(nullable = false)
     @NotNull
     private User user;
 
     @ManyToOne(optional = false)
-    @Column(nullable = false)
     @NotNull
     private Cell cell;
 }

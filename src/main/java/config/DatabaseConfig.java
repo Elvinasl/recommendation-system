@@ -15,6 +15,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
@@ -70,7 +71,17 @@ public class DatabaseConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
-        entityManagerFactoryBean.setPackagesToScan("main.java.models");
+        entityManagerFactoryBean.setJpaProperties(hibernateProperties());
+        entityManagerFactoryBean.setPackagesToScan("models");
         return entityManagerFactoryBean;
+    }
+
+    Properties hibernateProperties() {
+        return new Properties() {
+            {
+                setProperty("hibernate.show_sql",  "true");
+                setProperty("hibernate.hbm2ddl.auto", "create");
+            }
+        };
     }
 }

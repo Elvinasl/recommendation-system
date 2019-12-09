@@ -28,7 +28,7 @@ public class ColumnName extends Weight {
     private String name;
 
     @ManyToOne(optional = false)
-    @Column(nullable = false, name = "project_id")
+    @JoinColumn(name = "project_id", nullable = false)
     @NotNull
     private Project project;
 

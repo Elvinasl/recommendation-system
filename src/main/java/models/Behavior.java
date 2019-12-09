@@ -22,12 +22,10 @@ public class Behavior {
     private boolean liked;
 
     @ManyToOne(optional = false)
-    @Column(nullable = false)
     @NotNull
     private Row row;
 
     @ManyToOne(optional = false)
-    @Column(nullable = false)
     @NotNull
     private User user;
 }

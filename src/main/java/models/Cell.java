@@ -27,7 +27,6 @@ public class Cell extends Weight {
     private String name;
 
     @ManyToOne(optional = false)
-    @Column(nullable = false)
     @NotNull
     private ColumnName columnName;
 
@@ -35,7 +34,6 @@ public class Cell extends Weight {
     private List<Row> rows;
 
     @ManyToOne(optional = false)
-    @Column(nullable = false)
     @NotNull
     private UserPreference userPreference;
 }

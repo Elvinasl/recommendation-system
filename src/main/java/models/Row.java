@@ -20,13 +20,12 @@ public class Row extends Weight {
     private Long id;
 
     @ManyToOne(optional = false)
-    @Column(nullable = false)
     @NotNull
     private Project project;
 
     @OneToMany(mappedBy = "row")
     private List<Behavior> behaviors;
 
-    @ManyToMany(mappedBy = "row")
+    @ManyToMany(mappedBy = "rows")
     private List<Cell> cells;
 }

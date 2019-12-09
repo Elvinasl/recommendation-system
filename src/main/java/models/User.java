@@ -19,7 +19,6 @@ public class User {
     private Long id;
 
     @ManyToOne(optional = false)
-    @Column(nullable = false)
     @NotNull
     private Project project;
 
@@ -27,7 +26,6 @@ public class User {
     private List<Behavior> behaviors;
 
     @ManyToOne(optional = false)
-    @Column(nullable = false)
     @NotNull
     private UserPreference userPreference;
 }
