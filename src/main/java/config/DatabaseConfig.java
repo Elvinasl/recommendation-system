@@ -76,11 +76,11 @@ public class DatabaseConfig {
         return entityManagerFactoryBean;
     }
 
-    Properties hibernateProperties() {
+    private Properties hibernateProperties() {
         return new Properties() {
             {
-                setProperty("hibernate.show_sql",  "true");
-                setProperty("hibernate.hbm2ddl.auto", "create");
+                setProperty("hibernate.show_sql",  env.getProperty("hibernate_show_sql"));
+                setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate_hbm2ddl"));
             }
         };
     }
