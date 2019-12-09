@@ -25,4 +25,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Behavior> behaviors;
+
+    @ManyToOne(optional = false)
+    @Column(nullable = false)
+    @NotNull
+    private UserPreference userPreference;
 }

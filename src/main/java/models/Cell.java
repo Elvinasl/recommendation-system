@@ -33,4 +33,9 @@ public class Cell extends Weight {
 
     @ManyToMany
     private List<Row> rows;
+
+    @ManyToOne(optional = false)
+    @Column(nullable = false)
+    @NotNull
+    private UserPreference userPreference;
 }
