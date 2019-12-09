@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -27,4 +28,8 @@ public class Project {
     @Column(nullable = false, unique = true)
     private String apiKey;
 
+    @ManyToOne(optional = false)
+    @Column(nullable = false)
+    @NotNull
+    private Client client;
 }

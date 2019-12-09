@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,4 +29,7 @@ public class Client {
     @NotEmpty
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy="client")
+    private List<Project> project;
 }
