@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Data
@@ -27,4 +28,7 @@ public class Row {
     @Column(nullable = false)
     @NotNull
     private Project project;
+
+    @OneToMany(mappedBy = "row")
+    private List<Behavior> behaviors;
 }

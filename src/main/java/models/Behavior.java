@@ -6,23 +6,28 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Behavior {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    @NotNull
+    private boolean liked;
+
     @ManyToOne(optional = false)
     @Column(nullable = false)
     @NotNull
-    private Project project;
+    private Row row;
 
-    @OneToMany(mappedBy = "user")
-    private List<Behavior> behaviors;
+    @ManyToOne(optional = false)
+    @Column(nullable = false)
+    @NotNull
+    private User user;
 }
