@@ -39,4 +39,7 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private List<Row> rows;
+
+    @OneToMany(mappedBy = "project")
+    private List<Attribute> attributes;
 }
