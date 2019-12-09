@@ -27,6 +27,6 @@ public class Row extends Weight {
     @OneToMany(mappedBy = "row")
     private List<Behavior> behaviors;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "row")
     private List<Cell> cells;
 }
