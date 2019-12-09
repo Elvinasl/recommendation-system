@@ -36,9 +36,12 @@ public class DatabaseConfig {
         dataSource.setUsername(env.getProperty("mysql_username"));
         dataSource.setPassword(env.getProperty("mysql_password"));
 
-        dataSource.setUrl("jdbc:mysql://"
-                + env.getProperty("mysql_host")
-                + ":" + env.getProperty("mysql_port") + "/recommendation?createDatabaseIfNotExist=true");
+        String connString = String.format("jdbc:mysql://%s:%s/%s?createDatabaseIfNotExist=true",
+                env.getProperty("mysql_host"),
+                env.getProperty("mysql_port"),
+                env.getProperty("mysql_database")
+        );
+        dataSource.setUrl(connString);
 
         return dataSource;
     }
