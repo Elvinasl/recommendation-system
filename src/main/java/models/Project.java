@@ -41,5 +41,5 @@ public class Project {
     private List<Row> rows;
 
     @OneToMany(mappedBy = "project")
-    private List<Attribute> attributes;
+    private List<ColumnName> columnNames;
 }
