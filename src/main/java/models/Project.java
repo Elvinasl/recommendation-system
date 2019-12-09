@@ -36,4 +36,7 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private List<User> users;
+
+    @OneToMany(mappedBy = "project")
+    private List<Row> rows;
 }
