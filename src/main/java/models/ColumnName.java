@@ -15,6 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "name", "project_id" } ) } )
 public class ColumnName extends Weight {
 
     @Id
@@ -22,14 +23,12 @@ public class ColumnName extends Weight {
     private Long id;
 
     @NotEmpty
-    @Column(nullable = false)
+    @Column(nullable = false, name = "name")
     @Length(min = 1, max = 100)
     private String name;
 
-    // TODO: combination of project and name has to be unique
-
     @ManyToOne(optional = false)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "project_id")
     @NotNull
     private Project project;
 
