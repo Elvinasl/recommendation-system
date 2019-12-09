@@ -14,7 +14,7 @@ public class Client {
     private Long id;
 
     @Email
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @NotEmpty
     private String email;
 
