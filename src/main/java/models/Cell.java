@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,16 +26,25 @@ public class Cell extends Weight {
     @NotEmpty
     @Column(nullable = false)
     @Length(min = 1, max = 255)
-    private String name;
+    private String value;
 
     @ManyToOne(optional = false)
+    @JsonIgnore
     @NotNull
     private ColumnName columnName;
 
     @ManyToMany
+    @JsonIgnore
     private List<Row> rows;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
+    @JsonIgnore
     private UserPreference userPreference;
+
+    public void addRow(Row row) {
+        if (rows == null) {
+            rows = new ArrayList<>();
+        }
+        this.rows.add(row);
+    }
 }

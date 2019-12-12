@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,13 @@ public class UserPreference extends Weight {
     private Long id;
 
     @ManyToOne(optional = false)
+    @JsonIgnore
     @NotNull
     private User user;
 
     @ManyToOne(optional = false)
+    @JsonIgnore
     @NotNull
     private Cell cell;
+
 }

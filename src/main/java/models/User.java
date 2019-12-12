@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,12 +21,15 @@ public class User {
 
     @ManyToOne(optional = false)
     @NotNull
+    @JsonIgnore
     private Project project;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Behavior> behaviors;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
+    @JsonIgnore
     private UserPreference userPreference;
+
 }

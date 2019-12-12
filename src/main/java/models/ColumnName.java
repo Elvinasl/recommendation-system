@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,9 +30,17 @@ public class ColumnName extends Weight {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "project_id", nullable = false)
-    @NotNull
+    @JsonIgnore
     private Project project;
 
-    @OneToMany(mappedBy = "columnName")
+    @OneToMany(mappedBy = "columnName", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Cell> cells;
+
+    public void add(Cell cell) {
+        if (cells == null) {
+            cells = new ArrayList<>();
+        }
+        this.cells.add(cell);
+    }
 }

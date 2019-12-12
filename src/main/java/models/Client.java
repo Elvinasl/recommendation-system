@@ -30,6 +30,8 @@ public class Client {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy="client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Project> project;
+
 }
