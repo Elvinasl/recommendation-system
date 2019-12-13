@@ -19,12 +19,12 @@ public class UserPreference extends Weight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonIgnore
     @NotNull
     private User user;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonIgnore
     @NotNull
     private Cell cell;

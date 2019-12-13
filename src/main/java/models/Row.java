@@ -21,16 +21,16 @@ public class Row extends Weight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @NotNull
     @JsonIgnore
     private Project project;
 
-    @OneToMany(mappedBy = "row", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "row", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Behavior> behaviors;
 
-    @ManyToMany(mappedBy = "rows")
+    @ManyToMany(mappedBy = "rows", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Cell> cells;
 

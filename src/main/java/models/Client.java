@@ -30,7 +30,7 @@ public class Client {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Project> project;
 

@@ -22,12 +22,12 @@ public class Behavior {
     @NotNull
     private boolean liked;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonIgnore
     @NotNull
     private Row row;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonIgnore
     @NotNull
     private User user;

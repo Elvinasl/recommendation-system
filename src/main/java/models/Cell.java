@@ -28,16 +28,16 @@ public class Cell extends Weight {
     @Length(min = 1, max = 255)
     private String value;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonIgnore
     @NotNull
     private ColumnName columnName;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Row> rows;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private UserPreference userPreference;
 

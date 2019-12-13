@@ -28,12 +28,12 @@ public class ColumnName extends Weight {
     @Length(min = 1, max = 100)
     private String name;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
     @JsonIgnore
     private Project project;
 
-    @OneToMany(mappedBy = "columnName", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "columnName", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Cell> cells;
 
@@ -43,4 +43,5 @@ public class ColumnName extends Weight {
         }
         this.cells.add(cell);
     }
+
 }
