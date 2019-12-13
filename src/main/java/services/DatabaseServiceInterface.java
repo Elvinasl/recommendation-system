@@ -15,5 +15,4 @@ interface DatabaseServiceInterface<T> {
 
     void remove(int id);
 
-
 }
