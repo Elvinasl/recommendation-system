@@ -8,4 +8,6 @@ mysql_url_parameters=?createDatabaseIfNotExist=true
 
 # hibernate config
 hibernate_show_sql=false
+hibernate_format_sql=true
+hibernate_use_sql_comments=true
 hibernate_hbm2ddl=create
