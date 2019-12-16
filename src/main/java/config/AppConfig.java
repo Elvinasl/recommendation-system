@@ -12,7 +12,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScans({
         @ComponentScan("controllers"),
         @ComponentScan("repositories"),
-        @ComponentScan("services")
+        @ComponentScan("services"),
+        @ComponentScan("config")
 })
 public class AppConfig {
 

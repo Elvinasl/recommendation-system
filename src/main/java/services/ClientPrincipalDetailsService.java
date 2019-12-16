@@ -1,8 +1,8 @@
-package config.security;
+package services;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import config.security.ClientPrincipal;
 import models.Client;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,10 +10,14 @@ import org.springframework.stereotype.Service;
 import repositories.ClientRepository;
 
 @Service
-@NoArgsConstructor
-@AllArgsConstructor
 public class ClientPrincipalDetailsService implements UserDetailsService {
+
     private ClientRepository clientRepository;
+
+    @Autowired
+    public ClientPrincipalDetailsService(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

@@ -1,6 +1,6 @@
 package config;
 
-import config.security.ClientPrincipalDetailsService;
+import services.ClientPrincipalDetailsService;
 import config.security.jwt.JwtAuthenticationFilter;
 import config.security.jwt.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,19 +40,20 @@ import java.util.Collections;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private ClientPrincipalDetailsService clientPrincipalDetailsService;
+
     private ClientRepository clientRepository;
+    private ClientPrincipalDetailsService clientPrincipalDetailsService;
 
     @Autowired
-    public SecurityConfig(ClientPrincipalDetailsService clientPrincipalDetailsService, ClientRepository clientRepository) {
-        this.clientPrincipalDetailsService = clientPrincipalDetailsService;
+    public SecurityConfig(ClientRepository clientRepository, ClientPrincipalDetailsService clientPrincipalDetailsService) {
         this.clientRepository = clientRepository;
+        this.clientPrincipalDetailsService = clientPrincipalDetailsService;
     }
 
-    public SecurityConfig(boolean disableDefaults, ClientPrincipalDetailsService clientPrincipalDetailsService, ClientRepository clientRepository) {
+    public SecurityConfig(boolean disableDefaults, ClientRepository clientRepository, ClientPrincipalDetailsService clientPrincipalDetailsService) {
         super(disableDefaults);
-        this.clientPrincipalDetailsService = clientPrincipalDetailsService;
         this.clientRepository = clientRepository;
+        this.clientPrincipalDetailsService = clientPrincipalDetailsService;
     }
 
     @Override
@@ -104,8 +105,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // add jwt filters (1. authentication, 2. authorization)
         http
-            .addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(new JwtAuthorizationFilter(authenticationManager(),  this.clientRepository), UsernamePasswordAuthenticationFilter.class);
+            .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+            .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.clientRepository));
 
         // As it's a REST API, we don't want Spring remembering sessions for users. It should be stateless.
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
