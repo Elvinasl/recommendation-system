@@ -30,7 +30,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     /* Trigger when we issue POST request to /login
-        We also need to pass in {"username":"user", "password":"123123"} in the request body
+        We also need to pass in {"email":"user", "password":"123123"} in the request body
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -71,6 +71,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // Add token in response
         response.addHeader(JwtProperties.HEADER_STRING, fullToken);
         response.setContentType("application/json");
-        response.getWriter().print(new AuthenticatedClientPOJO(principal.getClient().toString()));
+        AuthenticatedClientPOJO authenticatedClientPOJO = new AuthenticatedClientPOJO();
+        authenticatedClientPOJO.setEmail(principal.getClient().getEmail());
+        authenticatedClientPOJO.setId(principal.getClient().getId());
+        response.getWriter().print(authenticatedClientPOJO.toString());
     }
 }
