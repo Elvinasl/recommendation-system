@@ -1,6 +1,7 @@
 package services;
 
 import models.Behavior;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.BehaviorRepository;
 
@@ -11,6 +12,7 @@ public class BehaviorService implements DatabaseServiceInterface<Behavior> {
 
     private final BehaviorRepository behaviorRepository;
 
+    @Autowired
     public BehaviorService(BehaviorRepository behaviorRepository) {
         this.behaviorRepository = behaviorRepository;
     }

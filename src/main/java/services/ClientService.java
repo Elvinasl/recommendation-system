@@ -1,6 +1,7 @@
 package services;
 
 import models.Client;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.ClientRepository;
 
@@ -11,6 +12,7 @@ public class ClientService implements DatabaseServiceInterface<Client> {
 
     private final ClientRepository clientRepository;
 
+    @Autowired
     public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }

@@ -35,12 +35,9 @@ public class ColumnName extends Weight {
 
     @OneToMany(mappedBy = "columnName", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Cell> cells;
+    private List<Cell> cells = new ArrayList<>();
 
-    public void add(Cell cell) {
-        if (cells == null) {
-            cells = new ArrayList<>();
-        }
+    public void addCell(Cell cell) {
         this.cells.add(cell);
     }
 

@@ -1,6 +1,7 @@
 package services;
 
 import models.Row;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.RowRepository;
 
@@ -11,6 +12,7 @@ public class RowService implements DatabaseServiceInterface<Row> {
 
     private final RowRepository rowRepository;
 
+    @Autowired
     public RowService(RowRepository rowRepository) {
         this.rowRepository = rowRepository;
     }

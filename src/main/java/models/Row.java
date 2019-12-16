@@ -28,16 +28,13 @@ public class Row extends Weight {
 
     @OneToMany(mappedBy = "row", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Behavior> behaviors;
+    private List<Behavior> behaviors = new ArrayList<>();
 
     @ManyToMany(mappedBy = "rows", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Cell> cells;
+    private List<Cell> cells = new ArrayList<>();
 
     public void addCell(Cell cell) {
-        if (cells == null) {
-            cells = new ArrayList<>();
-        }
         this.cells.add(cell);
     }
 }

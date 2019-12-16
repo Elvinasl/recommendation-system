@@ -1,6 +1,7 @@
 package services;
 
 import models.Cell;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.CellRepository;
 
@@ -11,6 +12,7 @@ public class CellService implements DatabaseServiceInterface<Cell> {
 
     private final CellRepository cellRepository;
 
+    @Autowired
     public CellService(CellRepository cellRepository) {
         this.cellRepository = cellRepository;
     }
