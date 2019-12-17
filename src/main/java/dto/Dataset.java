@@ -1,6 +1,9 @@
-package models;
+package dto;
 
 import lombok.Data;
+import models.Cell;
+import models.ColumnName;
+import models.Project;
 
 import java.util.List;
 import java.util.Map;

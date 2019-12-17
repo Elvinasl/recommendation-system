@@ -1,6 +1,7 @@
 package services;
 
-import models.Dataset;
+import dto.Dataset;
+import exceptions.responses.Response;
 import models.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class ProjectService {
      * @param apiKey used to get the project
      * @param data   containing project information
      */
-    public void seedDatabase(String apiKey, Dataset data) {
+    public Response seedDatabase(String apiKey, Dataset data) {
 
         // We first need to get the project by the given api key
         Project project = this.getByApiKey(apiKey);
@@ -42,6 +43,8 @@ public class ProjectService {
 
         // Update project with all their newly created columns/cells/rows
         projectRepository.update(project);
+
+        return new Response("Created");
     }
 
 }

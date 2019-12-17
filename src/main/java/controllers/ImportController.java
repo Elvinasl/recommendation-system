@@ -1,9 +1,9 @@
 package controllers;
 
-import models.Dataset;
+import dto.Dataset;
+import exceptions.responses.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import services.ProjectService;
 
@@ -40,11 +40,8 @@ public class ImportController {
      *               </pre>
      */
     @PostMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Transactional
-    public void importJson(@RequestHeader("api-key") String apiKey, @RequestBody Dataset data) {
-        // TODO: Ask about custom exceptions etc.
-        projectService.seedDatabase(apiKey, data);
+    public ResponseEntity<Response> importJson(@RequestHeader("api-key") String apiKey, @RequestBody Dataset data) {
+        return ResponseEntity.ok(projectService.seedDatabase(apiKey, data));
     }
 
 
