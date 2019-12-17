@@ -62,22 +62,6 @@ public class ProjectService {
         return new Response("Created");
     }
 
-//
-//     *               <pre>
-//     *                           {
-//     *               	                "columns": [
-//     *                                    {
-//     *                   	                    "name": "artist",
-//     *                   	                    "weight": 30
-//                    *                      },
-//     *                                ],
-//     *                                "rows": [
-//     *                                     [{ "value": "Elvis", "weight": 40, columnName: "artist" }, { "value": "Elvis", "weight": 40, columnName: "artist" }]
-//     *                                     [{ "value": "Elvis", "weight": 40, columnName: "artist" }, { "value": "Elvis", "weight": 40, columnName: "artist" }]
-//     *                                ]
-//     *                            }
-//     *               </pre>
-
     /**
      * Seed the project with data from the datasetDTO.
      *
@@ -87,6 +71,7 @@ public class ProjectService {
 
         datasetDTO.getColumns().forEach(columnName -> columnNameService.addOrUpdate(columnName, project));
 
+        // TODO: create a row with cells
 //        datasetDTO.getRows().forEach(row -> rowService.addOrUpdate(row, project));
     }
 }
