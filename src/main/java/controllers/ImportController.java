@@ -11,7 +11,7 @@ import services.ProjectService;
 @RequestMapping("/import")
 public class ImportController {
 
-    private final ProjectService projectService;
+    private ProjectService projectService;
 
     @Autowired
     public ImportController(ProjectService projectService) {
