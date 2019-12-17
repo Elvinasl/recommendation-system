@@ -5,14 +5,11 @@ import exceptions.responses.Response;
 import models.Cell;
 import models.ColumnName;
 import models.Project;
-import models.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.ProjectRepository;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.UUID;
 
 @Service
 public class ProjectService {
@@ -24,6 +21,14 @@ public class ProjectService {
     public ProjectService(ProjectRepository projectRepository, ColumnNameService columnNameService) {
         this.projectRepository = projectRepository;
         this.columnNameService = columnNameService;
+    }
+
+    // returns api key
+    public String add(Project project) {
+        String apiKey = UUID.randomUUID().toString();
+        project.setApiKey(apiKey);
+        projectRepository.add(project);
+        return apiKey;
     }
 
     /**

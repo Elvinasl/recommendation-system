@@ -25,12 +25,10 @@ public class Project {
     @Length(min = 2, max = 45)
     private String name;
 
-    @NotEmpty
     @Column(nullable = false, unique = true)
     private String apiKey;
 
     @ManyToOne(optional = false)
-    @NotNull
     private Client client;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)

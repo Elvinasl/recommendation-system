@@ -22,8 +22,9 @@ abstract class DatabaseRepository<T> {
     }
 
     @Transactional
-    public void add(T o) {
+    public T add(T o) {
         em.persist(o);
+        return o;
     }
 
     @Transactional

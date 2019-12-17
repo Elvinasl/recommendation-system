@@ -26,7 +26,6 @@ public class Client {
     @NotEmpty
     private String email;
 
-    @JsonIgnore
     @NotEmpty
     @Column(nullable = false)
     private String password;
