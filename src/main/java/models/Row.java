@@ -21,20 +21,13 @@ public class Row extends Weight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnore
     private Project project;
 
-    @OneToMany(mappedBy = "row", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(mappedBy = "row", cascade = CascadeType.ALL)
     private List<Behavior> behaviors = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "rows", fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToMany(mappedBy = "rows")
     private List<Cell> cells = new ArrayList<>();
-
-    public void addCell(Cell cell) {
-        this.cells.add(cell);
-    }
 }

@@ -1,7 +1,5 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import dto.Dataset;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Entity
 @Data
@@ -33,29 +29,16 @@ public class Project {
     @Column(nullable = false, unique = true)
     private String apiKey;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(optional = false)
     @NotNull
     private Client client;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Row> rows = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ColumnName> columnNames = new ArrayList<>();
-
-    /**
-     * Add row to the project list of rows
-     *
-     * @param row Row to add to the list
-     */
-    public void addRow(Row row) {
-        this.rows.add(row);
-    }
 }

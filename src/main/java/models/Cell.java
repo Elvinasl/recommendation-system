@@ -1,6 +1,5 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,23 +27,13 @@ public class Cell extends Weight {
     @Length(min = 1, max = 255)
     private String value;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(optional = false)
     @NotNull
     private ColumnName columnName;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Row> rows;
+    @ManyToMany
+    private List<Row> rows = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne
     private UserPreference userPreference;
-
-    public void addRow(Row row) {
-        if (rows == null) {
-            rows = new ArrayList<>();
-        }
-        this.rows.add(row);
-    }
 }

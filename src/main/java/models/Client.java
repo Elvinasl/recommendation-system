@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,8 +31,7 @@ public class Client {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Project> project;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Project> project = new ArrayList<>();
 
 }

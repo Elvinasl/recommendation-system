@@ -1,6 +1,5 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,13 +21,11 @@ public class Behavior {
     @NotNull
     private boolean liked;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(optional = false)
     @NotNull
     private Row row;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(optional = false)
     @NotNull
     private User user;
 
