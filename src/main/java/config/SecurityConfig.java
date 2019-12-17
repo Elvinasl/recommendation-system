@@ -49,12 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.clientPrincipalDetailsService = clientPrincipalDetailsService;
     }
 
-    public SecurityConfig(boolean disableDefaults, ClientRepository clientRepository, ClientPrincipalDetailsService clientPrincipalDetailsService) {
-        super(disableDefaults);
-        this.clientRepository = clientRepository;
-        this.clientPrincipalDetailsService = clientPrincipalDetailsService;
-    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
