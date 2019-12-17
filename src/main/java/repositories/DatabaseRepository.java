@@ -32,7 +32,7 @@ abstract class DatabaseRepository<T> {
     }
 
     @Transactional
-    public T getById(int id) {
+    public T getById(long id) {
         return em.find(type, id);
     }
 

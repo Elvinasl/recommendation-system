@@ -18,10 +18,12 @@ import java.util.stream.Stream;
 public class ProjectService {
 
     private ProjectRepository projectRepository;
+    private ColumnNameService columnNameService;
 
     @Autowired
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository, ColumnNameService columnNameService) {
         this.projectRepository = projectRepository;
+        this.columnNameService = columnNameService;
     }
 
     /**
@@ -54,96 +56,31 @@ public class ProjectService {
         return new Response("Created");
     }
 
+//
+//     *               <pre>
+//     *                           {
+//     *               	                "columns": [
+//     *                                    {
+//     *                   	                    "name": "artist",
+//     *                   	                    "weight": 30
+//                    *                      },
+//     *                                ],
+//     *                                "rows": [
+//     *                                    {
+//     *                     	                "artist": { "value": "Elvis", "weight": 40 },
+//     *                                    },
+//     *                                ]
+//     *                            }
+//     *               </pre>
+
     /**
      * Seed the project with data from the dataset.
      *
-     * @param data This data comes from the client
+     * @param dataset This data comes from the client
      */
-    public void seed(Dataset data, Project project) {
+    public void seed(Dataset dataset, Project project) {
 
-        // ==========  Create non existing columns  ==========
-
-
-        // First, we make sure that we have a map from both the
-        // project columns and dataset columns because project columns
-        // are coming from the database and dataset columns are
-        // coming from the client. We also remove the duplicates.
-
-        Map<String, ColumnName> headers = Stream.of(data.getColumns(), project.getColumnNames())
-                .filter(Objects::nonNull)
-                .flatMap(List::stream)
-                .collect(Collectors.toMap(ColumnName::getName, cn -> cn, (ColumnName x, ColumnName y) -> y));
-
-        // The project requires the ColumnNames as a list. So we parse it.
-        List<ColumnName> columns = new ArrayList<>(headers.values());
-        project.setColumnNames(columns);
-
-        // For each column we set the project.
-        columns.forEach((column) -> column.setProject(project));
-
-        this.createCellWithData(data, project, headers);
+        dataset.getColumns().forEach(columnName -> columnNameService.addOrUpdate(columnName, project));
 
     }
-
-    public void createCellWithData(Dataset data, Project project, Map<String, ColumnName> headers) {
-        // We create a map of cells to prevent duplicates
-        Map<String, Cell> cells = new HashMap<>();
-
-        // Get rows from dataset because these rows aren't
-        // an instance of Row model.
-        List<Map<String, Cell>> rows = data.getRows();
-
-        if (rows != null) {
-
-            // Now we want to loop trough all the rows in the dataset
-            rows.forEach((row) -> {
-
-                // For each dataset row we create a new row that will be
-                // inserted into the database because the 'row'-variable
-                // is an map of string(column name) and cell
-                Row dbRow = new Row();
-
-                // This new row should know to which project it belongs to
-                dbRow.setProject(project);
-
-                // Add this new row to this project
-                project.addRow(dbRow);
-
-                // Now we will loop trough all the cells from the current
-                // row with their column name as key
-                row.forEach((columnName, cell) -> {
-
-                    // To prevent an exception we need to make sure that the column name exists
-                    if (headers.containsKey(columnName)) {
-
-                        // Now we want to retrieve the ColumnName object
-                        // from the headers by the column name key
-                        ColumnName col = headers.get(columnName);
-
-                        // Does cell exists?
-                        if (cells.containsKey(cell.getValue())) {
-                            // We can just take the existing cell from the map
-                            cell = cells.get(cell.getValue());
-                        } else {
-                            // We need to add the cell to the map
-                            cells.put(cell.getValue(), cell);
-
-                            // Set the columnName object for cell
-                            cell.setColumnName(col);
-
-                            // Add cell to the columnName object
-                            col.addCell(cell);
-                        }
-
-                        // Add row to cell
-                        cell.addRow(dbRow);
-
-                        // Add cell to row
-                        dbRow.addCell(cell);
-                    }
-                });
-            });
-        }
-    }
-
 }
