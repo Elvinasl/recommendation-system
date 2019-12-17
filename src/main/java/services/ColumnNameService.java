@@ -16,15 +16,16 @@ public class ColumnNameService {
         this.columnNameRepository = columnNameRepository;
     }
 
-    public void addOrUpdate(ColumnName columnName, Project project) {
-        ColumnName existingColName = columnNameRepository.getByNameAndProject(columnName.getName(), project);
+    ColumnName addOrUpdate(ColumnName columnName, Project project) {
+        String colName = columnName.getName();
+        columnName.setProject(project);
 
-        if (existingColName == null) {
-            columnName.setProject(project);
-            columnNameRepository.add(columnName);
+        if (columnNameRepository.existsByNameAndProject(colName, project)) {
+            long existingId = columnNameRepository.getByNameAndProject(colName, project).getId();
+            columnName.setId(existingId);
+            return columnNameRepository.update(columnName);
         } else {
-            existingColName.setWeight(columnName.getWeight());
-            columnNameRepository.add(columnName);
+            return columnNameRepository.add(columnName);
         }
     }
 }

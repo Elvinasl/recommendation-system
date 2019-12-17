@@ -28,13 +28,27 @@ abstract class DatabaseRepository<T> {
     }
 
     @Transactional
-    public void update(T o) {
+    public T update(T o) {
         em.merge(o);
+        return o;
     }
 
     @Transactional
     public T getById(long id) {
         return em.find(type, id);
+    }
+
+    @Transactional
+    public boolean exists(T o) {
+        return count(o) > 0;
+    }
+
+    @Transactional
+    public long count(T o) {
+        return (long) em.createQuery(
+                "select count(o) from :obj o")
+                .setParameter("obj", type.getName())
+                .getSingleResult();
     }
 
     @SuppressWarnings("unchecked")

@@ -55,9 +55,6 @@ public class ProjectService {
         // Then we seed the project with the given dataset
         this.seed(data, project);
 
-        // Update project with all their newly created columns/cells/rows
-        projectRepository.update(project);
-
         return new Response("Created");
     }
 
