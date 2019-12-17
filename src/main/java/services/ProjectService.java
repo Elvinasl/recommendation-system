@@ -1,9 +1,7 @@
 package services;
 
-import dto.Dataset;
+import dto.DatasetDTO;
 import exceptions.responses.Response;
-import models.Cell;
-import models.ColumnName;
 import models.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +14,17 @@ public class ProjectService {
 
     private ProjectRepository projectRepository;
     private ColumnNameService columnNameService;
+    private RowService rowService;
 
     @Autowired
-    public ProjectService(ProjectRepository projectRepository, ColumnNameService columnNameService) {
+    public ProjectService(
+            ProjectRepository projectRepository,
+            ColumnNameService columnNameService,
+            RowService rowService
+    ) {
         this.projectRepository = projectRepository;
         this.columnNameService = columnNameService;
+        this.rowService = rowService;
     }
 
     // returns api key
@@ -47,7 +51,7 @@ public class ProjectService {
      * @param apiKey used to get the project
      * @param data   containing project information
      */
-    public Response seedDatabase(String apiKey, Dataset data) {
+    public Response seedDatabase(String apiKey, DatasetDTO data) {
 
         // We first need to get the project by the given api key
         Project project = this.getByApiKey(apiKey);
@@ -68,21 +72,21 @@ public class ProjectService {
 //                    *                      },
 //     *                                ],
 //     *                                "rows": [
-//     *                                    {
-//     *                     	                "artist": { "value": "Elvis", "weight": 40 },
-//     *                                    },
+//     *                                     [{ "value": "Elvis", "weight": 40, columnName: "artist" }, { "value": "Elvis", "weight": 40, columnName: "artist" }]
+//     *                                     [{ "value": "Elvis", "weight": 40, columnName: "artist" }, { "value": "Elvis", "weight": 40, columnName: "artist" }]
 //     *                                ]
 //     *                            }
 //     *               </pre>
 
     /**
-     * Seed the project with data from the dataset.
+     * Seed the project with data from the datasetDTO.
      *
-     * @param dataset This data comes from the client
+     * @param datasetDTO This data comes from the client
      */
-    public void seed(Dataset dataset, Project project) {
+    public void seed(DatasetDTO datasetDTO, Project project) {
 
-        dataset.getColumns().forEach(columnName -> columnNameService.addOrUpdate(columnName, project));
+        datasetDTO.getColumns().forEach(columnName -> columnNameService.addOrUpdate(columnName, project));
 
+//        datasetDTO.getRows().forEach(row -> rowService.addOrUpdate(row, project));
     }
 }

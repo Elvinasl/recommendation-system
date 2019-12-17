@@ -1,6 +1,6 @@
 package controllers;
 
-import dto.Dataset;
+import dto.DatasetDTO;
 import exceptions.responses.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class ImportController {
     }
 
     /**
-     * Handles the import request to import a given {@link Dataset} to a {@link models.Project}
+     * Handles the import request to import a given {@link DatasetDTO} to a {@link models.Project}
      *
      * @param apiKey The api key to find project for
      * @param data   JSON structured dataset (One of these is enough: columns and rows): <br>
@@ -40,7 +40,7 @@ public class ImportController {
      *               </pre>
      */
     @PostMapping
-    public ResponseEntity<Response> importJson(@RequestHeader("api-key") String apiKey, @RequestBody Dataset data) {
+    public ResponseEntity<Response> importJson(@RequestHeader("api-key") String apiKey, @RequestBody DatasetDTO data) {
         return ResponseEntity.ok(projectService.seedDatabase(apiKey, data));
     }
 
