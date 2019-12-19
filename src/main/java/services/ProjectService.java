@@ -62,22 +62,6 @@ public class ProjectService {
         return new Response("Created");
     }
 
-//
-//     *               <pre>
-//     *                           {
-//     *               	                "columns": [
-//     *                                    {
-//     *                   	                    "name": "artist",
-//     *                   	                    "weight": 30
-//                    *                      },
-//     *                                ],
-//     *                                "rows": [
-//     *                                     [{ "value": "Elvis", "weight": 40, columnName: "artist" }, { "value": "Elvis", "weight": 40, columnName: "artist" }]
-//     *                                     [{ "value": "Elvis", "weight": 40, columnName: "artist" }, { "value": "Elvis", "weight": 40, columnName: "artist" }]
-//     *                                ]
-//     *                            }
-//     *               </pre>
-
     /**
      * Seed the project with data from the datasetDTO.
      *
