@@ -76,3 +76,5 @@ fabric.properties
 
 target/
 docs/
+
+recommendation-system.iml
