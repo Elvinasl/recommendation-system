@@ -2,14 +2,12 @@ package repositories;
 
 
 import models.Cell;
-import models.ColumnName;
 import models.Project;
 import models.Row;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,19 +18,24 @@ public class RowRepository extends DatabaseRepository<Row> {
         super(Row.class);
     }
 
+    /**
+     * Searches the database for entries that all have the same row_id and these rows also need to have the values
+     * matching the given cells. Another requirement is that the row belongs to the given project. If all these match
+     * true will be given.
+     *
+     * @param project the cells belong to
+     * @param cells   containing the values that should be inserted into the database
+     * @return true if a row exists with the given cells
+     * @throws NoResultException get's thrown when there is no row found
+     */
     @Transactional
-    public long rowExists(Project project, List<Cell> cells, long totalColumnNames) throws NoResultException {
-//        SELECT `Cell`.*
-//                FROM `Cell`
-//        WHERE `row_id` IN (SELECT MIN(`row_id`)
-//                FROM `Cell`
-//        WHERE (`value`) IN ("TestValue3","TestValue4")
-//        GROUP BY `row_id`
-//        HAVING COUNT(*)=:totalColumnNamesForProject)
-        return (Long) em.createQuery(
-                "SELECT COUNT(cell.id) FROM Cell cell WHERE cell.row.id in (SELECT MIN(c.id) FROM Cell c WHERE c.value IN :cellValues GROUP BY c.row.id HAVING COUNT(c)=:totalColumns)")
+    public long rowExists(Project project, List<Cell> cells) throws NoResultException {
+        return (long) em.createQuery(
+                "SELECT COUNT(cell.id) FROM Cell cell WHERE cell.row.id in " +
+                        "(SELECT MIN(c.row.id) FROM Cell c WHERE c.value IN :cellValues " +
+                        "AND c.row.project = :project GROUP BY c.row.id HAVING COUNT(:project.columnNames))")
                 .setParameter("cellValues", cells.stream().map(Cell::getValue).collect(Collectors.toList()))
-                .setParameter("totalColumns", totalColumnNames)
+                .setParameter("project", project)
                 .getSingleResult();
     }
 }

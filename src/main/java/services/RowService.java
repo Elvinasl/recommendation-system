@@ -2,6 +2,7 @@ package services;
 
 import dto.CellDTO;
 import exceptions.NotFoundException;
+import exceptions.RowAlreadyExistsException;
 import models.Cell;
 import models.ColumnName;
 import models.Project;
@@ -29,14 +30,16 @@ public class RowService {
 
     /**
      * Inserts the given {@link CellDTO} into the database.
-     * @param row containing all the cells to be inserted
+     *
+     * @param row     containing all the cells to be inserted
      * @param project where the row should be inserted into
      */
     public void addOrUpdate(List<CellDTO> row, Project project) {
-         // TODO: Make sure the row does not exist yet.
+        // TODO: Update weight if row already exists
         Row newRow = new Row();
         newRow.setProject(project);
 
+        // Converting CellDTO's to Cell objects
         List<Cell> cells = row.stream().map(cellDTO -> {
             Cell cell = new Cell();
             cell.setValue(cellDTO.getValue());
@@ -44,20 +47,29 @@ public class RowService {
             try {
                 ColumnName columnName = columnNameRepository.getByNameAndProject(cellDTO.getColumnName(), project);
                 cell.setColumnName(columnName);
-            }catch(NoResultException e){
+            } catch (NoResultException e) {
                 throw new NotFoundException("Unknown column with name: " + cellDTO.getColumnName());
             }
             cell.setRow(newRow);
             return cell;
         }).collect(Collectors.toList());
 
-        rowExists(cells, project);
-        rowRepository.add(newRow);
+        if (rowExists(cells, project)) {
+            throw new RowAlreadyExistsException("Row duplicate found for row: " + cells.stream().map(Cell::getValue).collect(Collectors.joining(", ")));
+        } else {
+            newRow.setCells(cells);
+            rowRepository.add(newRow);
+        }
     }
 
-
-    public void rowExists(List<Cell> cells, Project project){
-        long totalRows = rowRepository.rowExists(project, cells, 3);
-        System.out.println(totalRows);
+    /**
+     * Checks if the given list of cells, forming a row, is already in the database.
+     *
+     * @param cells   that are inside the row
+     * @param project the row is belonging to
+     * @return true if the row is already in the database
+     */
+    public boolean rowExists(List<Cell> cells, Project project) {
+        return rowRepository.rowExists(project, cells) > 0;
     }
 }
