@@ -4,6 +4,7 @@ import models.ColumnName;
 import models.Project;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 @Repository
@@ -14,7 +15,7 @@ public class ColumnNameRepository extends DatabaseRepository<ColumnName> {
     }
 
     @Transactional
-    public ColumnName getByNameAndProject(String name, Project project) {
+    public ColumnName getByNameAndProject(String name, Project project) throws NoResultException {
         return (ColumnName) em.createQuery(
                 "SELECT c FROM ColumnName c WHERE c.name = :cName AND c.project = :cProject")
                 .setParameter("cName", name)

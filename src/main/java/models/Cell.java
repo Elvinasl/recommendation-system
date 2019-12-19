@@ -31,8 +31,8 @@ public class Cell extends Weight {
     @NotNull
     private ColumnName columnName;
 
-    @ManyToMany
-    private List<Row> rows = new ArrayList<>();
+    @OneToOne
+    private Row row;
 
     @ManyToOne
     private UserPreference userPreference;

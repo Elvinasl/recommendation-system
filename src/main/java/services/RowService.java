@@ -1,6 +1,7 @@
 package services;
 
 import dto.CellDTO;
+import exceptions.NotFoundException;
 import models.Cell;
 import models.ColumnName;
 import models.Project;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import repositories.ColumnNameRepository;
 import repositories.RowRepository;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +19,7 @@ import java.util.stream.Collectors;
 public class RowService {
 
     private RowRepository rowRepository;
-    private final ColumnNameRepository columnNameRepository;
+    private ColumnNameRepository columnNameRepository;
 
     @Autowired
     public RowService(RowRepository rowRepository, ColumnNameRepository columnNameRepository) {
@@ -32,18 +34,22 @@ public class RowService {
      */
     public void addOrUpdate(List<CellDTO> row, Project project) {
          // TODO: Make sure the row does not exist yet.
-        List<Cell> cells = row.stream().map(cellDTO -> {
+        Row newRow = new Row();
+        newRow.setProject(project);
+
+        row.stream().map(cellDTO -> {
             Cell cell = new Cell();
             cell.setValue(cellDTO.getValue());
             cell.setWeight(cellDTO.getWeight());
-            ColumnName columnName = columnNameRepository.getByNameAndProject(cellDTO.getColumnName(), project);
-            cell.setColumnName(columnName);
+            try {
+                ColumnName columnName = columnNameRepository.getByNameAndProject(cellDTO.getColumnName(), project);
+                cell.setColumnName(columnName);
+            }catch(NoResultException e){
+                throw new NotFoundException("Unknown column with name: " + cellDTO.getColumnName());
+            }
+            cell.setRow(newRow);
             return cell;
-        }).collect(Collectors.toList());
-
-        Row newRow = new Row();
-        newRow.setProject(project);
-        newRow.setCells(cells);
+        }).forEach(cell -> newRow.getCells().add(cell));
         rowRepository.add(newRow);
     }
 }
