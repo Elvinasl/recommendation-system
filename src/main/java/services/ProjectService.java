@@ -85,8 +85,10 @@ public class ProjectService {
      */
     public void seed(DatasetDTO datasetDTO, Project project) {
 
+        // Handling the columns
         datasetDTO.getColumns().forEach(columnName -> columnNameService.addOrUpdate(columnName, project));
 
-//        datasetDTO.getRows().forEach(row -> rowService.addOrUpdate(row, project));
+        // Handling the rows
+        datasetDTO.getRows().forEach(row -> rowService.addOrUpdate(row.getCells(), project));
     }
 }
