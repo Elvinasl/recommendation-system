@@ -37,7 +37,7 @@ public class RowService {
         Row newRow = new Row();
         newRow.setProject(project);
 
-        row.stream().map(cellDTO -> {
+        List<Cell> cells = row.stream().map(cellDTO -> {
             Cell cell = new Cell();
             cell.setValue(cellDTO.getValue());
             cell.setWeight(cellDTO.getWeight());
@@ -49,7 +49,15 @@ public class RowService {
             }
             cell.setRow(newRow);
             return cell;
-        }).forEach(cell -> newRow.getCells().add(cell));
+        }).collect(Collectors.toList());
+
+        rowExists(cells, project);
         rowRepository.add(newRow);
+    }
+
+
+    public void rowExists(List<Cell> cells, Project project){
+        long totalRows = rowRepository.rowExists(project, cells, 3);
+        System.out.println(totalRows);
     }
 }
