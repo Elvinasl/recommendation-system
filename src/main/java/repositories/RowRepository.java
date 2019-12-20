@@ -31,9 +31,14 @@ public class RowRepository extends DatabaseRepository<Row> {
     @Transactional
     public boolean rowExists(Project project, List<Cell> cells) throws NoResultException {
         long count = (long) em.createQuery(
-                "SELECT COUNT(cell.id) FROM Cell cell WHERE cell.row.id in " +
-                        "(SELECT MIN(c.row.id) FROM Cell c WHERE c.value IN :cellValues " +
-                        "AND c.row.project = :project GROUP BY c.row.id HAVING COUNT(:project.columnNames))")
+                "SELECT COUNT(cell.id) FROM Cell cell " +
+                        "INNER JOIN cell.row r " +
+                        "INNER JOIN r.project p " +
+                        "INNER JOIN p.columnNames f " +
+                        "WHERE cell.row.id IN " +
+                        "(SELECT MIN(c.row.id) FROM Cell c " +
+                        "WHERE c.value IN :cellValues AND c.row.project = :project " +
+                        "GROUP BY c.row.id HAVING COUNT(c.id) = SIZE(f))")
                 .setParameter("cellValues", cells.stream().map(Cell::getValue).collect(Collectors.toList()))
                 .setParameter("project", project)
                 .getSingleResult();
