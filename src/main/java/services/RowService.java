@@ -54,22 +54,11 @@ public class RowService {
             return cell;
         }).collect(Collectors.toList());
 
-        if (rowExists(cells, project)) {
+        if (rowRepository.rowExists(project, cells)) {
             throw new RowAlreadyExistsException("Row duplicate found for row: " + cells.stream().map(Cell::getValue).collect(Collectors.joining(", ")));
         } else {
             newRow.setCells(cells);
             rowRepository.add(newRow);
         }
-    }
-
-    /**
-     * Checks if the given list of cells, forming a row, is already in the database.
-     *
-     * @param cells   that are inside the row
-     * @param project the row is belonging to
-     * @return true if the row is already in the database
-     */
-    public boolean rowExists(List<Cell> cells, Project project) {
-        return rowRepository.rowExists(project, cells) > 0;
     }
 }

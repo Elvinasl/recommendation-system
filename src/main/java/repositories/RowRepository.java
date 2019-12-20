@@ -29,13 +29,15 @@ public class RowRepository extends DatabaseRepository<Row> {
      * @throws NoResultException get's thrown when there is no row found
      */
     @Transactional
-    public long rowExists(Project project, List<Cell> cells) throws NoResultException {
-        return (long) em.createQuery(
+    public boolean rowExists(Project project, List<Cell> cells) throws NoResultException {
+        long count = (long) em.createQuery(
                 "SELECT COUNT(cell.id) FROM Cell cell WHERE cell.row.id in " +
                         "(SELECT MIN(c.row.id) FROM Cell c WHERE c.value IN :cellValues " +
                         "AND c.row.project = :project GROUP BY c.row.id HAVING COUNT(:project.columnNames))")
                 .setParameter("cellValues", cells.stream().map(Cell::getValue).collect(Collectors.toList()))
                 .setParameter("project", project)
                 .getSingleResult();
+
+        return count > 0;
     }
 }
