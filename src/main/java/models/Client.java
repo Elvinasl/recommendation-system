@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,11 +26,11 @@ public class Client {
     @NotEmpty
     private String email;
 
-    @JsonIgnore
     @NotEmpty
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy="client")
-    private List<Project> project;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Project> project = new ArrayList<>();
+
 }

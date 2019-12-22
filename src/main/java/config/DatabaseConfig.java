@@ -2,7 +2,9 @@ package config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -37,10 +39,11 @@ public class DatabaseConfig {
         dataSource.setUsername(env.getProperty("mysql_username"));
         dataSource.setPassword(env.getProperty("mysql_password"));
 
-        String connString = String.format("jdbc:mysql://%s:%s/%s?createDatabaseIfNotExist=true",
+        String connString = String.format("jdbc:mysql://%s:%s/%s%s",
                 env.getProperty("mysql_host"),
                 env.getProperty("mysql_port"),
-                env.getProperty("mysql_database")
+                env.getProperty("mysql_database"),
+                env.getProperty("mysql_url_parameters")
         );
         dataSource.setUrl(connString);
 
@@ -79,7 +82,9 @@ public class DatabaseConfig {
     private Properties hibernateProperties() {
         return new Properties() {
             {
-                setProperty("hibernate.show_sql",  env.getProperty("hibernate_show_sql"));
+                setProperty("hibernate.show_sql", env.getProperty("hibernate_show_sql"));
+                setProperty("hibernate.format_sql", env.getProperty("hibernate_format_sql"));
+                setProperty("hibernate.use_sql_comments", env.getProperty("hibernate_use_sql_comments"));
                 setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate_hbm2ddl"));
             }
         };
