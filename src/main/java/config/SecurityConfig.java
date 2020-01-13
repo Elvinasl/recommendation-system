@@ -82,10 +82,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable();
 
-        http.antMatcher("/api/**").authorizeRequests()
-//                .anyRequest().authenticated()
-                .and()
-                .addFilterBefore(new ApiValidationFilter(authenticationManager(), this.clientRepository), UsernamePasswordAuthenticationFilter.class);
     }
 
     /**
@@ -110,6 +106,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // As it's a REST API, we don't want Spring remembering sessions for users. It should be stateless.
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        // adding specific filter for /api/** path
+        http.antMatcher("/api/**").authorizeRequests()
+            .and()
+            .addFilterBefore(new ApiValidationFilter(authenticationManager(), this.clientRepository), UsernamePasswordAuthenticationFilter.class);
+
 
         // We return it so we can chain more configuration
         return http;

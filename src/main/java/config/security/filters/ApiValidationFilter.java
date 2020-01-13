@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.client.HttpClientErrorException;
 import repositories.ClientRepository;
 
 import javax.servlet.FilterChain;
@@ -44,7 +45,7 @@ public class ApiValidationFilter extends BasicAuthenticationFilter {
         if (apiKey == null) {
             // Be sure to clear everything if something when wrong
             SecurityContextHolder.clearContext();
-            return;
+            throw new BadCredentialsException("API key was not found...");
         }
 
         // If header is present, try grab user principal from database and perform authorization
@@ -61,6 +62,6 @@ public class ApiValidationFilter extends BasicAuthenticationFilter {
             ClientPrincipal principal = new ClientPrincipal(client);
             return new UsernamePasswordAuthenticationToken(client.getEmail(), null, principal.getAuthorities());
         }
-        throw new BadCredentialsException("Bad API key");
+        throw new BadCredentialsException("Invalid API key");
     }
 }
