@@ -1,5 +1,7 @@
 package config;
 
+import config.security.filters.ApiValidationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import services.ClientPrincipalDetailsService;
 import config.security.jwt.JwtAuthenticationFilter;
 import config.security.jwt.JwtAuthorizationFilter;
@@ -79,6 +81,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // which is wat the CSRF exploit relies on.
                 .csrf()
                 .disable();
+
+        http.antMatcher("/api/**").authorizeRequests()
+//                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(new ApiValidationFilter(authenticationManager(), this.clientRepository), UsernamePasswordAuthenticationFilter.class);
     }
 
     /**
