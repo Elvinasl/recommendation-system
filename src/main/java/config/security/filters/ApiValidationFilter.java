@@ -10,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.web.client.HttpClientErrorException;
 import repositories.ClientRepository;
 
 import javax.servlet.FilterChain;
@@ -49,13 +48,13 @@ public class ApiValidationFilter extends BasicAuthenticationFilter {
         }
 
         // If header is present, try grab user principal from database and perform authorization
-        Authentication authentication = getApiAuthentication(request, apiKey);
+        Authentication authentication = getApiAuthentication(apiKey);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         chain.doFilter(request, response);
     }
 
-    private Authentication getApiAuthentication(HttpServletRequest request, String apiKey) {
+    private Authentication getApiAuthentication(String apiKey) {
 
         if (apiKey.length() > 0) {
             Client client = clientRepository.getByApiKey(apiKey);
