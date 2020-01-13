@@ -24,4 +24,12 @@ public class ClientRepository {
                 .setParameter("cEmail", email)
                 .getSingleResult();
     }
+
+    @Transactional
+    public Client getByApiKey(String apiKey) {
+        return (Client) em.createQuery(
+                "SELECT c FROM Client c, Project p WHERE p.apiKey = :apiKey AND p.client.id = c.id")
+                .setParameter("apiKey", apiKey)
+                .getSingleResult();
+    }
 }
