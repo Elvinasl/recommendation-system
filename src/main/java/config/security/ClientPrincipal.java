@@ -22,12 +22,6 @@ public class ClientPrincipal implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        // Extract list of permissions (name)
-        this.client.getPermissionList().forEach(p -> {
-            GrantedAuthority authority = new SimpleGrantedAuthority(p);
-            authorities.add(authority);
-        });
-
         // Extract role (ROLE_name)
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + this.client.getRole());
         authorities.add(authority);
