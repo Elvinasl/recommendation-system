@@ -1,6 +1,7 @@
 package services;
 
 import dto.CellDTO;
+import dto.DatasetCellDTO;
 import exceptions.NotFoundException;
 import exceptions.RowAlreadyExistsException;
 import models.Cell;
@@ -34,7 +35,7 @@ public class RowService {
      * @param row     containing all the cells to be inserted
      * @param project where the row should be inserted into
      */
-    public void addOrUpdate(List<CellDTO> row, Project project) {
+    public void addOrUpdate(List<DatasetCellDTO> row, Project project) {
         // TODO: Update weight if row already exists
         Row newRow = new Row();
         newRow.setProject(project);

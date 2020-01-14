@@ -10,5 +10,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RowDTO {
-    private List<CellDTO> cells;
+    private List<DatasetCellDTO> cells;
 }
