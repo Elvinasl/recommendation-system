@@ -62,4 +62,23 @@ public class RowService {
             rowRepository.add(newRow);
         }
     }
+
+    public Row getRowByCellDTOAndProject(List<CellDTO> row, Project project) {
+
+        List<Cell> cells = row.stream()
+                .map(cellDTO -> {
+                    Cell cell = new Cell();
+                    cell.setValue(cellDTO.getValue());
+                    ColumnName columnName = columnNameRepository.getByNameAndProject(cellDTO.getColumnName(), project);
+                    cell.setColumnName(columnName);
+                    return cell;
+                })
+                .collect(Collectors.toList());
+
+        return getByCellsAndProject(cells, project);
+    }
+
+    private Row getByCellsAndProject(List<Cell> cells, Project project) {
+        return rowRepository.findByCellsAndProject(cells, project);
+    }
 }

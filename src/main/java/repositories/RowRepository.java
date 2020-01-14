@@ -45,4 +45,9 @@ public class RowRepository extends DatabaseRepository<Row> {
 
         return count > 0;
     }
+
+    @Transactional
+    public Row findByCellsAndProject(List<Cell> cells, Project project) {
+        return null;
+    }
 }
