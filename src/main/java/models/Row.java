@@ -10,7 +10,8 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "Row_")
+// row is a reserved keyword in mysql 8+
+@Entity(name = "`Row`")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
