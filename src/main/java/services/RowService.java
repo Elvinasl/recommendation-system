@@ -69,7 +69,7 @@ public class RowService {
 
     public Row getRowByCellDTOAndProject(List<CellDTO> rowCells, Project project) {
 
-        List<Cell> cells = cellService.getCellsFromDB(rowCells, project);
+        List<Cell> cells = cellService.getCellsByCellDtoAndProject(rowCells, project);
 
         HashMap<Long, Integer> possibleRows = new HashMap<>();
 

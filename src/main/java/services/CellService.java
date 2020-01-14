@@ -20,7 +20,7 @@ public class CellService {
     }
 
 
-    public List<Cell> getCellsFromDB(List<CellDTO> cells, Project project) {
-        return cellRepository.getCells(cells, project);
+    public List<Cell> getCellsByCellDtoAndProject(List<CellDTO> cells, Project project) {
+        return cellRepository.getCellsByCellDtoAndProject(cells, project);
     }
 }

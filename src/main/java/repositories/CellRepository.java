@@ -15,7 +15,7 @@ public class CellRepository extends DatabaseRepository<Cell> {
         super(Cell.class);
     }
 
-    public List<Cell> getCells(List<CellDTO> cells, Project project) {
+    public List<Cell> getCellsByCellDtoAndProject(List<CellDTO> cells, Project project) {
         List<Cell> cellsFromDB = new ArrayList<>();
 
         for (CellDTO cell : cells) {
