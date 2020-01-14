@@ -13,4 +13,8 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
+    public boolean exists(String externalUserId) {
+        return userRepository.findByExternalUserId(externalUserId) != null;
+    }
 }
