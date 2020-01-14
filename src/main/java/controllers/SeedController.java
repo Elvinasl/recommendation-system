@@ -36,6 +36,7 @@ public class SeedController {
 
         Project project = projectService.getByApiKey(apiKey);
         List<Row> rows = project.getRows();
+        if (rows == null) rows = new ArrayList<>();
         int numberOfRows = rows.size();
 
         Faker faker = new Faker();

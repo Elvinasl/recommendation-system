@@ -14,7 +14,9 @@ import repositories.ColumnNameRepository;
 import repositories.RowRepository;
 
 import javax.persistence.NoResultException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,11 +24,13 @@ public class RowService {
 
     private RowRepository rowRepository;
     private ColumnNameRepository columnNameRepository;
+    private CellService cellService;
 
     @Autowired
-    public RowService(RowRepository rowRepository, ColumnNameRepository columnNameRepository) {
+    public RowService(RowRepository rowRepository, ColumnNameRepository columnNameRepository, CellService cellService) {
         this.rowRepository = rowRepository;
         this.columnNameRepository = columnNameRepository;
+        this.cellService = cellService;
     }
 
     /**
@@ -63,22 +67,52 @@ public class RowService {
         }
     }
 
-    public Row getRowByCellDTOAndProject(List<CellDTO> row, Project project) {
+    public Row getRowByCellDTOAndProject(List<CellDTO> rowCells, Project project) {
 
-        List<Cell> cells = row.stream()
-                .map(cellDTO -> {
-                    Cell cell = new Cell();
-                    cell.setValue(cellDTO.getValue());
-                    ColumnName columnName = columnNameRepository.getByNameAndProject(cellDTO.getColumnName(), project);
-                    cell.setColumnName(columnName);
-                    return cell;
-                })
-                .collect(Collectors.toList());
+        List<Cell> cells = cellService.getCellsFromDB(rowCells);
 
-        return getByCellsAndProject(cells, project);
+//        List<Long> possibleRows = new ArrayList<>();
+        HashMap<Long, Integer> possibleRows = new HashMap<>();
+
+        for (Cell cell : cells) {
+            Integer times = possibleRows.get(cell.getRow().getId());
+            if (times == null) {
+                times = 0;
+            }
+            possibleRows.put(cell.getRow().getId(), times + 1);
+        }
+
+        Integer max = 0;
+        Long rowId = 0L;
+        for (Map.Entry<Long, Integer> entry : possibleRows.entrySet()) {
+            if (entry.getValue() > max) {
+                rowId = entry.getKey();
+            }
+        }
+
+        return rowRepository.getById(rowId);
+
+
+//        List<Cell> cells = row.stream()
+//                .map(cellDTO -> {
+//                    Cell cell = new Cell();
+//                    cell.setValue(cellDTO.getValue());
+//                    ColumnName columnName = columnNameRepository.getByNameAndProject(cellDTO.getColumnName(), project);
+//                    cell.setColumnName(columnName);
+//                    return cell;
+//                })
+//                .collect(Collectors.toList());
+
+//        return getByCellsAndProject(cells, project);
     }
 
-    private Row getByCellsAndProject(List<Cell> cells, Project project) {
-        return rowRepository.findByCellsAndProject(cells, project);
-    }
+//    private Row getByCellsAndProject(List<Cell> cells, Project project) {
+//
+////        cells = rowRepository.findByCells(cells, project);
+//
+//
+//
+////        return null;
+////        return rowRepository.findByCellsAndProject(cells, project);
+//    }
 }

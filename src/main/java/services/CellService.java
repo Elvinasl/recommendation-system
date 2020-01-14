@@ -1,8 +1,12 @@
 package services;
 
+import dto.CellDTO;
+import models.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.CellRepository;
+
+import java.util.List;
 
 @Service
 public class CellService {
@@ -15,4 +19,7 @@ public class CellService {
     }
 
 
+    public List<Cell> getCellsFromDB(List<CellDTO> cells) {
+        return cellRepository.getCells(cells);
+    }
 }
