@@ -48,6 +48,9 @@ public class RowRepository extends DatabaseRepository<Row> {
 
     @Transactional
     public Row findByCellsAndProject(List<Cell> cells, Project project) {
-        return null;
+        return em.createQuery("SELECT Row FROM Row r WHERE r.cells = :cells AND r.project = :project", Row.class)
+                .setParameter("cells", cells)
+                .setParameter("project", project)
+                .getSingleResult();
     }
 }
