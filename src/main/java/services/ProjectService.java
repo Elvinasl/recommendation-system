@@ -59,7 +59,7 @@ public class ProjectService {
         // Then we seed the project with the given dataset
         this.seed(data, project);
 
-        return new Response("Created");
+        return new Response("Data has been added");
     }
 
     /**
