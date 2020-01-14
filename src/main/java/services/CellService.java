@@ -2,6 +2,7 @@ package services;
 
 import dto.CellDTO;
 import models.Cell;
+import models.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.CellRepository;
@@ -19,7 +20,7 @@ public class CellService {
     }
 
 
-    public List<Cell> getCellsFromDB(List<CellDTO> cells) {
-        return cellRepository.getCells(cells);
+    public List<Cell> getCellsFromDB(List<CellDTO> cells, Project project) {
+        return cellRepository.getCells(cells, project);
     }
 }

@@ -2,6 +2,7 @@ package repositories;
 
 import dto.CellDTO;
 import models.Cell;
+import models.Project;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,17 +15,21 @@ public class CellRepository extends DatabaseRepository<Cell> {
         super(Cell.class);
     }
 
-    public List<Cell> getCells(List<CellDTO> cells) {
+    public List<Cell> getCells(List<CellDTO> cells, Project project) {
         List<Cell> cellsFromDB = new ArrayList<>();
 
         for (CellDTO cell : cells) {
-            List<Cell> cellsPartFromDB = em.createQuery("SELECT c FROM Cell c WHERE c.columnName.name = :columnName AND c.value = :value ")
+            List<Cell> cellResults = em.createQuery("SELECT c " +
+                    "FROM Cell c " +
+                    "WHERE c.columnName.name = :columnName " +
+                    "AND c.value = :celValue " +
+                    "AND c.row.project = :project")
                     .setParameter("columnName", cell.getColumnName())
-                    .setParameter("value", cell.getValue())
+                    .setParameter("celValue", cell.getValue())
+                    .setParameter("project", project)
                     .getResultList();
-            cellsFromDB.addAll(cellsFromDB);
+            cellsFromDB.addAll(cellResults);
         }
-
         return cellsFromDB;
     }
 }

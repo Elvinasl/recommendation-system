@@ -69,9 +69,8 @@ public class RowService {
 
     public Row getRowByCellDTOAndProject(List<CellDTO> rowCells, Project project) {
 
-        List<Cell> cells = cellService.getCellsFromDB(rowCells);
+        List<Cell> cells = cellService.getCellsFromDB(rowCells, project);
 
-//        List<Long> possibleRows = new ArrayList<>();
         HashMap<Long, Integer> possibleRows = new HashMap<>();
 
         for (Cell cell : cells) {
@@ -91,28 +90,5 @@ public class RowService {
         }
 
         return rowRepository.getById(rowId);
-
-
-//        List<Cell> cells = row.stream()
-//                .map(cellDTO -> {
-//                    Cell cell = new Cell();
-//                    cell.setValue(cellDTO.getValue());
-//                    ColumnName columnName = columnNameRepository.getByNameAndProject(cellDTO.getColumnName(), project);
-//                    cell.setColumnName(columnName);
-//                    return cell;
-//                })
-//                .collect(Collectors.toList());
-
-//        return getByCellsAndProject(cells, project);
     }
-
-//    private Row getByCellsAndProject(List<Cell> cells, Project project) {
-//
-////        cells = rowRepository.findByCells(cells, project);
-//
-//
-//
-////        return null;
-////        return rowRepository.findByCellsAndProject(cells, project);
-//    }
 }
