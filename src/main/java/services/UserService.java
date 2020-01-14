@@ -1,5 +1,7 @@
 package services;
 
+import models.Project;
+import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.UserRepository;
@@ -14,7 +16,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public boolean exists(String externalUserId) {
-        return userRepository.findByExternalUserId(externalUserId) != null;
+    public User add(User user) {
+        return userRepository.add(user);
+    }
+
+    public User findByExternalIdAndProject(String externalUserId, Project project) {
+        return userRepository.findByExternalIdAndProject(externalUserId, project);
     }
 }

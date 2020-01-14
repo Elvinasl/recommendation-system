@@ -22,7 +22,6 @@ public class User {
 
     @NotNull
     @NotEmpty
-    @Max(45)
     @Column(unique = true, nullable = false)
     private String externalUserId;
 

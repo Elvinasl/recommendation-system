@@ -5,6 +5,7 @@ import exceptions.responses.Response;
 import models.Behavior;
 import models.Project;
 import models.Row;
+import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.BehaviorRepository;
@@ -15,12 +16,14 @@ public class BehaviorService {
     private ProjectService projectService;
     private RowService rowService;
     private BehaviorRepository behaviorRepository;
+    private UserService userService;
 
     @Autowired
-    public BehaviorService(ProjectService projectService, RowService rowService, BehaviorRepository behaviorRepository) {
+    public BehaviorService(ProjectService projectService, RowService rowService, BehaviorRepository behaviorRepository, UserService userService) {
         this.projectService = projectService;
         this.rowService = rowService;
         this.behaviorRepository = behaviorRepository;
+        this.userService = userService;
     }
 
     public Response add(String apiKey, BehaviorDTO behaviorDTO) {
@@ -28,11 +31,21 @@ public class BehaviorService {
 
         Row row = rowService.getRowByCellDTOAndProject(behaviorDTO.getCells(), project);
 
+        String externalUserId = behaviorDTO.getUserId();
+
+        User user = userService.findByExternalIdAndProject(externalUserId, project);
+
+        if (user == null) {
+            user = new User();
+            user.setProject(project);
+            user.setExternalUserId(externalUserId);
+            userService.add(user);
+        }
+
         Behavior behavior = new Behavior();
         behavior.setRow(row);
         behavior.setLiked(behaviorDTO.isLiked());
-        // TODO: create used logic here
-//        behavior.setUser(null);
+        behavior.setUser(user);
         behaviorRepository.add(behavior);
         return new Response("Behavior recorded");
     }

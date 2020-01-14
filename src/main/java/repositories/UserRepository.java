@@ -1,9 +1,13 @@
 package repositories;
 
 
+import models.Project;
 import models.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 @Repository
 public class UserRepository extends DatabaseRepository<User> {
@@ -14,9 +18,14 @@ public class UserRepository extends DatabaseRepository<User> {
 
 
     @Transactional
-    public User findByExternalUserId(String externalUserId) {
-        return em.createQuery("SELECT u FROM User u WHERE u.externalUserId = :externalUserId", User.class)
+    public User findByExternalIdAndProject(String externalUserId, Project project) {
+        Query query = em.createQuery("SELECT u " +
+                "FROM User u " +
+                "WHERE u.externalUserId = :externalUserId " +
+                "AND u.project = :project ", User.class)
                 .setParameter("externalUserId", externalUserId)
-                .getSingleResult();
+                .setParameter("project", project);
+
+        return getSingleResultOrNull(query);
     }
 }

@@ -15,4 +15,6 @@ public class BehaviorDTO {
     private List<CellDTO> cells;
     @NotNull
     private boolean liked;
+    @NotNull
+    private String userId;
 }

@@ -3,7 +3,9 @@ package repositories;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 abstract class DatabaseRepository<T> {
@@ -63,6 +65,14 @@ abstract class DatabaseRepository<T> {
         if (null != o) {
             em.remove(o);
         }
+    }
+
+    @Transactional
+    public T getSingleResultOrNull(Query query){
+        List results = query.getResultList();
+        if (results.isEmpty()) return null;
+        else if (results.size() == 1) return (T) results.get(0);
+        throw new NonUniqueResultException();
     }
 
 }
