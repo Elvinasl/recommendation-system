@@ -1,6 +1,7 @@
 package repositories;
 
 
+import dto.CellDTO;
 import models.Cell;
 import models.Project;
 import models.Row;
@@ -44,5 +45,29 @@ public class RowRepository extends DatabaseRepository<Row> {
                 .getSingleResult();
 
         return count > 0;
+    }
+
+    /**
+     * Finds a row based on the cell values and the project
+     *
+     * @param project the cells belong to
+     * @param cells containing the values that should all match for a specific row
+     * @return a row if the row is found
+     * @throws NoResultException get's thrown when there is no row found
+     */
+    @Transactional
+    public Row findRowByCellsAndProject(List<CellDTO> cells, Project project) throws NoResultException {
+        return (Row) em.createQuery(
+                "SELECT cell.row FROM Cell cell " +
+                        "INNER JOIN cell.row r " +
+                        "INNER JOIN r.project p " +
+                        "INNER JOIN p.columnNames f " +
+                        "WHERE cell.row.id IN " +
+                        "(SELECT MIN(c.row.id) FROM Cell c " +
+                        "WHERE c.value IN :cellValues AND c.row.project = :project " +
+                        "GROUP BY c.row.id HAVING COUNT(c.id) = SIZE(f))")
+                .setParameter("cellValues", cells.stream().map(CellDTO::getValue).collect(Collectors.toList()))
+                .setParameter("project", project)
+                .getSingleResult();
     }
 }

@@ -24,13 +24,11 @@ public class RowService {
 
     private RowRepository rowRepository;
     private ColumnNameRepository columnNameRepository;
-    private CellService cellService;
 
     @Autowired
-    public RowService(RowRepository rowRepository, ColumnNameRepository columnNameRepository, CellService cellService) {
+    public RowService(RowRepository rowRepository, ColumnNameRepository columnNameRepository) {
         this.rowRepository = rowRepository;
         this.columnNameRepository = columnNameRepository;
-        this.cellService = cellService;
     }
 
     /**
@@ -67,28 +65,13 @@ public class RowService {
         }
     }
 
+    /**
+     * Returns a row if there is any row found with the given cell values and the same project
+     * @param rowCells all the cell values that make a row
+     * @param project that the row belongs to
+     * @return a row if there is any match with all the cell values and project
+     */
     public Row getRowByCellDTOAndProject(List<CellDTO> rowCells, Project project) {
-
-        List<Cell> cells = cellService.getCellsByCellDtoAndProject(rowCells, project);
-
-        HashMap<Long, Integer> possibleRows = new HashMap<>();
-
-        for (Cell cell : cells) {
-            Integer times = possibleRows.get(cell.getRow().getId());
-            if (times == null) {
-                times = 0;
-            }
-            possibleRows.put(cell.getRow().getId(), times + 1);
-        }
-
-        Integer max = 0;
-        Long rowId = 0L;
-        for (Map.Entry<Long, Integer> entry : possibleRows.entrySet()) {
-            if (entry.getValue() > max) {
-                rowId = entry.getKey();
-            }
-        }
-
-        return rowRepository.getById(rowId);
+        return rowRepository.findRowByCellsAndProject(rowCells, project);
     }
 }
