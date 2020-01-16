@@ -73,11 +73,12 @@ public class RowRepository extends DatabaseRepository<Row> {
 
     @Transactional
     public List<Row> findMostLiked(Project project, int amount) {
-
+        // TODO: (or ask) is there a way to fetch only r.cells? and still use group by
         return em.createQuery("SELECT r " +
                 "FROM Project p " +
                 "INNER JOIN p.rows r " +
                 "INNER JOIN r.behaviors b " +
+                "FETCH ALL PROPERTIES " +
                 "WHERE r.project = :project " +
                 "GROUP BY r.id " +
                 "ORDER BY count(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", Row.class)

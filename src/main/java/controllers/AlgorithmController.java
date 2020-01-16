@@ -1,7 +1,7 @@
 package controllers;
 
+import dto.GeneratedRecommendationDTO;
 import dto.RecommendationDTO;
-import exceptions.responses.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class AlgorithmController {
     }
 
     @GetMapping
-    public ResponseEntity<Response> getRecommendation(@RequestHeader("api-key") String apiKey, @RequestBody RecommendationDTO recommendationDTO) {
+    public ResponseEntity<GeneratedRecommendationDTO> getRecommendation(@RequestHeader("api-key") String apiKey, @RequestBody RecommendationDTO recommendationDTO) {
         return new ResponseEntity<>(algorithmCore.generateRecommendation(apiKey, recommendationDTO), HttpStatus.OK);
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MostLikedDTO {
+public class GeneratedRecommendationDTO {
 
     private List<RowDTO> rows;
 
