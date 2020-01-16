@@ -20,7 +20,7 @@ public class AlgorithmController {
     }
 
     @GetMapping
-    public ResponseEntity<Response> getReccomendation(@RequestHeader("api-key") String apiKey, @RequestBody RecommendationDTO recommendationDTO) {
+    public ResponseEntity<Response> getRecommendation(@RequestHeader("api-key") String apiKey, @RequestBody RecommendationDTO recommendationDTO) {
         return new ResponseEntity<>(algorithmCore.generateRecommendation(apiKey, recommendationDTO), HttpStatus.OK);
     }
 }

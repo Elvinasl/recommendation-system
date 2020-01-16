@@ -1,14 +1,12 @@
 package services.algorithm;
 
 import dto.RecommendationDTO;
-import models.Behavior;
+import exceptions.responses.Response;
 import models.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import services.BehaviorService;
 import services.ProjectService;
-
-import java.util.List;
 
 @Service
 public class AlgorithmCore {
@@ -22,8 +20,8 @@ public class AlgorithmCore {
         this.projectService = projectService;
     }
 
-    public List<Behavior> generateRecommendation(String apiKey, RecommendationDTO recommendationDTO) {
+    public Response generateRecommendation(String apiKey, RecommendationDTO recommendationDTO) {
         Project project = projectService.getByApiKey(apiKey);
-        return null;
+        return new Response("ok");
     }
 }
