@@ -74,16 +74,17 @@ public class RowRepository extends DatabaseRepository<Row> {
     }
 
     @Transactional
-    public List<RowDTO> findMostLiked(Project project, int amount) {
-        return em.createNativeQuery("SELECT r.id as id, " +
-                "count(case b.liked when 1 then 1 else null end) - count(case b.liked when 0 then 1 else null end) as points " +
-                "FROM `Row` r " +
-                "INNER JOIN Behavior b ON b.row_id = r.id " +
-                "WHERE r.project_id = :projectId " +
+    public List<Row> findMostLiked(Project project, int amount) {
+
+        return em.createQuery("SELECT r " +
+                "FROM Project p " +
+                "INNER JOIN p.rows r " +
+                "INNER JOIN r.behaviors b " +
+                "WHERE r.project = :project " +
                 "GROUP BY r.id " +
-                "ORDER BY points DESC ")
+                "ORDER BY count(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", Row.class)
+                .setParameter("project", project)
                 .setMaxResults(amount)
-                .setParameter("projectId", project.getId())
                 .getResultList();
     }
 }
