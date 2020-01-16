@@ -23,4 +23,8 @@ public class UserService {
     public User findByExternalIdAndProject(String externalUserId, Project project) {
         return userRepository.findByExternalIdAndProject(externalUserId, project);
     }
+
+    public User findByExternalIdAndProjectOrNull(String externalUserId, Project project) {
+        return userRepository.findByExternalIdAndProjectOrNull(externalUserId, project);
+    }
 }

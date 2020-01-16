@@ -19,13 +19,20 @@ public class UserRepository extends DatabaseRepository<User> {
 
     @Transactional
     public User findByExternalIdAndProject(String externalUserId, Project project) {
-        Query query = em.createQuery("SELECT u " +
+        return (User) findByExternalIdAndProjectQuery(externalUserId, project).getSingleResult();
+    }
+
+    @Transactional
+    public User findByExternalIdAndProjectOrNull(String externalUserId, Project project) {
+        return getSingleResultOrNull(findByExternalIdAndProjectQuery(externalUserId, project));
+    }
+
+    private Query findByExternalIdAndProjectQuery(String externalUserId, Project project) {
+        return em.createQuery("SELECT u " +
                 "FROM User u " +
                 "WHERE u.externalUserId = :externalUserId " +
                 "AND u.project = :project ", User.class)
                 .setParameter("externalUserId", externalUserId)
                 .setParameter("project", project);
-
-        return getSingleResultOrNull(query);
     }
 }

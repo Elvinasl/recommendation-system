@@ -33,7 +33,7 @@ public class BehaviorService {
 
         String externalUserId = behaviorDTO.getUserId();
 
-        User user = userService.findByExternalIdAndProject(externalUserId, project);
+        User user = userService.findByExternalIdAndProjectOrNull(externalUserId, project);
 
         if (user == null) {
             user = new User();
