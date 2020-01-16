@@ -91,13 +91,13 @@ public class SeedController {
 
         datasetDTO.setColumns(columns);
 
-        List<RowDTO> rows = datasetDTO.getRows();
+        List<DatasetRowDTO> rows = datasetDTO.getRows();
         if (rows == null) rows = new ArrayList<>();
 
 
         for (int i = 0; i < times; i++) {
 
-            RowDTO rowDTO = new RowDTO();
+            DatasetRowDTO datasetRowDTO = new DatasetRowDTO();
             List<DatasetCellDTO> cells = new ArrayList<>();
 
             Book book = faker.book();
@@ -106,9 +106,9 @@ public class SeedController {
             cells.add(this.datasetCellDTO(50, "publisher", book.publisher()));
             cells.add(this.datasetCellDTO(50, "title", book.title()));
 
-            rowDTO.setCells(cells);
+            datasetRowDTO.setCells(cells);
 
-            rows.add(rowDTO);
+            rows.add(datasetRowDTO);
         }
         datasetDTO.setRows(rows);
 

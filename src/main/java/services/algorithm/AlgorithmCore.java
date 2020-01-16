@@ -4,6 +4,7 @@ import dto.RecommendationDTO;
 import exceptions.responses.Response;
 import models.Behavior;
 import models.Project;
+import models.Row;
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,11 @@ public class AlgorithmCore {
 
         if (user == null) {
             // get most liked movies
-            rowRepository.findMostLiked(project, recommendationDTO.getAmount());
+            List<Row> rows = rowRepository.findMostLiked(project, recommendationDTO.getAmount());
+            rows.stream()
+                    .map(row -> {
+
+                    })
         }
 
         List<Behavior> likedContent = behaviorService.getBehaviorsByUserAndTypeAndProject(user, true, project);
