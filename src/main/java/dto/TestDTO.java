@@ -4,12 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RowDTO {
-    private List<DatasetCellDTO> cells;
-    private Integer points;
+@Data
+
+public class TestDTO {
+    private Long id;
+    private int points;
 }

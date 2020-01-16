@@ -17,11 +17,4 @@ public class DatasetCellDTO extends CellDTO {
     @Max(100)
     @NotNull
     private int weight = 50;
-
-    public static DatasetCellDTO create(int weight, String columnName, String value) {
-        DatasetCellDTO cell = new DatasetCellDTO(weight);
-        cell.setColumnName(columnName);
-        cell.setValue(value);
-        return cell;
-    }
 }

@@ -101,10 +101,10 @@ public class SeedController {
             List<DatasetCellDTO> cells = new ArrayList<>();
 
             Book book = faker.book();
-            cells.add(DatasetCellDTO.create(50, "author", book.author()));
-            cells.add(DatasetCellDTO.create(50, "genre", book.genre()));
-            cells.add(DatasetCellDTO.create(50, "publisher", book.publisher()));
-            cells.add(DatasetCellDTO.create(50, "title", book.title()));
+            cells.add(this.datasetCellDTO(50, "author", book.author()));
+            cells.add(this.datasetCellDTO(50, "genre", book.genre()));
+            cells.add(this.datasetCellDTO(50, "publisher", book.publisher()));
+            cells.add(this.datasetCellDTO(50, "title", book.title()));
 
             rowDTO.setCells(cells);
 
@@ -113,5 +113,12 @@ public class SeedController {
         datasetDTO.setRows(rows);
 
         return new ResponseEntity<>(projectService.seedDatabase(apiKey, datasetDTO), HttpStatus.CREATED);
+    }
+
+    private DatasetCellDTO datasetCellDTO(int weight, String columnName, String value) {
+        DatasetCellDTO cell = new DatasetCellDTO(weight);
+        cell.setColumnName(columnName);
+        cell.setValue(value);
+        return cell;
     }
 }

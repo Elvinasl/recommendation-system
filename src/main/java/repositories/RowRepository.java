@@ -2,6 +2,8 @@ package repositories;
 
 
 import dto.CellDTO;
+import dto.RowDTO;
+import dto.TestDTO;
 import models.Cell;
 import models.Project;
 import models.Row;
@@ -69,5 +71,19 @@ public class RowRepository extends DatabaseRepository<Row> {
                 .setParameter("cellValues", cells.stream().map(CellDTO::getValue).collect(Collectors.toList()))
                 .setParameter("project", project)
                 .getSingleResult();
+    }
+
+    @Transactional
+    public List<RowDTO> findMostLiked(Project project, int amount) {
+        return em.createNativeQuery("SELECT r.id as id, " +
+                "count(case b.liked when 1 then 1 else null end) - count(case b.liked when 0 then 1 else null end) as points " +
+                "FROM `Row` r " +
+                "INNER JOIN Behavior b ON b.row_id = r.id " +
+                "WHERE r.project_id = :projectId " +
+                "GROUP BY r.id " +
+                "ORDER BY points DESC ")
+                .setMaxResults(amount)
+                .setParameter("projectId", project.getId())
+                .getResultList();
     }
 }
