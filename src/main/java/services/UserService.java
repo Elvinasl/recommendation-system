@@ -20,10 +20,6 @@ public class UserService {
         return userRepository.add(user);
     }
 
-    public User findByExternalIdAndProject(String externalUserId, Project project) {
-        return userRepository.findByExternalIdAndProject(externalUserId, project);
-    }
-
     public User findByExternalIdAndProjectOrNull(String externalUserId, Project project) {
         return userRepository.findByExternalIdAndProjectOrNull(externalUserId, project);
     }

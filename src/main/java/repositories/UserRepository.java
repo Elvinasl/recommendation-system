@@ -16,12 +16,6 @@ public class UserRepository extends DatabaseRepository<User> {
         super(User.class);
     }
 
-
-    @Transactional
-    public User findByExternalIdAndProject(String externalUserId, Project project) {
-        return (User) findByExternalIdAndProjectQuery(externalUserId, project).getSingleResult();
-    }
-
     @Transactional
     public User findByExternalIdAndProjectOrNull(String externalUserId, Project project) {
         return getSingleResultOrNull(findByExternalIdAndProjectQuery(externalUserId, project));

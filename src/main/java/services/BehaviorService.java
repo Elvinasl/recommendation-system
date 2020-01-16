@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.BehaviorRepository;
 
+import java.util.List;
+
 @Service
 public class BehaviorService {
 
@@ -48,5 +50,9 @@ public class BehaviorService {
         behavior.setUser(user);
         behaviorRepository.add(behavior);
         return new Response("Behavior recorded");
+    }
+
+    public List<Behavior> getBehaviorsByUserAndTypeAndProject(User user, boolean liked, Project project) {
+        return behaviorRepository.getBehaviorsByUserAndTypeAndProject(user, liked, project);
     }
 }
