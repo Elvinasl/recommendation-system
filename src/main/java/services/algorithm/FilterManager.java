@@ -9,28 +9,20 @@ import java.util.List;
 @Service
 public class FilterManager {
 
-    private AlgorithmFilter likeFilter;
-
-    private AlgorithmFilter currentFilter;
+    private List<AlgorithmFilter> filters;
 
     @Autowired
-    public FilterManager(AlgorithmFilter likeFilter) {
-        this.likeFilter = likeFilter;
+    public FilterManager(HasBehaviorFilter hasBehaviorFilter,
+                         HasLikesFilter hasLikesFilter) {
+        this.filters = new ArrayList<>();
+
+        this.filters.add(hasBehaviorFilter);
+        this.filters.add(hasLikesFilter);
     }
 
     public List<AlgorithmFilter> getFilters() {
-        List<AlgorithmFilter> filters = new ArrayList<>();
-        filters.add(likeFilter);
-
-        return filters;
+        return this.filters;
     }
 
-    public boolean hasNext(){
-        // ....
-    }
-
-    public AlgorithmFilter nextFilter(){
-        // ...
-    }
 
 }

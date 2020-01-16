@@ -18,4 +18,6 @@ public class FiltersData {
     private List<Behavior> behaviors;
     private User user;
     private Project project;
+    private int amount;
+    private boolean finished = false;
 }

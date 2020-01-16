@@ -3,65 +3,53 @@ package services.algorithm;
 import dto.GeneratedRecommendationDTO;
 import dto.RecommendationDTO;
 import dto.RowDTO;
-import models.Behavior;
 import models.Project;
 import models.Row;
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import repositories.RowRepository;
-import services.BehaviorService;
 import services.CellService;
 import services.ProjectService;
 import services.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AlgorithmCore implements AlgorithmFilter {
+public class AlgorithmCore {
 
-    private BehaviorService behaviorService;
     private ProjectService projectService;
     private UserService userService;
-    private RowRepository rowRepository;
     private CellService cellService;
     private FilterManager filterManager;
 
-    private RecommendationDTO recommendationDTO;
-
     @Autowired
-    public AlgorithmCore(BehaviorService behaviorService, ProjectService projectService, UserService userService, RowRepository rowRepository, CellService cellService, FilterManager filterManager) {
-        this.behaviorService = behaviorService;
+    public AlgorithmCore(ProjectService projectService,
+                         UserService userService,
+                         CellService cellService,
+                         FilterManager filterManager) {
         this.projectService = projectService;
         this.userService = userService;
-        this.rowRepository = rowRepository;
         this.cellService = cellService;
         this.filterManager = filterManager;
     }
 
-    public GeneratedRecommendationDTO generateRecommendation(String apiKey, RecommendationDTO recommendationDTO) {
-        this.recommendationDTO = recommendationDTO;
 
+    public GeneratedRecommendationDTO generateRecommendation(String apiKey, RecommendationDTO recommendationDTO) {
         Project project = projectService.getByApiKey(apiKey);
         User user = userService.findByExternalIdAndProjectOrNull(recommendationDTO.getUserId(), project);
-
-
 
         FiltersData filtersData = new FiltersData();
         filtersData.setProject(project);
         filtersData.setUser(user);
+        filtersData.setAmount(recommendationDTO.getAmount());
 
-
-        filterManager.getFilters().forEach(filter -> {
-            filter.filter()
+        filterManager.getFilters().forEach(f -> {
+            if (!filtersData.isFinished()) {
+                f.filter(filtersData);
+            }
         });
-
-        filter(filtersData)
-
-        return generateDTO();
+        return generateDTO(filtersData.getRows());
     }
 
 
@@ -78,8 +66,4 @@ public class AlgorithmCore implements AlgorithmFilter {
         return generatedRecommendationDTO;
     }
 
-    @Override
-    public FiltersData filter(FiltersData filtersData) {
-        return likeFilter.filter(filtersData);
-    }
 }
