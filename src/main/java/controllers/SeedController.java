@@ -10,6 +10,7 @@ import models.Project;
 import models.Row;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import services.BehaviorService;
 import services.ProjectService;
@@ -32,22 +33,30 @@ public class SeedController {
 
 
     @GetMapping(path = "behavior/{times}")
+    @Transactional
     public ResponseEntity<String> seedBehavior(@RequestHeader("api-key") String apiKey, @PathVariable int times) {
 
         Project project = projectService.getByApiKey(apiKey);
         List<Row> rows = project.getRows();
         if (rows == null) rows = new ArrayList<>();
         int numberOfRows = rows.size();
+        System.out.println(numberOfRows);
+
 
         Faker faker = new Faker();
         for (int i = 0; i < times; i++) {
-            Row row = rows.get(faker.random().nextInt(0, numberOfRows));
+            Row row = rows.get(faker.random().nextInt(0, numberOfRows - 1));
             BehaviorDTO behaviorDTO = new BehaviorDTO();
+            behaviorDTO.setUserId(String.valueOf(faker.random().nextInt(0, times / 10 - 1)));
+            List<CellDTO> behaviorDTOCells = behaviorDTO.getCells();
+            if (behaviorDTOCells == null) behaviorDTOCells = new ArrayList<>();
+
             List<Cell> cells = row.getCells();
             for (int j = 0; j < cells.size(); j++) {
                 Cell cell = cells.get(j);
-                behaviorDTO.getCells().add(new CellDTO(cell.getColumnName().getName(), cell.getValue()));
+                behaviorDTOCells.add(new CellDTO(cell.getColumnName().getName(), cell.getValue()));
             }
+            behaviorDTO.setCells(behaviorDTOCells);
             // Two times bool() because the first returns 'bool' and the second 'boolean'
             behaviorDTO.setLiked(faker.bool().bool());
             behaviorService.add(apiKey, behaviorDTO);
