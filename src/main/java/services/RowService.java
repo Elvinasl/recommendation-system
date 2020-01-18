@@ -4,19 +4,14 @@ import dto.CellDTO;
 import dto.DatasetCellDTO;
 import exceptions.NotFoundException;
 import exceptions.RowAlreadyExistsException;
-import models.Cell;
-import models.ColumnName;
-import models.Project;
-import models.Row;
+import models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.ColumnNameRepository;
 import repositories.RowRepository;
 
 import javax.persistence.NoResultException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,11 +62,16 @@ public class RowService {
 
     /**
      * Returns a row if there is any row found with the given cell values and the same project
+     *
      * @param rowCells all the cell values that make a row
-     * @param project that the row belongs to
+     * @param project  that the row belongs to
      * @return a row if there is any match with all the cell values and project
      */
     public Row getRowByCellDTOAndProject(List<CellDTO> rowCells, Project project) {
         return rowRepository.findRowByCellsAndProject(rowCells, project);
+    }
+
+    public List<Row> getMostLikedContentForProjectAndUser(Project project, User user) {
+        return rowRepository.getMostLikedContentForProjectAndUser(project, user);
     }
 }

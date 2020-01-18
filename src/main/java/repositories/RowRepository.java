@@ -5,6 +5,7 @@ import dto.CellDTO;
 import models.Cell;
 import models.Project;
 import models.Row;
+import models.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
@@ -84,6 +85,21 @@ public class RowRepository extends DatabaseRepository<Row> {
                 "ORDER BY count(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", Row.class)
                 .setParameter("project", project)
                 .setMaxResults(amount)
+                .getResultList();
+    }
+
+    public List<Row> getMostLikedContentForProjectAndUser(Project project, User user) {
+
+        return em.createQuery("SELECT r " +
+                "FROM Project p " +
+                "INNER JOIN p.rows r " +
+                "FETCH ALL PROPERTIES " +
+                "LEFT OUTER JOIN r.behaviors b ON b.user = :user " +
+                "WHERE r.project = :project " +
+                "GROUP BY r.id " +
+                "ORDER BY count(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", Row.class)
+                .setParameter("project", project)
+                .setParameter("user", user)
                 .getResultList();
     }
 }
