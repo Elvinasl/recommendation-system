@@ -1,7 +1,7 @@
 package services.algorithm;
 
+import dto.RowWithPointsDTO;
 import models.Project;
-import models.Row;
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class HasBehaviorFilter implements AlgorithmFilter {
 
         if (user == null) {
             filtersData.setFinished(true);
-            List<Row> rows = rowRepository.findMostLiked(project, filtersData.getAmount());
+            List<RowWithPointsDTO> rows = rowRepository.findMostLiked(project, filtersData.getAmount());
             filtersData.setRows(rows);
         }
         return filtersData;

@@ -3,11 +3,12 @@ package services.algorithm;
 import dto.GeneratedRecommendationDTO;
 import dto.RecommendationDTO;
 import dto.RowDTO;
+import dto.RowWithPointsDTO;
 import models.Project;
-import models.Row;
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import services.CellService;
 import services.ProjectService;
 import services.UserService;
@@ -35,6 +36,8 @@ public class AlgorithmCore {
     }
 
 
+    // TODO: find a solution to remove transactional here..
+    @Transactional
     public GeneratedRecommendationDTO generateRecommendation(String apiKey, RecommendationDTO recommendationDTO) {
         Project project = projectService.getByApiKey(apiKey);
         User user = userService.findByExternalIdAndProjectOrNull(recommendationDTO.getUserId(), project);
@@ -49,17 +52,19 @@ public class AlgorithmCore {
                 f.filter(filtersData);
             }
         });
-        return generateDTO(filtersData.getRows());
+
+        // Get only the amount that is given
+        List<RowWithPointsDTO> rows = filtersData.getRows().subList(0, recommendationDTO.getAmount());
+        return generateDTO(rows);
     }
 
 
-
-    private GeneratedRecommendationDTO generateDTO(List<Row> rows) {
+    private GeneratedRecommendationDTO generateDTO(List<RowWithPointsDTO> rows) {
         GeneratedRecommendationDTO generatedRecommendationDTO = new GeneratedRecommendationDTO();
         generatedRecommendationDTO.setRows(rows.stream()
                 .map(row -> {
                     RowDTO rowDTO = new RowDTO();
-                    rowDTO.convertCellsToDTO(cellService.getByRow(row));
+                    rowDTO.convertCellsToDTO(row.getCells());
                     return rowDTO;
                 }).collect(Collectors.toList()));
 

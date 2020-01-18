@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 // row is a reserved keyword in mysql 8+
-@Entity(name = "`Row`")
+@Entity(name = "Row")
+@javax.persistence.Table(name = "`Row`")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

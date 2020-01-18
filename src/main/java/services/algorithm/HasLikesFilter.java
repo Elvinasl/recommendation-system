@@ -1,7 +1,7 @@
 package services.algorithm;
 
+import dto.RowWithPointsDTO;
 import models.Project;
-import models.Row;
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class HasLikesFilter implements AlgorithmFilter {
 
         // Secondly we get the list of rows in the most liked order
         // No amount, because the list is probably gonna be changed in next filters.
-        List<Row> rows = rowService.getMostLikedContentForProjectAndUser(project, user);
+        List<RowWithPointsDTO> rows = rowService.getMostLikedContentForProjectAndUser(project, user);
 
         // Set the list of rows into the filters data
         filtersData.setRows(rows);

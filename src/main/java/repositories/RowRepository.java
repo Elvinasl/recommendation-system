@@ -2,6 +2,7 @@ package repositories;
 
 
 import dto.CellDTO;
+import dto.RowWithPointsDTO;
 import models.Cell;
 import models.Project;
 import models.Row;
@@ -73,31 +74,36 @@ public class RowRepository extends DatabaseRepository<Row> {
     }
 
     @Transactional
-    public List<Row> findMostLiked(Project project, int amount) {
+    public List<RowWithPointsDTO> findMostLiked(Project project, int amount) {
         // TODO: (or ask) is there a way to fetch only r.cells? and still use group by
-        return em.createQuery("SELECT r " +
+        return em.createQuery("SELECT NEW dto.RowWithPointsDTO(r, " +
+                "COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) ) " +
                 "FROM Project p " +
                 "INNER JOIN p.rows r " +
+                "INNER JOIN r.cells c " +
                 "INNER JOIN r.behaviors b " +
                 "FETCH ALL PROPERTIES " +
                 "WHERE r.project = :project " +
                 "GROUP BY r.id " +
-                "ORDER BY count(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", Row.class)
+                "ORDER BY COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", RowWithPointsDTO.class)
                 .setParameter("project", project)
                 .setMaxResults(amount)
                 .getResultList();
     }
 
-    public List<Row> getMostLikedContentForProjectAndUser(Project project, User user) {
+    @Transactional
+    public List<RowWithPointsDTO> getMostLikedContentForProjectAndUser(Project project, User user) {
 
-        return em.createQuery("SELECT r " +
-                "FROM Project p " +
-                "INNER JOIN p.rows r " +
-                "FETCH ALL PROPERTIES " +
-                "LEFT OUTER JOIN r.behaviors b ON b.user = :user " +
+        return em.createQuery("SELECT NEW dto.RowWithPointsDTO(r, " +
+                "COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) ) " +
+                "FROM Row r " +
+                "JOIN r.cells c " +
+                "JOIN c.columnName cn " +
+//                "FETCH ALL PROPERTIES " +
+                "LEFT JOIN r.behaviors b ON b.user = :user " +
                 "WHERE r.project = :project " +
-                "GROUP BY r.id " +
-                "ORDER BY count(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", Row.class)
+                "GROUP BY r " +
+                "ORDER BY COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", RowWithPointsDTO.class)
                 .setParameter("project", project)
                 .setParameter("user", user)
                 .getResultList();

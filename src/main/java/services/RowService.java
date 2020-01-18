@@ -2,6 +2,7 @@ package services;
 
 import dto.CellDTO;
 import dto.DatasetCellDTO;
+import dto.RowWithPointsDTO;
 import exceptions.NotFoundException;
 import exceptions.RowAlreadyExistsException;
 import models.*;
@@ -71,7 +72,7 @@ public class RowService {
         return rowRepository.findRowByCellsAndProject(rowCells, project);
     }
 
-    public List<Row> getMostLikedContentForProjectAndUser(Project project, User user) {
+    public List<RowWithPointsDTO> getMostLikedContentForProjectAndUser(Project project, User user) {
         return rowRepository.getMostLikedContentForProjectAndUser(project, user);
     }
 }
