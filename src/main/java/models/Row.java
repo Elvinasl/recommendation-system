@@ -29,6 +29,6 @@ public class Row extends Weight {
     @OneToMany(mappedBy = "row", cascade = CascadeType.ALL)
     private List<Behavior> behaviors = new ArrayList<>();
 
-    @OneToMany(mappedBy = "row", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "row", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Cell> cells = new ArrayList<>();
 }

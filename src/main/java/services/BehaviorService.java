@@ -49,7 +49,7 @@ public class BehaviorService {
         behavior.setUser(user);
         behaviorRepository.add(behavior);
 
-        userPreferenceService.createOrAdjust(project, user, row);
+        userPreferenceService.createOrAdjust(user, row, behavior);
 
         return new Response("Behavior recorded");
     }
