@@ -33,14 +33,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         this.secret = secret;
     }
 
-    /* Trigger when we issue POST request to /login
-                We also need to pass in {"email":"user", "password":"123123"} in the request body
-             */
+    /*
+        Trigger when we issue POST request to /login
+        We also need to pass in {"email":"user", "password":"123123"} in the request body
+     */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
         // Grab credentials and map them to login view model
-        LoginViewModel credentials = null;
+        LoginViewModel credentials;
         try {
             credentials = new ObjectMapper().readValue(request.getInputStream(), LoginViewModel.class);
         } catch (IOException e) {
@@ -59,6 +60,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return authenticationManager.authenticate(authenticationToken);
     }
 
+    /*
+        This method determines what happens if authentication is successfull
+        We take the clientPricipal and based on his username (email), JWT expiration time and secret create jwt token
+        Then we add this token to response header
+     */
     @Override
     public void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         // Grab principal
