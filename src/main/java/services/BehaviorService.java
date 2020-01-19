@@ -2,10 +2,7 @@ package services;
 
 import dto.BehaviorDTO;
 import exceptions.responses.Response;
-import models.Behavior;
-import models.Project;
-import models.Row;
-import models.User;
+import models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.BehaviorRepository;
@@ -19,13 +16,15 @@ public class BehaviorService {
     private RowService rowService;
     private BehaviorRepository behaviorRepository;
     private UserService userService;
+    private UserPreferenceService userPreferenceService;
 
     @Autowired
-    public BehaviorService(ProjectService projectService, RowService rowService, BehaviorRepository behaviorRepository, UserService userService) {
+    public BehaviorService(ProjectService projectService, RowService rowService, BehaviorRepository behaviorRepository, UserService userService, UserPreferenceService userPreferenceService) {
         this.projectService = projectService;
         this.rowService = rowService;
         this.behaviorRepository = behaviorRepository;
         this.userService = userService;
+        this.userPreferenceService = userPreferenceService;
     }
 
     public Response add(String apiKey, BehaviorDTO behaviorDTO) {
@@ -49,6 +48,9 @@ public class BehaviorService {
         behavior.setLiked(behaviorDTO.isLiked());
         behavior.setUser(user);
         behaviorRepository.add(behavior);
+
+        userPreferenceService.createOrAdjust(project, user, row);
+
         return new Response("Behavior recorded");
     }
 
