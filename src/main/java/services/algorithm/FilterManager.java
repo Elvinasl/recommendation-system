@@ -13,13 +13,16 @@ public class FilterManager {
 
     @Autowired
     public FilterManager(HasBehaviorFilter hasBehaviorFilter,
-                         HasLikesFilter hasLikesFilter,
-                         WeightsFilter weightsFilter) {
+     HasLikesFilter hasLikesFilter,
+     WeightsFilter weightsFilter,
+     UserPreferenceFilter userPreferenceFilter
+    ) {
         this.filters = new ArrayList<>();
 
         this.filters.add(hasBehaviorFilter);
         this.filters.add(hasLikesFilter);
         this.filters.add(weightsFilter);
+        this.filters.add(userPreferenceFilter);
     }
 
     public List<AlgorithmFilter> getFilters() {
