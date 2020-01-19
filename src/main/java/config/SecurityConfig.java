@@ -1,7 +1,7 @@
 package config;
 
-import config.security.filters.ApiValidationFilter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import services.ClientPrincipalDetailsService;
 import config.security.jwt.JwtAuthenticationFilter;
 import config.security.jwt.JwtAuthorizationFilter;
@@ -40,10 +40,13 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
+@PropertySource("classpath:security.properties")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private ClientRepository clientRepository;
     private ClientPrincipalDetailsService clientPrincipalDetailsService;
+    @Value("${jwt_secret}")
+    private String secret;
 
     @Autowired
     public SecurityConfig(ClientRepository clientRepository, ClientPrincipalDetailsService clientPrincipalDetailsService) {
@@ -101,17 +104,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // add jwt filters (1. authentication, 2. authorization)
         http
-            .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-            .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.clientRepository));
+            .addFilter(new JwtAuthenticationFilter(authenticationManager(), this.secret))
+            .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.clientRepository, this.secret));
 
         // As it's a REST API, we don't want Spring remembering sessions for users. It should be stateless.
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        // adding specific filter for /api/** path
-        http.antMatcher("/api/**").authorizeRequests()
-            .and()
-            .addFilterBefore(new ApiValidationFilter(authenticationManager(), this.clientRepository), UsernamePasswordAuthenticationFilter.class);
-
 
         // We return it so we can chain more configuration
         return http;

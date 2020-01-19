@@ -3,11 +3,13 @@ package config.security.jwt;
 import com.auth0.jwt.JWT;
 import config.security.ClientPrincipal;
 import models.Client;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import repositories.ClientRepository;
 
@@ -19,12 +21,23 @@ import java.io.IOException;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
+
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private ClientRepository clientRepository;
+    private String secret;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, ClientRepository clientRepository) {
+    @Autowired
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, ClientRepository clientRepository, String secret) {
         super(authenticationManager);
         this.clientRepository = clientRepository;
+        this.secret = secret;
+    }
+
+    @Autowired
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, AuthenticationEntryPoint authenticationEntryPoint, ClientRepository clientRepository, String secret) {
+        super(authenticationManager, authenticationEntryPoint);
+        this.clientRepository = clientRepository;
+        this.secret = secret;
     }
 
     @Override
@@ -55,7 +68,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         if (token.length() > 0) {
             // parse the token and validate it
-            String email = JWT.require(HMAC512(JwtProperties.SECRET.getBytes()))
+            String email = JWT.require(HMAC512(secret.getBytes()))
                     .build()
                     .verify(token)
                     .getSubject();

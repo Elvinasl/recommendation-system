@@ -4,6 +4,9 @@ import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import config.security.AuthenticatedClientPOJO;
 import config.security.ClientPrincipal;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,15 +27,19 @@ import java.util.Date;
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    private AuthenticationManager authenticationManager;
+    private String secret;
+
+    @Autowired
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String secret) {
         this.authenticationManager = authenticationManager;
+        this.secret = secret;
     }
 
     /* Trigger when we issue POST request to /login
-        We also need to pass in {"email":"user", "password":"123123"} in the request body
-     */
+                We also need to pass in {"email":"user", "password":"123123"} in the request body
+             */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
@@ -63,8 +71,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // Create JWT Token
         String token = JWT.create()
                 .withSubject(principal.getUsername())
+                // date is needed here because of jwt library
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
-                .sign(HMAC512(JwtProperties.SECRET.getBytes()));
+                .sign(HMAC512(secret.getBytes()));
 
 
         String fullToken = JwtProperties.TOKEN_PREFIX +  token;
