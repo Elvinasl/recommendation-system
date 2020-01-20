@@ -124,8 +124,14 @@ public class CellPointsFilter implements AlgorithmFilter {
             // Get the cell with points from the list
             return this.uniqueCellsFromBehaviors.get(cell.getValue());
         } else {
-            // Cell doesn't exist in the list, so create and add it here
-            return this.uniqueCellsFromBehaviors.put(cell.getValue(), new CellWithPointsDTO(cell));
+            // Cell doesn't exist in the list, so create
+            CellWithPointsDTO cellWithPoints = new CellWithPointsDTO(cell);
+
+            // add it to the list
+            this.uniqueCellsFromBehaviors.put(cell.getValue(), cellWithPoints);
+
+            // Return cell
+            return cellWithPoints;
         }
     }
 
