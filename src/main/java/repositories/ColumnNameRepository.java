@@ -34,4 +34,13 @@ public class ColumnNameRepository extends DatabaseRepository<ColumnName> {
 
         return count > 0;
     }
+
+
+    @Transactional
+    public long getCountForProject(Project project) {
+        return (long) em.createQuery(
+                "SELECT count(c) FROM ColumnName c WHERE c.project = :project")
+                .setParameter("project", project)
+                .getSingleResult();
+    }
 }

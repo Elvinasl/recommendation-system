@@ -28,4 +28,8 @@ public class ColumnNameService {
             return columnNameRepository.add(columnName);
         }
     }
+
+    public long getCountForProject(Project project) {
+        return columnNameRepository.getCountForProject(project);
+    }
 }

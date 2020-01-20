@@ -13,9 +13,10 @@ public class FilterManager {
 
     @Autowired
     public FilterManager(HasBehaviorFilter hasBehaviorFilter,
-     HasLikesFilter hasLikesFilter,
-     WeightsFilter weightsFilter,
-     UserPreferenceFilter userPreferenceFilter
+                         HasLikesFilter hasLikesFilter,
+                         WeightsFilter weightsFilter,
+                         UserPreferenceFilter userPreferenceFilter,
+                         CellPointsFilter cellPointsFilter
     ) {
         this.filters = new ArrayList<>();
 
@@ -23,6 +24,7 @@ public class FilterManager {
         this.filters.add(hasLikesFilter);
         this.filters.add(weightsFilter);
         this.filters.add(userPreferenceFilter);
+        this.filters.add(cellPointsFilter);
     }
 
     public List<AlgorithmFilter> getFilters() {

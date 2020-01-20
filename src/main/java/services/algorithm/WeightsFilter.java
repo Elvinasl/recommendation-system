@@ -3,6 +3,7 @@ package services.algorithm;
 import dto.RowWithPointsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import services.BehaviorService;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,15 +11,16 @@ import java.util.Comparator;
 @Service
 public class WeightsFilter implements AlgorithmFilter {
 
-    @Autowired
-    public WeightsFilter() {
+    private BehaviorService behaviorService;
 
+    @Autowired
+    public WeightsFilter(BehaviorService behaviorService) {
+        this.behaviorService = behaviorService;
     }
 
     @Override
     public FiltersData filter(FiltersData filtersData) {
 
-        // TODO: Need to add better column weights
         filtersData.getRows().forEach(row -> {
             row.getCells().forEach(cell -> {
                 float weight = cell.getColumnName().getWeight() * cell.getWeight() / 20f;

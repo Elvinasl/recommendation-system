@@ -2,7 +2,10 @@ package services;
 
 import dto.BehaviorDTO;
 import exceptions.responses.Response;
-import models.*;
+import models.Behavior;
+import models.Project;
+import models.Row;
+import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.BehaviorRepository;
@@ -56,5 +59,9 @@ public class BehaviorService {
 
     public List<Behavior> getBehaviorsByUserAndTypeAndProject(User user, boolean liked, Project project) {
         return behaviorRepository.getBehaviorsByUserAndTypeAndProject(user, liked, project);
+    }
+
+    public List<Behavior> getBehaviorsByUser(User user) {
+        return behaviorRepository.getBehaviorsByUser(user);
     }
 }

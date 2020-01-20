@@ -29,4 +29,16 @@ public class BehaviorRepository extends DatabaseRepository<Behavior> {
                 .setParameter("project", project)
                 .getResultList();
     }
+
+    @Transactional
+    public List<Behavior> getBehaviorsByUser(User user) {
+
+        return em.createQuery("SELECT b " +
+                "FROM Behavior b " +
+                "JOIN FETCH b.row r " +
+                "JOIN FETCH r.cells " +
+                "WHERE b.user = :user ", Behavior.class)
+                .setParameter("user", user)
+                .getResultList();
+    }
 }
