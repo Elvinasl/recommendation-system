@@ -1,13 +1,13 @@
 package integration;
 
-import config.AppConfig;
-import exceptions.responses.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
+import recommendator.config.AppConfig;
+import recommendator.exceptions.responses.Response;
 
 @ContextConfiguration(classes = { AppConfig.class })
 @WebAppConfiguration
