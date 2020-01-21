@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import recommendator.repositories.ClientRepository;
 import recommendator.services.ClientPrincipalDetailsService;
 import recommendator.config.security.jwt.JwtAuthenticationFilter;
@@ -50,8 +51,6 @@ public class SecurityConfig {
     private ClientPrincipalDetailsService clientPrincipalDetailsService;
     @Value("${jwt_secret}")
     private String secret;
-    @Value("${profile}")
-    private String profile;
 
     @Autowired
     public SecurityConfig(ClientRepository clientRepository, ClientPrincipalDetailsService clientPrincipalDetailsService) {
@@ -63,18 +62,19 @@ public class SecurityConfig {
 
     @Bean
     @Profile("dev")
-    WebSecurityConfigurerAdapter noAuth() {
+    WebSecurityConfigurerAdapter dev() {
         return new WebSecurityConfigurerAdapter() {
             @Override
-            protected void configure(HttpSecurity http) throws Exception {
-                http.authorizeRequests().anyRequest().permitAll();
+            public void configure(WebSecurity webSecurity) {
+                // ignore all
+                webSecurity.ignoring().mvcMatchers("/*");
             }
         };
     }
 
     @Bean
     @Profile("default")
-    WebSecurityConfigurerAdapter basic() {
+    WebSecurityConfigurerAdapter standard() {
         return new WebSecurityConfigurerAdapter() {
             @Override
             protected void configure(AuthenticationManagerBuilder auth) {
@@ -156,11 +156,11 @@ public class SecurityConfig {
                 daoAuthenticationProvider.setUserDetailsService(clientPrincipalDetailsService);
                 return daoAuthenticationProvider;
             }
-
-            @Bean
-            PasswordEncoder passwordEncoder() {
-                return new BCryptPasswordEncoder();
-            }
         };
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
