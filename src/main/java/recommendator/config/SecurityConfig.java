@@ -1,7 +1,10 @@
 package recommendator.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.Environment;
 import recommendator.repositories.ClientRepository;
 import recommendator.services.ClientPrincipalDetailsService;
 import recommendator.config.security.jwt.JwtAuthenticationFilter;
@@ -41,12 +44,14 @@ import java.util.Collections;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @PropertySource("classpath:security.properties")
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
     private ClientRepository clientRepository;
     private ClientPrincipalDetailsService clientPrincipalDetailsService;
     @Value("${jwt_secret}")
     private String secret;
+    @Value("${profile}")
+    private String profile;
 
     @Autowired
     public SecurityConfig(ClientRepository clientRepository, ClientPrincipalDetailsService clientPrincipalDetailsService) {
@@ -54,88 +59,108 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.clientPrincipalDetailsService = clientPrincipalDetailsService;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(authenticationProvider());
-    }
 
-    /**
-     * In this method we get a {@link HttpSecurity} object we can use for configuring the security in our application.
-     * <p>
-     * It's important to know that the top most configuration should be more specific than the bottom configuration.
-     * If I say the url /admin is accessible by admins only and then say all the URLS are open for everyone,
-     * that is interpreted as "/admin is secured, but everything else is open for business".
-     * However, if I were to do that the other way around, my rule for /admin would be ignored.
-     *
-     * @param http The object we configure our security in
-     * @throws Exception
-     */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // First we configure it to allow authentication and authorization in REST
-        enableRESTAuthentication(http)
-                // Now let's say which requests we want to authorize
-                .authorizeRequests()
-                .and()
-                .cors()
-                .and()
-                // We're disabling defenses against Cross-Site Request Forgery,
-                // as the browser is not responsible for adding authentication information to the request
-                // which is wat the CSRF exploit relies on.
-                .csrf()
-                .disable();
 
-    }
-
-    /**
-     * I separated the configuration for security in REST to simplify it.
-     * In this method we enable logging in and configure it for a REST API.
-     *
-     * @param http The {@link HttpSecurity} object we can use for configuration
-     * @return
-     * @throws Exception
-     */
-    private HttpSecurity enableRESTAuthentication(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-            // configure access rules
-            .antMatchers(HttpMethod.POST, "/login").permitAll()
-            .anyRequest().authenticated();
-
-        // add jwt filters (1. authentication, 2. authorization)
-        http
-            .addFilter(new JwtAuthenticationFilter(authenticationManager(), this.secret))
-            .addFilter(new JwtAuthorizationFilter(authenticationManager(),  this.clientRepository, this.secret));
-
-        // As it's a REST API, we don't want Spring remembering sessions for users. It should be stateless.
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        // We return it so we can chain more configuration
-        return http;
+    @Bean
+    @Profile("dev")
+    WebSecurityConfigurerAdapter noAuth() {
+        return new WebSecurityConfigurerAdapter() {
+            @Override
+            protected void configure(HttpSecurity http) throws Exception {
+                http.authorizeRequests().anyRequest().permitAll();
+            }
+        };
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
-        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+    @Profile("default")
+    WebSecurityConfigurerAdapter basic() {
+        return new WebSecurityConfigurerAdapter() {
+            @Override
+            protected void configure(AuthenticationManagerBuilder auth) {
+                auth.authenticationProvider(authenticationProvider());
+            }
 
-    @Bean
-    DaoAuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(this.clientPrincipalDetailsService);
-        return daoAuthenticationProvider;
-    }
+            /**
+             * In this method we get a {@link HttpSecurity} object we can use for configuring the security in our application.
+             * <p>
+             * It's important to know that the top most configuration should be more specific than the bottom configuration.
+             * If I say the url /admin is accessible by admins only and then say all the URLS are open for everyone,
+             * that is interpreted as "/admin is secured, but everything else is open for business".
+             * However, if I were to do that the other way around, my rule for /admin would be ignored.
+             *
+             * @param http The object we configure our security in
+             * @throws Exception
+             */
+            @Override
+            protected void configure(HttpSecurity http) throws Exception {
+                // First we configure it to allow authentication and authorization in REST
+                enableRESTAuthentication(http)
+                        // Now let's say which requests we want to authorize
+                        .authorizeRequests()
+                        .and()
+                        .cors()
+                        .and()
+                        // We're disabling defenses against Cross-Site Request Forgery,
+                        // as the browser is not responsible for adding authentication information to the request
+                        // which is wat the CSRF exploit relies on.
+                        .csrf()
+                        .disable();
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+            }
+
+
+            /**
+             * I separated the configuration for security in REST to simplify it.
+             * In this method we enable logging in and configure it for a REST API.
+             *
+             * @param http The {@link HttpSecurity} object we can use for configuration
+             * @return
+             * @throws Exception
+             */
+            private HttpSecurity enableRESTAuthentication(HttpSecurity http) throws Exception {
+                http
+                        .authorizeRequests()
+                        // configure access rules
+                        .antMatchers(HttpMethod.POST, "/login").permitAll()
+                        .anyRequest().authenticated();
+
+                // add jwt filters (1. authentication, 2. authorization)
+                http
+                        .addFilter(new JwtAuthenticationFilter(authenticationManager(), secret))
+                        .addFilter(new JwtAuthorizationFilter(authenticationManager(),  clientRepository, secret));
+
+                // As it's a REST API, we don't want Spring remembering sessions for users. It should be stateless.
+                http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+                // We return it so we can chain more configuration
+                return http;
+            }
+
+            @Bean
+            public CorsConfigurationSource corsConfigurationSource() {
+                CorsConfiguration configuration = new CorsConfiguration();
+                configuration.setAllowedOrigins(Arrays.asList("http://localhost"));
+                configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+                configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
+                configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", configuration);
+                return source;
+            }
+
+            @Bean
+            DaoAuthenticationProvider authenticationProvider(){
+                DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+                daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+                daoAuthenticationProvider.setUserDetailsService(clientPrincipalDetailsService);
+                return daoAuthenticationProvider;
+            }
+
+            @Bean
+            PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+            }
+        };
     }
 }
