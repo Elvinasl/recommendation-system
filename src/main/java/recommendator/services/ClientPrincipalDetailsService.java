@@ -1,13 +1,13 @@
-package services;
+package recommendator.services;
 
-import config.security.ClientPrincipal;
-import models.Client;
+import recommendator.config.security.ClientPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import repositories.ClientRepository;
+import recommendator.models.entities.Client;
+import recommendator.repositories.ClientRepository;
 
 @Service
 public class ClientPrincipalDetailsService implements UserDetailsService {

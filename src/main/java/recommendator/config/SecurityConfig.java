@@ -1,10 +1,11 @@
-package config;
+package recommendator.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import services.ClientPrincipalDetailsService;
-import config.security.jwt.JwtAuthenticationFilter;
-import config.security.jwt.JwtAuthorizationFilter;
+import recommendator.repositories.ClientRepository;
+import recommendator.services.ClientPrincipalDetailsService;
+import recommendator.config.security.jwt.JwtAuthenticationFilter;
+import recommendator.config.security.jwt.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import repositories.ClientRepository;
 
 import java.util.Arrays;
 import java.util.Collections;
