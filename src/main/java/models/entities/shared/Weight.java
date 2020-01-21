@@ -1,4 +1,4 @@
-package models.shared;
+package models.entities.shared;
 
 import lombok.Data;
 

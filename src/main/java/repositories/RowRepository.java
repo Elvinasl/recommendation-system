@@ -3,10 +3,10 @@ package repositories;
 
 import dto.CellDTO;
 import dto.RowWithPointsDTO;
-import models.Cell;
-import models.Project;
-import models.Row;
-import models.User;
+import models.entities.Cell;
+import models.entities.Project;
+import models.entities.Row;
+import models.entities.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
@@ -75,9 +75,8 @@ public class RowRepository extends DatabaseRepository<Row> {
 
     @Transactional
     public List<RowWithPointsDTO> findMostLiked(Project project, int amount) {
-        // TODO: (or ask) is there a way to fetch only r.cells? and still use group by
-        return em.createQuery("SELECT NEW dto.RowWithPointsDTO(r, " +
-                "COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) ) " +
+        return em.createQuery("SELECT " +
+                "NEW dto.RowWithPointsDTO(r, COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) ) " +
                 "FROM Project p " +
                 "INNER JOIN p.rows r " +
                 "INNER JOIN r.cells c " +
@@ -94,12 +93,9 @@ public class RowRepository extends DatabaseRepository<Row> {
     @Transactional
     public List<RowWithPointsDTO> getMostLikedContentForProjectAndUser(Project project, User user) {
 
-        return em.createQuery("SELECT NEW dto.RowWithPointsDTO(r, " +
-                "COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) ) " +
+        return em.createQuery("SELECT " +
+                "NEW dto.RowWithPointsDTO(r, COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) ) " +
                 "FROM Row r " +
-                "JOIN r.cells c " +
-                "JOIN c.columnName cn " +
-//                "FETCH ALL PROPERTIES " +
                 "LEFT JOIN r.behaviors b ON b.user = :user " +
                 "WHERE r.project = :project " +
                 "GROUP BY r " +

@@ -2,7 +2,7 @@ package repositories;
 
 
 import exceptions.NotFoundException;
-import models.Project;
+import models.entities.Project;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

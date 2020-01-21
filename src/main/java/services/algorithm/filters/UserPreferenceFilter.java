@@ -1,15 +1,11 @@
-package services.algorithm;
+package services.algorithm.filters;
 
 import dto.RowWithPointsDTO;
-import models.Cell;
-import models.Project;
-import models.User;
+import models.entities.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import services.UserPreferenceService;
-
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import services.algorithm.FiltersData;
 
 @Service
 public class UserPreferenceFilter implements AlgorithmFilter {

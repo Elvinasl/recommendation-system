@@ -5,7 +5,7 @@ import dto.DatasetCellDTO;
 import dto.RowWithPointsDTO;
 import exceptions.NotFoundException;
 import exceptions.RowAlreadyExistsException;
-import models.*;
+import models.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.ColumnNameRepository;

@@ -1,9 +1,10 @@
-package models;
+package models.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import models.shared.Weight;
+import lombok.ToString;
+import models.entities.shared.Weight;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"columnName", "row", "userPreference"})
 public class Cell extends Weight {
 
     @Id
@@ -34,4 +36,6 @@ public class Cell extends Weight {
 
     @ManyToOne
     private UserPreference userPreference;
+
+
 }

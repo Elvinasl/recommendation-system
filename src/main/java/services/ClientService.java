@@ -1,6 +1,6 @@
 package services;
 
-import models.Client;
+import models.entities.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.ClientRepository;

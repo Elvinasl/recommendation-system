@@ -3,9 +3,9 @@ package dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import models.Behavior;
-import models.Cell;
-import models.Row;
+import models.entities.Behavior;
+import models.entities.Cell;
+import models.entities.Row;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +17,7 @@ public class RowWithPointsDTO extends Row {
 
     private Float points;
 
-    public RowWithPointsDTO(Object row, Object points) {
-        Row r = (Row) row;
+    public RowWithPointsDTO(Row r, Object points) {
         this.setId(r.getId());
         this.setProject(r.getProject());
         this.setWeight(r.getWeight());

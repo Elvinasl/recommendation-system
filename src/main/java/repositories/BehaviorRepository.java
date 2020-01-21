@@ -1,9 +1,9 @@
 package repositories;
 
 
-import models.Behavior;
-import models.Project;
-import models.User;
+import models.entities.Behavior;
+import models.entities.Project;
+import models.entities.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -4,8 +4,8 @@ import dto.GeneratedRecommendationDTO;
 import dto.RecommendationDTO;
 import dto.RowDTO;
 import dto.RowWithPointsDTO;
-import models.Project;
-import models.User;
+import models.entities.Project;
+import models.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +13,8 @@ import services.CellService;
 import services.ProjectService;
 import services.UserService;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,8 +37,6 @@ public class AlgorithmCore {
         this.filterManager = filterManager;
     }
 
-
-    // TODO: find a solution to remove transactional here..
     @Transactional
     public GeneratedRecommendationDTO generateRecommendation(String apiKey, RecommendationDTO recommendationDTO) {
         Project project = projectService.getByApiKey(apiKey);
@@ -53,8 +53,14 @@ public class AlgorithmCore {
             }
         });
 
+        // Sort list by points
+        Comparator<RowWithPointsDTO> compareRowsByPoints = Comparator.comparing(RowWithPointsDTO::getPoints).reversed();
+        Collections.sort(filtersData.getRows(), compareRowsByPoints);
+
         // Get only the amount that is given
         List<RowWithPointsDTO> rows = filtersData.getRows().subList(0, recommendationDTO.getAmount());
+
+
         return generateDTO(rows);
     }
 

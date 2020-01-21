@@ -1,9 +1,10 @@
-package services.algorithm;
+package services.algorithm.filters;
 
 import dto.RowWithPointsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import services.BehaviorService;
+import services.algorithm.FiltersData;
 
 import java.util.Collections;
 import java.util.Comparator;

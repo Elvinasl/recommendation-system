@@ -1,12 +1,13 @@
-package services.algorithm;
+package services.algorithm.filters;
 
 import dto.RowWithPointsDTO;
-import models.Project;
-import models.User;
+import models.entities.Project;
+import models.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import services.BehaviorService;
 import services.RowService;
+import services.algorithm.FiltersData;
 
 import java.util.List;
 

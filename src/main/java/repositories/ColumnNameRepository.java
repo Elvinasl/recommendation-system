@@ -1,7 +1,7 @@
 package repositories;
 
-import models.ColumnName;
-import models.Project;
+import models.entities.ColumnName;
+import models.entities.Project;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;

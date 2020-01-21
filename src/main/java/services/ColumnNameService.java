@@ -1,7 +1,7 @@
 package services;
 
-import models.ColumnName;
-import models.Project;
+import models.entities.ColumnName;
+import models.entities.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.ColumnNameRepository;

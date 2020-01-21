@@ -3,7 +3,7 @@ package dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import models.Cell;
+import models.entities.Cell;
 
 import java.util.List;
 import java.util.stream.Collectors;

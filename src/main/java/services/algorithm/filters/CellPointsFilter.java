@@ -1,15 +1,18 @@
-package services.algorithm;
+package services.algorithm.filters;
 
 import dto.CellWithPointsDTO;
-import dto.RowWithPointsDTO;
-import models.Behavior;
-import models.Cell;
+import models.entities.Behavior;
+import models.entities.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import services.BehaviorService;
 import services.ColumnNameService;
+import services.algorithm.FiltersData;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * CellPointsFilter class is changing the rowList by the cell points
@@ -49,10 +52,6 @@ public class CellPointsFilter implements AlgorithmFilter {
 
         // Modify row points by the cell points
         this.modifyRowPointsByCellPoints(filtersData);
-
-        // Sort list by points
-        Comparator<RowWithPointsDTO> compareRowsByPoints = Comparator.comparing(RowWithPointsDTO::getPoints).reversed();
-        Collections.sort(filtersData.getRows(), compareRowsByPoints);
 
         return filtersData;
     }

@@ -4,9 +4,9 @@ import dto.RowWithPointsDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import models.Behavior;
-import models.Project;
-import models.User;
+import models.entities.Behavior;
+import models.entities.Project;
+import models.entities.User;
 
 import java.util.List;
 

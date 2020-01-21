@@ -1,6 +1,9 @@
 package services;
 
-import models.*;
+import models.entities.Behavior;
+import models.entities.Row;
+import models.entities.User;
+import models.entities.UserPreference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;

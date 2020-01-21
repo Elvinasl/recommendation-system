@@ -1,7 +1,7 @@
 package repositories;
 
-import models.Cell;
-import models.Row;
+import models.entities.Cell;
+import models.entities.Row;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

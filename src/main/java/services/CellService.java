@@ -1,7 +1,7 @@
 package services;
 
-import models.Cell;
-import models.Row;
+import models.entities.Cell;
+import models.entities.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.CellRepository;

@@ -1,4 +1,6 @@
-package services.algorithm;
+package services.algorithm.filters;
+
+import services.algorithm.FiltersData;
 
 public interface AlgorithmFilter {
 

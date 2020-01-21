@@ -2,10 +2,10 @@ package services;
 
 import dto.BehaviorDTO;
 import exceptions.responses.Response;
-import models.Behavior;
-import models.Project;
-import models.Row;
-import models.User;
+import models.entities.Behavior;
+import models.entities.Project;
+import models.entities.Row;
+import models.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.BehaviorRepository;

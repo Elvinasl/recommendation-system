@@ -1,8 +1,8 @@
 package dto;
 
 import lombok.Data;
-import models.ColumnName;
-import models.Project;
+import models.entities.ColumnName;
+import models.entities.Project;
 
 import java.util.List;
 

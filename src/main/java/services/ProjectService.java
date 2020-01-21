@@ -2,7 +2,7 @@ package services;
 
 import dto.DatasetDTO;
 import exceptions.responses.Response;
-import models.Project;
+import models.entities.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repositories.ProjectRepository;

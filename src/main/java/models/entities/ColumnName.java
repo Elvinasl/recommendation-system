@@ -1,10 +1,9 @@
-package models;
+package models.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import models.shared.Weight;
+import models.entities.shared.Weight;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;

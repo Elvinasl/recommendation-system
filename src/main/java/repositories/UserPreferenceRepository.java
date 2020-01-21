@@ -1,8 +1,7 @@
 package repositories;
 
-import exceptions.NotFoundException;
-import models.Cell;
-import models.UserPreference;
+import models.entities.Cell;
+import models.entities.UserPreference;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

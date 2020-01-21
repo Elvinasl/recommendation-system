@@ -1,7 +1,7 @@
 package repositories;
 
 
-import models.Client;
+import models.entities.Client;
 import org.springframework.stereotype.Repository;
 
 @Repository
