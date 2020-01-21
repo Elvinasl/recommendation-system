@@ -1,4 +1,4 @@
-package config.security.jwt;
+package recommendator.config.security.jwt;
 
 
 class JwtProperties {

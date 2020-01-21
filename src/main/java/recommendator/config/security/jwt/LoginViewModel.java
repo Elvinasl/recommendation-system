@@ -1,4 +1,4 @@
-package config.security.jwt;
+package recommendator.config.security.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

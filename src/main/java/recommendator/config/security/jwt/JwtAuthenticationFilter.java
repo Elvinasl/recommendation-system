@@ -1,8 +1,8 @@
-package config.security.jwt;
+package recommendator.config.security.jwt;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import config.security.ClientPrincipal;
+import recommendator.config.security.ClientPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

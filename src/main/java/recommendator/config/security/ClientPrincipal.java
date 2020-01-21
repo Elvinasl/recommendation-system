@@ -1,11 +1,11 @@
-package config.security;
+package recommendator.config.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import models.Client;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import recommendator.models.entities.Client;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package config;
+package recommendator.config;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
