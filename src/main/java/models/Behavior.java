@@ -28,4 +28,5 @@ public class Behavior {
     @ManyToOne(optional = false)
     @NotNull
     private User user;
+
 }

@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,16 +25,15 @@ public class Cell extends Weight {
     @NotEmpty
     @Column(nullable = false)
     @Length(min = 1, max = 255)
-    private String name;
+    private String value;
 
     @ManyToOne(optional = false)
     @NotNull
     private ColumnName columnName;
 
-    @ManyToMany
-    private List<Row> rows;
+    @OneToOne
+    private Row row;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     private UserPreference userPreference;
 }

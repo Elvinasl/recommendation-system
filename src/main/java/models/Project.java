@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,20 +25,18 @@ public class Project {
     @Length(min = 2, max = 45)
     private String name;
 
-    @NotEmpty
     @Column(nullable = false, unique = true)
     private String apiKey;
 
     @ManyToOne(optional = false)
-    @NotNull
     private Client client;
 
-    @OneToMany(mappedBy = "project")
-    private List<User> users;
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project")
-    private List<Row> rows;
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<Row> rows = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project")
-    private List<ColumnName> columnNames;
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<ColumnName> columnNames = new ArrayList<>();
 }

@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import models.shared.Weight;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,9 +25,9 @@ public class Row extends Weight {
     @NotNull
     private Project project;
 
-    @OneToMany(mappedBy = "row")
-    private List<Behavior> behaviors;
+    @OneToMany(mappedBy = "row", cascade = CascadeType.ALL)
+    private List<Behavior> behaviors = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "rows")
-    private List<Cell> cells;
+    @OneToMany(mappedBy = "row", cascade = CascadeType.ALL)
+    private List<Cell> cells = new ArrayList<>();
 }

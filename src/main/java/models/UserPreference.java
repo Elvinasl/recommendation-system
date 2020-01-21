@@ -25,4 +25,5 @@ public class UserPreference extends Weight {
     @ManyToOne(optional = false)
     @NotNull
     private Cell cell;
+
 }

@@ -22,10 +22,10 @@ public class User {
     @NotNull
     private Project project;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Behavior> behaviors;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     private UserPreference userPreference;
+
 }
