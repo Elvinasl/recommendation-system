@@ -2,7 +2,7 @@ package services;
 
 import dto.CellDTO;
 import dto.DatasetCellDTO;
-import dto.RowWithPointsDTO;
+import models.containers.RowWithPoints;
 import exceptions.NotFoundException;
 import exceptions.RowAlreadyExistsException;
 import models.entities.*;
@@ -69,10 +69,11 @@ public class RowService {
      * @return a row if there is any match with all the cell values and project
      */
     public Row getRowByCellDTOAndProject(List<CellDTO> rowCells, Project project) {
-        return rowRepository.findRowByCellsAndProject(rowCells, project);
+        List<String> cellValues = rowCells.stream().map(CellDTO::getValue).collect(Collectors.toList());
+        return rowRepository.findRowByCellsAndProject(cellValues, project);
     }
 
-    public List<RowWithPointsDTO> getMostLikedContentForProjectAndUser(Project project, User user) {
+    public List<RowWithPoints> getMostLikedContentForProjectAndUser(Project project, User user) {
         return rowRepository.getMostLikedContentForProjectAndUser(project, user);
     }
 }

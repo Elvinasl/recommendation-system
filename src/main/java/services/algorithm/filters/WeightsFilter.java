@@ -1,6 +1,6 @@
 package services.algorithm.filters;
 
-import dto.RowWithPointsDTO;
+import models.containers.RowWithPoints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import services.BehaviorService;
@@ -31,7 +31,7 @@ public class WeightsFilter implements AlgorithmFilter {
         });
 
         // Sort list by points
-        Comparator<RowWithPointsDTO> compareByPoints = Comparator.comparing(RowWithPointsDTO::getPoints).reversed();
+        Comparator<RowWithPoints> compareByPoints = Comparator.comparing(RowWithPoints::getPoints).reversed();
         Collections.sort(filtersData.getRows(), compareByPoints);
 
         return filtersData;

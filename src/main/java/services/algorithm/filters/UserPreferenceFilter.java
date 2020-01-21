@@ -1,6 +1,6 @@
 package services.algorithm.filters;
 
-import dto.RowWithPointsDTO;
+import models.containers.RowWithPoints;
 import models.entities.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class UserPreferenceFilter implements AlgorithmFilter {
     public FiltersData filter(FiltersData filtersData) {
 
         // we are looping through every row
-        for (RowWithPointsDTO row : filtersData.getRows()) {
+        for (RowWithPoints row : filtersData.getRows()) {
 
             float userPrefPoints = 0F;
             // grabbing row cells and summing up all their weight (if they have one)

@@ -1,4 +1,4 @@
-package dto;
+package models.containers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,11 +8,11 @@ import models.entities.Cell;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CellWithPointsDTO extends Cell {
+public class CellWithPoints extends Cell {
 
     private Float points = 0f;
 
-    public CellWithPointsDTO(Cell cell) {
+    public CellWithPoints(Cell cell) {
         super(cell.getId(), cell.getValue(), cell.getColumnName(), cell.getRow(), cell.getUserPreference());
     }
 

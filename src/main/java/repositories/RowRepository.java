@@ -1,8 +1,7 @@
 package repositories;
 
 
-import dto.CellDTO;
-import dto.RowWithPointsDTO;
+import models.containers.RowWithPoints;
 import models.entities.Cell;
 import models.entities.Project;
 import models.entities.Row;
@@ -52,13 +51,13 @@ public class RowRepository extends DatabaseRepository<Row> {
     /**
      * Finds a row based on the cell values and the project
      *
-     * @param project the cells belong to
      * @param cells containing the values that should all match for a specific row
+     * @param project the cells belong to
      * @return a row if the row is found
      * @throws NoResultException get's thrown when there is no row found
      */
     @Transactional
-    public Row findRowByCellsAndProject(List<CellDTO> cells, Project project) throws NoResultException {
+    public Row findRowByCellsAndProject(List<String> cellValues, Project project) throws NoResultException {
         return (Row) em.createQuery(
                 "SELECT cell.row FROM Cell cell " +
                         "INNER JOIN cell.row r " +
@@ -68,15 +67,15 @@ public class RowRepository extends DatabaseRepository<Row> {
                         "(SELECT MIN(c.row.id) FROM Cell c " +
                         "WHERE c.value IN :cellValues AND c.row.project = :project " +
                         "GROUP BY c.row.id HAVING COUNT(c.id) = SIZE(f))")
-                .setParameter("cellValues", cells.stream().map(CellDTO::getValue).collect(Collectors.toList()))
+                .setParameter("cellValues", cellValues)
                 .setParameter("project", project)
                 .getSingleResult();
     }
 
     @Transactional
-    public List<RowWithPointsDTO> findMostLiked(Project project, int amount) {
+    public List<RowWithPoints> findMostLiked(Project project, int amount) {
         return em.createQuery("SELECT " +
-                "NEW dto.RowWithPointsDTO(r, COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) ) " +
+                "NEW models.containers.RowWithPoints(r, COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) ) " +
                 "FROM Project p " +
                 "INNER JOIN p.rows r " +
                 "INNER JOIN r.cells c " +
@@ -84,22 +83,22 @@ public class RowRepository extends DatabaseRepository<Row> {
                 "FETCH ALL PROPERTIES " +
                 "WHERE r.project = :project " +
                 "GROUP BY r.id " +
-                "ORDER BY COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", RowWithPointsDTO.class)
+                "ORDER BY COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", RowWithPoints.class)
                 .setParameter("project", project)
                 .setMaxResults(amount)
                 .getResultList();
     }
 
     @Transactional
-    public List<RowWithPointsDTO> getMostLikedContentForProjectAndUser(Project project, User user) {
+    public List<RowWithPoints> getMostLikedContentForProjectAndUser(Project project, User user) {
 
         return em.createQuery("SELECT " +
-                "NEW dto.RowWithPointsDTO(r, COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) ) " +
+                "NEW models.containers.RowWithPoints(r, COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) ) " +
                 "FROM Row r " +
                 "LEFT JOIN r.behaviors b ON b.user = :user " +
                 "WHERE r.project = :project " +
                 "GROUP BY r " +
-                "ORDER BY COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", RowWithPointsDTO.class)
+                "ORDER BY COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", RowWithPoints.class)
                 .setParameter("project", project)
                 .setParameter("user", user)
                 .getResultList();

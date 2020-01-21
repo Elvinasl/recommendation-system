@@ -3,7 +3,7 @@ package services.algorithm;
 import dto.GeneratedRecommendationDTO;
 import dto.RecommendationDTO;
 import dto.RowDTO;
-import dto.RowWithPointsDTO;
+import models.containers.RowWithPoints;
 import models.entities.Project;
 import models.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,18 +54,18 @@ public class AlgorithmCore {
         });
 
         // Sort list by points
-        Comparator<RowWithPointsDTO> compareRowsByPoints = Comparator.comparing(RowWithPointsDTO::getPoints).reversed();
+        Comparator<RowWithPoints> compareRowsByPoints = Comparator.comparing(RowWithPoints::getPoints).reversed();
         Collections.sort(filtersData.getRows(), compareRowsByPoints);
 
         // Get only the amount that is given
-        List<RowWithPointsDTO> rows = filtersData.getRows().subList(0, recommendationDTO.getAmount());
+        List<RowWithPoints> rows = filtersData.getRows().subList(0, recommendationDTO.getAmount());
 
 
         return generateDTO(rows);
     }
 
 
-    private GeneratedRecommendationDTO generateDTO(List<RowWithPointsDTO> rows) {
+    private GeneratedRecommendationDTO generateDTO(List<RowWithPoints> rows) {
         GeneratedRecommendationDTO generatedRecommendationDTO = new GeneratedRecommendationDTO();
         generatedRecommendationDTO.setRows(rows.stream()
                 .map(row -> {

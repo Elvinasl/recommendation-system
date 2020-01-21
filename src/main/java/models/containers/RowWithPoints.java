@@ -1,4 +1,4 @@
-package dto;
+package models.containers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,11 +13,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RowWithPointsDTO extends Row {
+public class RowWithPoints extends Row {
 
     private Float points;
 
-    public RowWithPointsDTO(Row r, Object points) {
+    public RowWithPoints(Row r, Object points) {
         this.setId(r.getId());
         this.setProject(r.getProject());
         this.setWeight(r.getWeight());

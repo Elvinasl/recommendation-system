@@ -1,6 +1,6 @@
 package services.algorithm;
 
-import dto.RowWithPointsDTO;
+import models.containers.RowWithPoints;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class FiltersData {
-    private List<RowWithPointsDTO> rows;
+    private List<RowWithPoints> rows;
     private List<Behavior> behaviors;
     private User user;
     private Project project;

@@ -63,9 +63,9 @@ public class ProjectService {
     }
 
     /**
-     * Seed the project with data from the datasetDTO.
+     * Seed the project with containers from the datasetDTO.
      *
-     * @param datasetDTO This data comes from the client
+     * @param datasetDTO This containers comes from the client
      */
     public void seed(DatasetDTO datasetDTO, Project project) {
 

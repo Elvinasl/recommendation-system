@@ -1,6 +1,6 @@
 package services.algorithm.filters;
 
-import dto.CellWithPointsDTO;
+import models.containers.CellWithPoints;
 import models.entities.Behavior;
 import models.entities.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class CellPointsFilter implements AlgorithmFilter {
     private ColumnNameService columnNameService;
     private BehaviorService behaviorService;
 
-    private Map<String, CellWithPointsDTO> uniqueCellsFromBehaviors;
+    private Map<String, CellWithPoints> uniqueCellsFromBehaviors;
     private List<Behavior> behaviors;
 
 
@@ -58,7 +58,7 @@ public class CellPointsFilter implements AlgorithmFilter {
 
     /**
      * Getting the behaviors from the filteredData or get it from
-     * the database and set it into filtered data.
+     * the database and set it into filtered containers.
      *
      * @param filtersData
      */
@@ -89,7 +89,7 @@ public class CellPointsFilter implements AlgorithmFilter {
             behavior.getRow().getCells().forEach(cell -> {
 
 
-                CellWithPointsDTO cellWithPoints = this.getOrAddUniqueCellWithPoints(cell);
+                CellWithPoints cellWithPoints = this.getOrAddUniqueCellWithPoints(cell);
 
                 // Get the points
                 Float points = cellWithPoints.getPoints();
@@ -116,15 +116,15 @@ public class CellPointsFilter implements AlgorithmFilter {
      * Get cellWithPoints from the map of unique cells by cell or convert and add it.
      *
      * @param cell Cell to get/convert
-     * @return CellWithPointsDTO to get a cell with points to calculate with
+     * @return CellWithPoints to get a cell with points to calculate with
      */
-    private CellWithPointsDTO getOrAddUniqueCellWithPoints(Cell cell) {
+    private CellWithPoints getOrAddUniqueCellWithPoints(Cell cell) {
         if (this.uniqueCellsFromBehaviors.containsKey(cell.getValue())) {
             // Get the cell with points from the list
             return this.uniqueCellsFromBehaviors.get(cell.getValue());
         } else {
             // Cell doesn't exist in the list, so create
-            CellWithPointsDTO cellWithPoints = new CellWithPointsDTO(cell);
+            CellWithPoints cellWithPoints = new CellWithPoints(cell);
 
             // add it to the list
             this.uniqueCellsFromBehaviors.put(cell.getValue(), cellWithPoints);

@@ -1,6 +1,6 @@
 package services.algorithm.filters;
 
-import dto.RowWithPointsDTO;
+import models.containers.RowWithPoints;
 import models.entities.Project;
 import models.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +27,18 @@ public class HasLikesFilter implements AlgorithmFilter {
     public FiltersData filter(FiltersData filtersData) {
 
 
-        // First, we get the user and project from the filters data
+        // First, we get the user and project from the filters containers
         User user = filtersData.getUser();
         Project project = filtersData.getProject();
 
         // Secondly we get the list of rows in the most liked order
         // No amount, because the list is probably gonna be changed in next filters.
-        List<RowWithPointsDTO> rows = rowService.getMostLikedContentForProjectAndUser(project, user);
+        List<RowWithPoints> rows = rowService.getMostLikedContentForProjectAndUser(project, user);
 
-        // Set the list of rows into the filters data
+        // Set the list of rows into the filters containers
         filtersData.setRows(rows);
 
-        // Return the filters data
+        // Return the filters containers
         return filtersData;
     }
 
