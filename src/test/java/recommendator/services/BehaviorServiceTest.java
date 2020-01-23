@@ -39,8 +39,9 @@ class BehaviorServiceTest {
 
         Mockito.when(projectService.getByApiKey(anyString())).thenReturn(new Project());
         Mockito.when(rowService.getRowByCellDTOAndProject(anyList(), any(Project.class))).thenReturn(new Row());
+        // if we are creating behavior with existing user, we need user,
+        // if we are creating with new (external) user we want to create new (external) user
         Mockito.when(userService.findByExternalIdAndProjectOrNull(anyString(), any(Project.class))).thenReturn(new User()).thenReturn(null);
-
         Response response = behaviorService.add("test", new BehaviorDTO(new ArrayList<>(),false, "userId"));
         assertThat("Behavior recorded").isEqualTo(response.getMessage());
         verify(behaviorRepository, times(1)).add(any(Behavior.class));
@@ -48,6 +49,7 @@ class BehaviorServiceTest {
         // Checking if the user is null
         response = behaviorService.add("test", new BehaviorDTO(new ArrayList<>(),false, "userId"));
         assertThat("Behavior recorded").isEqualTo(response.getMessage());
+        // if it is a new user, this method should be called
         verify(userService, times(1)).add(any(User.class));
 
     }
