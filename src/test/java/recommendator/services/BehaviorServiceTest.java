@@ -3,9 +3,7 @@ package recommendator.services;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import recommendator.dto.BehaviorDTO;
 import recommendator.dto.CellDTO;
@@ -18,6 +16,8 @@ import recommendator.repositories.BehaviorRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
@@ -39,8 +39,9 @@ class BehaviorServiceTest {
 
         Mockito.when(projectService.getByApiKey(anyString())).thenReturn(new Project());
         Mockito.when(rowService.getRowByCellDTOAndProject(anyList(), any(Project.class))).thenReturn(new Row());
+        // if we are creating behavior with existing user, we need user,
+        // if we are creating with new (external) user we want to create new (external) user
         Mockito.when(userService.findByExternalIdAndProjectOrNull(anyString(), any(Project.class))).thenReturn(new User()).thenReturn(null);
-
         Response response = behaviorService.add("test", new BehaviorDTO(new ArrayList<>(),false, "userId"));
         assertThat("Behavior recorded").isEqualTo(response.getMessage());
         verify(behaviorRepository, times(1)).add(any(Behavior.class));
@@ -48,16 +49,42 @@ class BehaviorServiceTest {
         // Checking if the user is null
         response = behaviorService.add("test", new BehaviorDTO(new ArrayList<>(),false, "userId"));
         assertThat("Behavior recorded").isEqualTo(response.getMessage());
+        // if it is a new user, this method should be called
         verify(userService, times(1)).add(any(User.class));
 
     }
 
     @Test
     void getBehaviorsByUserAndTypeAndProject() {
+        // get liked behaviors
+        Mockito.when(behaviorRepository.getBehaviorsByUserAndTypeAndProject(any(User.class), ArgumentMatchers.eq(true), any(Project.class)))
+                .thenReturn(Collections.singletonList(new Behavior(1L, true, null, null)));
+
+        // get disliked behaviors
+        Mockito.when(behaviorRepository.getBehaviorsByUserAndTypeAndProject(any(User.class), ArgumentMatchers.eq(false), any(Project.class)))
+                .thenReturn(Collections.singletonList(new Behavior(1L, false, null, null)));
+
+        List<Behavior> likedResponse = behaviorService.getBehaviorsByUserAndTypeAndProject(new User(), true, new Project());
+        List<Behavior> dislikedResponse = behaviorService.getBehaviorsByUserAndTypeAndProject(new User(), false, new Project());
+
+        assertThat(likedResponse.get(0).isLiked()).isTrue();
+        assertThat(likedResponse.size()).isEqualTo(1);
+        assertThat(dislikedResponse.get(0).isLiked()).isFalse();
+        assertThat(dislikedResponse.size()).isEqualTo(1);
     }
 
     @Test
     void getBehaviorsByUser() {
+
+        User u = new User();
+        u.setId(10L);
+        Mockito.when(behaviorRepository.getBehaviorsByUser(u))
+                .thenReturn(Collections.singletonList(new Behavior(1L, false, null, u)));
+
+        List<Behavior> response = behaviorService.getBehaviorsByUser(u);
+
+        assertThat(response.get(0).getUser()).isEqualTo(u);
+        assertThat(response.size()).isEqualTo(1);
     }
 
 }
