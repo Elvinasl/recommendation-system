@@ -1,6 +1,7 @@
 package recommendator.repositories;
 
 
+import recommendator.exceptions.NotFoundException;
 import recommendator.models.containers.RowWithPoints;
 import recommendator.models.entities.Cell;
 import recommendator.models.entities.Project;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -32,7 +34,7 @@ public class RowRepository extends DatabaseRepository<Row> {
      */
     @Transactional
     public boolean rowExists(Project project, List<Cell> cells) throws NoResultException {
-        long count = (long) em.createQuery(
+        long count = em.createQuery(
                 "SELECT COUNT(cell.id) FROM Cell cell " +
                         "INNER JOIN cell.row r " +
                         "INNER JOIN r.project p " +
@@ -40,12 +42,12 @@ public class RowRepository extends DatabaseRepository<Row> {
                         "WHERE cell.row.id IN " +
                         "(SELECT MIN(c.row.id) FROM Cell c " +
                         "WHERE c.value IN :cellValues AND c.row.project = :project " +
-                        "GROUP BY c.row.id HAVING COUNT(c.id) = SIZE(f))")
+                        "GROUP BY c.row.id HAVING COUNT(c.id) = SIZE(f))", Long.class)
                 .setParameter("cellValues", cells.stream().map(Cell::getValue).collect(Collectors.toList()))
                 .setParameter("project", project)
-                .getSingleResult();
+                .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Unknown row"));
 
-        return count > 0;
+            return count > 0;
     }
 
     /**
@@ -57,8 +59,8 @@ public class RowRepository extends DatabaseRepository<Row> {
      * @throws NoResultException get's thrown when there is no row found
      */
     @Transactional
-    public Row findRowByCellsAndProject(List<String> cellValues, Project project) throws NoResultException {
-        return (Row) em.createQuery(
+    public Row findRowByCellsAndProject(List<String> cellValues, Project project) {
+        return em.createQuery(
                 "SELECT cell.row FROM Cell cell " +
                         "INNER JOIN cell.row r " +
                         "INNER JOIN r.project p " +
@@ -66,10 +68,11 @@ public class RowRepository extends DatabaseRepository<Row> {
                         "WHERE cell.row.id IN " +
                         "(SELECT MIN(c.row.id) FROM Cell c " +
                         "WHERE c.value IN :cellValues AND c.row.project = :project " +
-                        "GROUP BY c.row.id HAVING COUNT(c.id) = SIZE(f))")
+                        "GROUP BY c.row.id HAVING COUNT(c.id) = SIZE(f))", Row.class)
                 .setParameter("cellValues", cellValues)
                 .setParameter("project", project)
-                .getSingleResult();
+                .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Unknown row"));
+
     }
 
     @Transactional
@@ -91,7 +94,6 @@ public class RowRepository extends DatabaseRepository<Row> {
 
     @Transactional
     public List<RowWithPoints> getMostLikedContentForProjectAndUser(Project project, User user) {
-
         return em.createQuery("SELECT " +
                 "NEW recommendator.models.containers.RowWithPoints(r, COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) ) " +
                 "FROM Row r " +
