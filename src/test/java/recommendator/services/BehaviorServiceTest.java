@@ -3,9 +3,7 @@ package recommendator.services;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import recommendator.dto.BehaviorDTO;
 import recommendator.dto.CellDTO;
@@ -18,6 +16,8 @@ import recommendator.repositories.BehaviorRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
@@ -56,6 +56,19 @@ class BehaviorServiceTest {
 
     @Test
     void getBehaviorsByUserAndTypeAndProject() {
+        Mockito.when(behaviorRepository.getBehaviorsByUserAndTypeAndProject(any(User.class), ArgumentMatchers.eq(true), any(Project.class)))
+                .thenReturn(Collections.singletonList(new Behavior(1L, true, null, null)));
+
+        Mockito.when(behaviorRepository.getBehaviorsByUserAndTypeAndProject(any(User.class), ArgumentMatchers.eq(false), any(Project.class)))
+                .thenReturn(Collections.singletonList(new Behavior(1L, false, null, null)));
+
+        List<Behavior> likedResponse = behaviorService.getBehaviorsByUserAndTypeAndProject(new User(), true, new Project());
+        List<Behavior> dislikedResponse = behaviorService.getBehaviorsByUserAndTypeAndProject(new User(), false, new Project());
+
+        assertThat(likedResponse.get(0).isLiked()).isTrue();
+        assertThat(likedResponse.size()).isEqualTo(1);
+        assertThat(dislikedResponse.get(0).isLiked()).isFalse();
+        assertThat(dislikedResponse.size()).isEqualTo(1);
     }
 
     @Test
