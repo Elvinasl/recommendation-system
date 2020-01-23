@@ -11,7 +11,6 @@ import recommendator.services.ClientService;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(path = "/client")
 public class ClientController {
 
     private ClientService clientService;
@@ -22,6 +21,7 @@ public class ClientController {
     }
 
     @PostMapping
+    @RequestMapping(path = "/register")
     public ResponseEntity<Response> add(@RequestBody Client client) {
         return new ResponseEntity<>(clientService.add(client), HttpStatus.CREATED);
     }

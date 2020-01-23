@@ -122,7 +122,7 @@ public class SecurityConfig {
                 http
                         .authorizeRequests()
                         // configure access rules
-                        .antMatchers(HttpMethod.POST, "/login").permitAll()
+                        .antMatchers(HttpMethod.POST, "/login", "/register").permitAll()
                         .anyRequest().authenticated();
 
                 // add jwt filters (1. authentication, 2. authorization)
