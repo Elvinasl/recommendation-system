@@ -76,5 +76,29 @@ class ColumnNameServiceTest {
 
     @Test
     void getCountForProject() {
+
+        // Initialize project
+        Project project = new Project();
+
+        // Mock a method of the columnNameRepository
+        Mockito.when(columnNameRepository.getCountForProject(project))
+                .thenReturn(10L) // Returning 10 first call
+                .thenReturn(20L); // Returning 20 the second call
+
+        // Create variable
+        long count;
+
+        // Call count the first time
+        count = columnNameService.getCountForProject(project);
+
+        // Check count
+        assertThat(count).isEqualTo(10L);
+
+        // Call count the second time
+        count = columnNameService.getCountForProject(project);
+
+        // Check count
+        assertThat(count).isEqualTo(20L);
+
     }
 }
