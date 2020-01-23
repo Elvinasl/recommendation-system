@@ -57,7 +57,7 @@ class ProjectServiceTest {
         project.setApiKey(key);
 
         // Mock getByApiKey which returns a project
-        Mockito.when(projectService.getByApiKey(key))
+        Mockito.when(projectRepository.getByApiKey(key))
                 .thenReturn(project);
 
         // Call method with the key
