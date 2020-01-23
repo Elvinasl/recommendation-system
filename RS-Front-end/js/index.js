@@ -7,6 +7,22 @@ $( document ).ready(function() {
         handleRegister();
     });
 
+    $("#algorithm").click(function(){
+        $("#htmlDiv").load("algorithm.html");
+    });
+    $("#behaviour").click(function(){
+        $("#htmlDiv").load("behaviour.html");
+    });
+    $("#client").click(function(){
+        $("#htmlDiv").load("client.html");
+    });
+    $("#import").click(function(){
+        $("#htmlDiv").load("import.html");
+    });
+    $("#project").click(function(){
+        $("#htmlDiv").load("project.html");
+    });
+
     function handleLogin(){
         // $.ajax({
         //     method:"post",
@@ -17,7 +33,7 @@ $( document ).ready(function() {
         // });
 
         $.post("localhost:8081/login", {
-            username: $("#username").val(),
+            username: $("#email").val(),
             password: $("#password").val()
         }).done(function(data){
             console.info(data);
@@ -25,6 +41,7 @@ $( document ).ready(function() {
     }
 
     function handleRegister(){
+        /*
         $.ajax({
             method:"post",
             data:{
@@ -32,5 +49,6 @@ $( document ).ready(function() {
                 password: $("#password").val()
             }
         })
+        */
     }
 });
