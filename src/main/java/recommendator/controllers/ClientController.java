@@ -1,6 +1,8 @@
 package recommendator.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> add(@RequestBody @Valid Client client) {
-        return ResponseEntity.ok(clientService.add(client));
+    public ResponseEntity<Response> add(@RequestBody Client client) {
+        return new ResponseEntity<>(clientService.add(client), HttpStatus.CREATED);
     }
 }
