@@ -23,6 +23,19 @@ class UserServiceTest {
 
     @Test
     void add() {
+
+        User user = new User();
+        user.setId(1L);
+
+        Mockito.when(userRepository.add(user)).thenReturn(user);
+
+        User addedUser = userService.add(user);
+
+        assertThat(addedUser.getId()).isEqualTo(user.getId());
+    }
+
+    @Test
+    void findByExternalIdAndProjectOrNull() {
         User user = new User();
         user.setExternalUserId("id");
 
@@ -33,10 +46,5 @@ class UserServiceTest {
         // checking whether user was mapped correctly
         assertThat(response).isEqualTo(user);
         assertThat(response.getExternalUserId()).isEqualTo(user.getExternalUserId());
-
-    }
-
-    @Test
-    void findByExternalIdAndProjectOrNull() {
     }
 }
