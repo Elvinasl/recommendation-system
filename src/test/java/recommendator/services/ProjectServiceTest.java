@@ -6,6 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import recommendator.dto.DatasetDTO;
+import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Project;
 import recommendator.repositories.ProjectRepository;
 
@@ -61,9 +63,32 @@ class ProjectServiceTest {
 
     @Test
     void seedDatabase() {
+
+        // Mock the service, because seedDatabase has a call to
+        // a method in projectService which is tested separately
+        ProjectService mockedProjectService = Mockito.mock(projectService.getClass());
+
+        // Initialize key
+        String key = "key";
+
+        // Initialize datasetDTO
+        DatasetDTO datasetDTO = new DatasetDTO();
+
+        // Initialize project
+        Project project = new Project();
+
+        // Not the mocked version must be called
+        Mockito.when(mockedProjectService.seedDatabase(key, datasetDTO)).thenCallRealMethod();
+
+        // Call the method to test
+        Response response = mockedProjectService.seedDatabase("key", datasetDTO);
+
+        // Check response
+        assertThat(response.getMessage()).isEqualTo("Data has been addeds");
     }
 
     @Test
     void seed() {
     }
+
 }
