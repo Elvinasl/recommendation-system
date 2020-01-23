@@ -3,6 +3,7 @@ package recommendator.services;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -27,7 +28,7 @@ class BehaviorServiceTest {
     @Mock UserService userService;
     @Mock UserPreferenceService userPreferenceService;
     @Mock BehaviorRepository behaviorRepository;
-    @Mock BehaviorService behaviorService;
+    @InjectMocks BehaviorService behaviorService;
 
     @BeforeEach
     public void setUp() {
