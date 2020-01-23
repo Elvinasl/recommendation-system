@@ -56,9 +56,11 @@ class BehaviorServiceTest {
 
     @Test
     void getBehaviorsByUserAndTypeAndProject() {
+        // get liked behaviors
         Mockito.when(behaviorRepository.getBehaviorsByUserAndTypeAndProject(any(User.class), ArgumentMatchers.eq(true), any(Project.class)))
                 .thenReturn(Collections.singletonList(new Behavior(1L, true, null, null)));
 
+        // get disliked behaviors
         Mockito.when(behaviorRepository.getBehaviorsByUserAndTypeAndProject(any(User.class), ArgumentMatchers.eq(false), any(Project.class)))
                 .thenReturn(Collections.singletonList(new Behavior(1L, false, null, null)));
 
@@ -73,6 +75,16 @@ class BehaviorServiceTest {
 
     @Test
     void getBehaviorsByUser() {
+
+        User u = new User();
+        u.setId(10L);
+        Mockito.when(behaviorRepository.getBehaviorsByUser(u))
+                .thenReturn(Collections.singletonList(new Behavior(1L, false, null, u)));
+
+        List<Behavior> response = behaviorService.getBehaviorsByUser(u);
+
+        assertThat(response.get(0).getUser()).isEqualTo(u);
+        assertThat(response.size()).isEqualTo(1);
     }
 
 }
