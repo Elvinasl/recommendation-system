@@ -2,9 +2,11 @@ package recommendator.services;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import recommendator.models.entities.Client;
 import recommendator.repositories.ClientRepository;
@@ -17,6 +19,8 @@ class ClientPrincipalDetailsServiceTest {
 
     @Mock ClientRepository clientRepository;
 
+    @InjectMocks ClientPrincipalDetailsService clientPrincipalDetailsService;
+
     @Test
     void loadUserByUsername() {
         Client client = new Client();
@@ -24,10 +28,10 @@ class ClientPrincipalDetailsServiceTest {
         client.setEmail(email);
         Mockito.when(clientRepository.getByEmail(email)).thenReturn(client);
 
-        Client response = clientRepository.getByEmail(email);
+        UserDetails response = clientPrincipalDetailsService.loadUserByUsername(email);
 
         // checking if get by email returns the same client
-        assertEquals(response.getEmail(), email);
+        assertEquals(response.getUsername(), email);
 
         // checking username not found exception
         assertThatThrownBy(() -> {
