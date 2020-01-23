@@ -8,12 +8,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import recommendator.dto.BehaviorDTO;
+import recommendator.dto.CellDTO;
 import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Behavior;
 import recommendator.models.entities.Project;
 import recommendator.models.entities.Row;
 import recommendator.models.entities.User;
 import recommendator.repositories.BehaviorRepository;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
@@ -30,31 +34,21 @@ class BehaviorServiceTest {
     @Mock BehaviorRepository behaviorRepository;
     @InjectMocks BehaviorService behaviorService;
 
-    @BeforeEach
-    public void setUp() {
-        behaviorService = new BehaviorService(projectService, rowService, behaviorRepository, userService, userPreferenceService);
-    }
-
     @Test
     void add() {
 
         Mockito.when(projectService.getByApiKey(anyString())).thenReturn(new Project());
         Mockito.when(rowService.getRowByCellDTOAndProject(anyList(), any(Project.class))).thenReturn(new Row());
-        Mockito.when(userService.findByExternalIdAndProjectOrNull(anyString(), any(Project.class))).thenReturn(new User());
+        Mockito.when(userService.findByExternalIdAndProjectOrNull(anyString(), any(Project.class))).thenReturn(new User()).thenReturn(null);
 
-        Response response = behaviorService.add("test", new BehaviorDTO());
+        Response response = behaviorService.add("test", new BehaviorDTO(new ArrayList<>(),false, "userId"));
         assertThat("Behavior recorded").isEqualTo(response.getMessage());
         verify(behaviorRepository, times(1)).add(any(Behavior.class));
 
-
-//        List<Behavior> behaviors = Arrays.asList(new Behavior(), new Behavior());
-//        Mockito.when(behaviorRepository.getBehaviorsByUser(any(User.class))).thenReturn(behaviors);
-//
-//
-//        BehaviorDTO behaviorDTO = new BehaviorDTO(null, true, null);
-
-
-//        assertThat(behaviorService.add("", behaviorDTO), new Response(""));
+        // Checking if the user is null
+        response = behaviorService.add("test", new BehaviorDTO(new ArrayList<>(),false, "userId"));
+        assertThat("Behavior recorded").isEqualTo(response.getMessage());
+        verify(userService, times(1)).add(any(User.class));
 
     }
 
