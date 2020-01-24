@@ -95,9 +95,14 @@ public class SecurityConfig {
             @Override
             protected void configure(HttpSecurity http) throws Exception {
                 // First we configure it to allow authentication and authorization in REST
+
+
+
                 enableRESTAuthentication(http)
                         // Now let's say which requests we want to authorize
                         .authorizeRequests()
+//                        .and()
+//                        .cors()
                         .and()
                         .cors()
                         .and()
@@ -138,18 +143,6 @@ public class SecurityConfig {
             }
 
             @Bean
-            public CorsConfigurationSource corsConfigurationSource() {
-                CorsConfiguration configuration = new CorsConfiguration();
-                configuration.setAllowedOrigins(Arrays.asList("http://localhost"));
-                configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-                configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
-                configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                source.registerCorsConfiguration("/**", configuration);
-                return source;
-            }
-
-            @Bean
             DaoAuthenticationProvider authenticationProvider(){
                 DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
                 daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
@@ -157,6 +150,31 @@ public class SecurityConfig {
                 return daoAuthenticationProvider;
             }
         };
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
+        source.registerCorsConfiguration("/**", configuration);
+
+
+        configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost"));
+        configuration.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
+        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+
+        source.registerCorsConfiguration("/login", configuration);
+        source.registerCorsConfiguration("/register", configuration);
+        source.registerCorsConfiguration("/project/*", configuration);
+
+        return source;
     }
 
     @Bean

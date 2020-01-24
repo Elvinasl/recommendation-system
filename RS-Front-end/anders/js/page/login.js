@@ -10,17 +10,15 @@ $(function(){
             "password": $("#password").val()
         };
 
-        $.ajax({
-            url: "http://localhost:8080/register",
-            method: "get",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                // 'api-key': 'a'
-            },
+        helpers.ajax({
+            method: "POST",
+            url: "http://localhost:8080/login",
             data: body,
             success: function (data) {
                 console.log(data);
+            },
+            error: function (response) {
+                console.log(response);
             }
         });
 
