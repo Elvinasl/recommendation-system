@@ -13,7 +13,6 @@ import recommendator.exceptions.SomethingWentWrongException;
 import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Client;
 import recommendator.repositories.ClientRepository;
-import sun.jvm.hotspot.utilities.Assert;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
