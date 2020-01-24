@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import recommendator.dto.LoginDTO;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -41,9 +42,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
         // Grab credentials and map them to login view model
-        LoginViewModel credentials;
+        LoginDTO credentials;
         try {
-            credentials = new ObjectMapper().readValue(request.getInputStream(), LoginViewModel.class);
+            credentials = new ObjectMapper().readValue(request.getInputStream(), LoginDTO.class);
         } catch (IOException e) {
             // clear everything if something when wrong
             SecurityContextHolder.clearContext();

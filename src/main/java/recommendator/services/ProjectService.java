@@ -1,10 +1,10 @@
 package recommendator.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import recommendator.dto.DatasetDTO;
 import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Project;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import recommendator.repositories.ProjectRepository;
 
 import java.util.UUID;
@@ -27,11 +27,23 @@ public class ProjectService {
         this.rowService = rowService;
     }
 
-    // returns api key
+    /**
+     * Generate api key for the {@link Project} and persist it to the database
+     *
+     * @param project The project where to create api key for
+     * @return the generated api key
+     */
     public String add(Project project) {
+        // Generate api key
         String apiKey = UUID.randomUUID().toString();
+
+        // Set api key
         project.setApiKey(apiKey);
+
+        // Add project
         projectRepository.add(project);
+
+        // Return api key
         return apiKey;
     }
 
@@ -66,6 +78,7 @@ public class ProjectService {
      * Seed the project with containers from the datasetDTO.
      *
      * @param datasetDTO This containers comes from the client
+     * @param project this is the project which should be seeded
      */
     public void seed(DatasetDTO datasetDTO, Project project) {
 
