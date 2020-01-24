@@ -1,75 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Recommendator</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"></head>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Recommendation-System</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+
+</head>
 <body>
-<div class="container">
-    <div class="row">
-        <ul class="nav">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" id="algorithm" href="#">Algorithm</a></li>
-            <li class="nav-item"><a class="nav-link" id="behaviour" href="#">behaviour</a></li>
-            <li class="nav-item"><a class="nav-link" id="client" href="#">Client</a></li>
-            <li class="nav-item"><a class="nav-link" id="import" href="#">Import</a></li>
-            <li class="nav-item"><a class="nav-link" id="project" href="#">Project</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#loginmodal">Login</a></li>
-        </ul>
-    </div>
-    <div class="row">
-        <div class="col"><h1>Recommendator</h1></div>
-    </div>
-    <div id="htmlDiv">
-        <div class="row">
-            <div class="col">
-                Welcome to the Home page of Recommendator.<br/>
-                show data here if not authenticated<br/>
+    <header>
+        <nav class="navigation">
+            <ul class="">
+                <li class="nav-item" data-name="index" data-type="html">
+                    <a href="#" class="nav-item-link">index</a>
+                </li>
+                <li class="nav-item" data-name="login" data-type="html" data-with-js="true">
+                    <a href="#" class="nav-item-link" >Login</a>
+                </li>
+                <li class="nav-item" data-name="register" data-type="html" data-with-js="true">
+                    <a href="#" class="nav-item-link" >Register</a>
+                </li>
+                <li class="nav-item" data-name="algorithm" data-type="html" data-with-js="true">
+                    <a href="#" class="nav-item-link" >Content</a>
+                </li>
+                <li class="nav-item" data-name="import" data-type="html" data-with-js="true">
+                    <a href="#" class="nav-item-link" >Import</a>
+                </li>
+                <li class="nav-item" data-name="extern" data-type="extern">
+                    <a href="http://google.nl" class="nav-item-link" >Externe link</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div id="alerts">
 
-            </div>
-        </div>
     </div>
-</div>
+    <div id="content">
 
-<!-- Modal -->
-<div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="loginmodalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Login to Recommendator</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Email</span>
-                        </div>
-                        <input type="text" name="email" placeholder=" Your email here." id="email"/>
-                    </div>
-                    <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon2">Password</span>
-                    </div>
-                        <input type="password" name="password" placeholder=" Your password here."  id="password"/>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info" id="register">Register</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="login">Login</button>
-            </div>
-        </div>
     </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<script src="js/index.js"></script>
-<script src="js/app.js"></script>
-
+    <script src="js/Helpers.js" ></script>
+    <script src="js/Navigator.js" ></script>
 </body>
 </html>
