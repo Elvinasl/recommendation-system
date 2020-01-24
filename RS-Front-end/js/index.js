@@ -24,15 +24,7 @@ $( document ).ready(function() {
     });
 
     function handleLogin(){
-        // $.ajax({
-        //     method:"post",
-        //     data:{
-        //         username: $("#username").val(),
-        //         password: $("#password").val()
-        //     }
-        // });
-
-        $.post("localhost:8081/login", {
+        $.post("http://localhost:8081/login", {
             username: $("#email").val(),
             password: $("#password").val()
         }).done(function(data){

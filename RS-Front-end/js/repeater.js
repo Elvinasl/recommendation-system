@@ -25,7 +25,7 @@ jQuery.fn.extend({
                 var attrName = $(el).data('name');
                 var skipName = $(el).data('skip-name');
                 if (skipName != true) {
-                    $(el).attr("name", group + "[" + key + "]" + "[" + attrName + "]");
+                    $(el).attr("name", group + "[]");
                 } else {
                     if (attrName != 'undefined') {
                         $(el).attr("name", attrName);
