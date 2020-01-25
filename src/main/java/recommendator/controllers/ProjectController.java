@@ -1,12 +1,11 @@
 package recommendator.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import recommendator.dto.ProjectDTO;
 import recommendator.models.entities.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import recommendator.services.ProjectService;
 
 import javax.validation.Valid;
@@ -23,7 +22,7 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<String> add(@RequestBody @Valid Project project) {
-        return ResponseEntity.ok(projectService.add(project));
+    public ResponseEntity<ProjectDTO> add(@RequestBody @Valid ProjectDTO project) {
+        return ResponseEntity.ok().body(projectService.add(project));
     }
 }

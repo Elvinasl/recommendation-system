@@ -25,6 +25,12 @@ public class ExceptionHandlers {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new RowExistsResponse(exception.getMessage()));
     }
 
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(SomethingWentWrongException.class)
+    public ResponseEntity<Response> handleSomethingWentWrongException(SomethingWentWrongException exception) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new Response(exception.getMessage()));
+    }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(NoResultException.class)
     public ResponseEntity<Response> handleRowAlreadyExistsException(NoResultException exception) {

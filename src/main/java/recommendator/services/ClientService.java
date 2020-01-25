@@ -2,6 +2,7 @@ package recommendator.services;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import recommendator.dto.LoginDTO;
+import recommendator.exceptions.RowAlreadyExistsException;
 import recommendator.exceptions.SomethingWentWrongException;
 import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Client;

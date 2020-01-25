@@ -3,6 +3,7 @@ package recommendator.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
@@ -15,6 +16,6 @@ import javax.validation.constraints.NotNull;
 public class LoginDTO {
     @Email(message = "Incorrect email format!")
     private String email;
-    @Min(value = 6, message = "Password has to be longer than 6 characters!")
+    @Length(min = 6, message = "Password has to be longer than 6 characters!")
     private String password;
 }
