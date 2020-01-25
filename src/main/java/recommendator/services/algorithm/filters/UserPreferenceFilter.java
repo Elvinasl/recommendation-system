@@ -8,14 +8,10 @@ import recommendator.services.algorithm.FiltersData;
 import recommendator.services.UserPreferenceService;
 
 @Service
+/**
+ * This filter takes user preference depending on a row cell and adjusts row points based on that
+ */
 public class UserPreferenceFilter implements AlgorithmFilter {
-
-    private UserPreferenceService userPreferenceService;
-
-    @Autowired
-    public UserPreferenceFilter(UserPreferenceService userPreferenceService) {
-        this.userPreferenceService = userPreferenceService;
-    }
 
     @Override
     public FiltersData filter(FiltersData filtersData) {
@@ -33,7 +29,7 @@ public class UserPreferenceFilter implements AlgorithmFilter {
             }
 
             // adding the points from row and previos filters
-            userPrefPoints += row.getWeight() + row.getPoints();
+            userPrefPoints += row.getWeight() + row.getPoints() * 20f;
             row.setPoints(userPrefPoints);
         }
 
