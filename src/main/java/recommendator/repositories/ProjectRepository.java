@@ -16,15 +16,10 @@ public class ProjectRepository extends DatabaseRepository<Project> {
         super(Project.class);
     }
 
-
     @Transactional
     public Project getByApiKey(String key) {
-        TypedQuery<Project> query = em.createQuery("SELECT p FROM Project p WHERE p.apiKey = ?1", Project.class);
-        query.setParameter(1, key);
-        try {
-            return query.getSingleResult();
-        }catch(NoResultException e){
-            throw new NotFoundException("Project not found");
-        }
+        return em.createQuery("SELECT p FROM Project p WHERE p.apiKey = ?1", Project.class)
+              .setParameter(1, key)
+                .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Project not found"));
     }
 }

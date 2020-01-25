@@ -1,12 +1,19 @@
 package recommendator.services;
 
-import recommendator.dto.DatasetDTO;
-import recommendator.exceptions.responses.Response;
-import recommendator.models.entities.Project;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import recommendator.dto.DatasetDTO;
+import recommendator.dto.ProjectDTO;
+import recommendator.dto.DatasetRowDTO;
+import recommendator.exceptions.responses.Response;
+import recommendator.models.entities.Client;
+import recommendator.models.entities.ColumnName;
+import recommendator.models.entities.Project;
 import recommendator.repositories.ProjectRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -15,24 +22,39 @@ public class ProjectService {
     private ProjectRepository projectRepository;
     private ColumnNameService columnNameService;
     private RowService rowService;
+    private final ClientPrincipalDetailsService clientPrincipalDetailsService;
 
     @Autowired
     public ProjectService(
             ProjectRepository projectRepository,
             ColumnNameService columnNameService,
-            RowService rowService
-    ) {
+            RowService rowService,
+            ClientPrincipalDetailsService clientService) {
         this.projectRepository = projectRepository;
         this.columnNameService = columnNameService;
         this.rowService = rowService;
+        this.clientPrincipalDetailsService = clientService;
     }
 
-    // returns api key
-    public String add(Project project) {
-        String apiKey = UUID.randomUUID().toString();
-        project.setApiKey(apiKey);
+    /**
+     * Generate api key for the {@link Project} and persist it to the database
+     *
+     * @param projectDTO The project where to create api key for
+     * @return projectDTO containing the name and api-key
+     */
+    public ProjectDTO add(ProjectDTO projectDTO) {
+        String clientUsername = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Client client = clientPrincipalDetailsService.getClientByUsername(clientUsername);
+
+        Project project = new Project();
+        project.setName(projectDTO.getName());
+        project.setClient(client);
+        project.setApiKey(UUID.randomUUID().toString());
+
+        // Add project
         projectRepository.add(project);
-        return apiKey;
+
+        return new ProjectDTO(project.getName(), project.getApiKey());
     }
 
     /**
@@ -66,13 +88,21 @@ public class ProjectService {
      * Seed the project with containers from the datasetDTO.
      *
      * @param datasetDTO This containers comes from the client
+     * @param project this is the project which should be seeded
      */
     public void seed(DatasetDTO datasetDTO, Project project) {
 
+        List<ColumnName> columnNames = datasetDTO.getColumns();
+        List<DatasetRowDTO> datasetRowDTOs = datasetDTO.getRows();
         // Handling the columns
-        datasetDTO.getColumns().forEach(columnName -> columnNameService.addOrUpdate(columnName, project));
+        if(columnNames != null) {
+            columnNames.forEach(columnName -> columnNameService.addOrUpdate(columnName, project));
+        }
 
         // Handling the rows
-        datasetDTO.getRows().forEach(row -> rowService.addOrUpdate(row.getCells(), project));
+        if (datasetRowDTOs != null) {
+            datasetRowDTOs.forEach(row -> rowService.addOrUpdate(row.getCells(), project));
+
+        }
     }
 }
