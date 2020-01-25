@@ -1,6 +1,5 @@
 package recommendator.services;
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import recommendator.dto.LoginDTO;
 import recommendator.exceptions.RowAlreadyExistsException;

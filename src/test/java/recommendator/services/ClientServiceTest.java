@@ -15,6 +15,8 @@ import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Client;
 import recommendator.repositories.ClientRepository;
 
+import javax.persistence.NoResultException;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -42,7 +44,7 @@ class ClientServiceTest {
         client.setPassword("password");
 
         // if client doesn't exists, we allow to register
-        Mockito.when(clientRepository.getByEmail(email)).thenThrow(EmptyResultDataAccessException.class);
+        Mockito.when(clientRepository.getByEmail(email)).thenThrow(NoResultException.class);
         Mockito.when(clientRepository.add(any(Client.class))).thenReturn(client);
 
         // creating a client

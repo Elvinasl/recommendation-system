@@ -3,10 +3,13 @@ package recommendator.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import recommendator.dto.DatasetDTO;
+import recommendator.dto.DatasetRowDTO;
 import recommendator.exceptions.responses.Response;
+import recommendator.models.entities.ColumnName;
 import recommendator.models.entities.Project;
 import recommendator.repositories.ProjectRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -82,10 +85,17 @@ public class ProjectService {
      */
     public void seed(DatasetDTO datasetDTO, Project project) {
 
+        List<ColumnName> columnNames = datasetDTO.getColumns();
+        List<DatasetRowDTO> datasetRowDTOs = datasetDTO.getRows();
         // Handling the columns
-        datasetDTO.getColumns().forEach(columnName -> columnNameService.addOrUpdate(columnName, project));
+        if(columnNames != null) {
+            columnNames.forEach(columnName -> columnNameService.addOrUpdate(columnName, project));
+        }
 
         // Handling the rows
-        datasetDTO.getRows().forEach(row -> rowService.addOrUpdate(row.getCells(), project));
+        if (datasetRowDTOs != null) {
+            datasetRowDTOs.forEach(row -> rowService.addOrUpdate(row.getCells(), project));
+
+        }
     }
 }
