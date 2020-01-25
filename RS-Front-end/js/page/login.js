@@ -15,15 +15,10 @@ $(function(){
             url: "http://localhost:8081/login",
             data: body,
             success: function (data) {
-                // Not coming here, because there's no content
+                console.log(data);
             },
             error: function (response) {
-                if(response.status === 200){
-                    helpers.alert('Logged in successfully', 'success');
-                    navigator.setAuthentication(response.getResponseHeader('Authorization'));
-                }else{
-                    helpers.alert('Credentials are wrong', 'danger');
-                }
+                console.log(response);
             }
         });
 
