@@ -27,7 +27,6 @@ import javax.servlet.ServletContext;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { AppConfig.class, DatabaseConfig.class})
@@ -97,6 +96,9 @@ public class ClientControllerIntegrationTest {
         // Trying to login with bad credentials
         MockHttpServletResponse secondRegister = request(badClient, "/login");
         assertThat(secondRegister.getStatus()).isEqualTo(401);
+
+        // Cleanup
+        clientRepository.remove(1);
     }
 
     /**
