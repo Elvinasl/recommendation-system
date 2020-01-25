@@ -2,6 +2,7 @@ package recommendator.services;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import recommendator.dto.LoginDTO;
 import recommendator.exceptions.SomethingWentWrongException;
 import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Client;
@@ -23,13 +24,15 @@ public class ClientService  {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Response add(Client client) {
+    public Response add(LoginDTO loginDTO) {
         try {
-            clientRepository.getByEmail(client.getEmail());
+            clientRepository.getByEmail(loginDTO.getEmail());
         } catch (EmptyResultDataAccessException e) {
 
+            Client client = new Client();
+            client.setEmail(loginDTO.getEmail());
             // encrypting password
-            client.setPassword(passwordEncoder.encode(client.getPassword()));
+            client.setPassword(passwordEncoder.encode(loginDTO.getPassword()));
             client.setRole("ROLE_USER");
             clientRepository.add(client);
             return new Response("Client created!");
