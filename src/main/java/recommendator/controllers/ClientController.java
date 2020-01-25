@@ -38,7 +38,7 @@ public class ClientController {
         return new ResponseEntity<>(clientService.disable(clientId), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/admin")
+    @GetMapping(path = "/admin/")
     public ResponseEntity<AllClientsDTO> getAllClients() {
         return new ResponseEntity<>(clientService.getAllClients(), HttpStatus.OK);
     }
