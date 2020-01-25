@@ -54,8 +54,14 @@ public class AlgorithmCore {
         Comparator<RowWithPoints> compareRowsByPoints = Comparator.comparing(RowWithPoints::getPoints).reversed();
         Collections.sort(filtersData.getRows(), compareRowsByPoints);
 
+        // eliminating possibility to get index out of bounds
+        int amount = recommendationDTO.getAmount();
+        if(filtersData.getRows().size() < amount) {
+            amount = filtersData.getRows().size();
+        }
+
         // Get only the amount that is given
-        List<RowWithPoints> rows = filtersData.getRows().subList(0, recommendationDTO.getAmount());
+        List<RowWithPoints> rows = filtersData.getRows().subList(0, amount);
 
 
         return generateDTO(rows);
