@@ -90,10 +90,7 @@ class ProjectServiceTest {
     @Test
     void seed() {
 
-        // Initialize datasetDTO
         DatasetDTO datasetDTO = new DatasetDTO();
-
-        // Initialize project
         Project project = new Project();
 
         // Call the seed method
