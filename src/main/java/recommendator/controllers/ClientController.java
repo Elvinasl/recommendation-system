@@ -2,6 +2,7 @@ package recommendator.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import recommendator.dto.LoginDTO;
 import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Client;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class ClientController {
 
     @PostMapping
     @RequestMapping(path = "/register")
-    public ResponseEntity<Response> add(@RequestBody Client client) {
-        return new ResponseEntity<>(clientService.add(client), HttpStatus.CREATED);
+    public ResponseEntity<Response> add(@RequestBody @Valid LoginDTO loginDTO) {
+        return new ResponseEntity<>(clientService.add(loginDTO), HttpStatus.CREATED);
     }
 }
