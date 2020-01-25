@@ -141,6 +141,11 @@ public class CellPointsFilter implements AlgorithmFilter {
      * @param filtersData
      */
     private void modifyRowPointsByCellPoints(FiltersData filtersData) {
+        if(filtersData.getRows() == null) {
+            filtersData.setRows(new ArrayList<>());
+            return;
+        }
+
         filtersData.getRows().forEach(rowWithPoints -> {
             rowWithPoints.getCells().forEach(cell -> {
                 if (this.uniqueCellsFromBehaviors.containsKey(cell.getValue())) {

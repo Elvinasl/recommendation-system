@@ -51,8 +51,7 @@ public class AlgorithmCore {
         });
 
         // Sort list by points
-        Comparator<RowWithPoints> compareRowsByPoints = Comparator.comparing(RowWithPoints::getPoints).reversed();
-        filtersData.getRows().sort(compareRowsByPoints);
+        filtersData.getRows().sort(AlgorithmPointsComparator.comparator);
 
         // eliminating possibility to get index out of bounds
         int amount = recommendationDTO.getAmount();
