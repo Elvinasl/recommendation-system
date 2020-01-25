@@ -1,24 +1,18 @@
 package recommendator.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.Environment;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import recommendator.repositories.ClientRepository;
-import recommendator.services.ClientPrincipalDetailsService;
-import recommendator.config.security.jwt.JwtAuthenticationFilter;
-import recommendator.config.security.jwt.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -27,9 +21,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import recommendator.config.security.jwt.JwtAuthenticationFilter;
+import recommendator.config.security.jwt.JwtAuthorizationFilter;
+import recommendator.repositories.ClientRepository;
+import recommendator.services.ClientPrincipalDetailsService;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 
 /**
@@ -159,20 +156,10 @@ public class SecurityConfig {
 
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("*"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
-        source.registerCorsConfiguration("/**", configuration);
-
-
-        configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost"));
         configuration.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
-        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-
-        source.registerCorsConfiguration("/login", configuration);
-        source.registerCorsConfiguration("/register", configuration);
-        source.registerCorsConfiguration("/project/*", configuration);
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        source.registerCorsConfiguration("/**", configuration);
 
         return source;
     }

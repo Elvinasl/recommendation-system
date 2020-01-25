@@ -9,14 +9,17 @@ class Navigator{
 
     navigationItems = {};
 
-
+    authentication = null;
 
     constructor(page = "index") {
         this.contentElement = $("#content");
 
+        let authentication = window.localStorage.getItem('authentication');
 
-        this.updateNavigation();
-
+        if(authentication !== null){
+            this.authentication = authentication;
+            // TODO: check authentication
+        }
 
         var url = window.location.href;
 
@@ -26,12 +29,45 @@ class Navigator{
                 page = hash;
             }
         }
-        this.load(page);
+
+
+        this.updateNavigation(function(navigator){
+            navigator.load(page);
+        });
+
     }
 
-    updateNavigation(){
+    updateNavigation(callback){
+
+
+        let authentication = this.authentication;
+
+
+        let navigationUrl = "anonymous";
+        if(authentication){
+            // TODO: check authentication
+            navigationUrl = "logged-in";
+        }
+        let navigator = this;
+        $.ajax({
+            url: "navigation/" + navigationUrl + ".html" + (debug ? '?_=' + new Date().getTime() : ''),
+            method: "get",
+            success: function (data) {
+                $("#navigation").html(data);
+                navigator.navigationItems = navigator.updateNavElements(authentication !== null);
+                if(typeof callback !== "undefined") callback(navigator);
+            }
+        });
+
+    }
+
+    updateNavElements(authorised){
+
 
         let navigationItems = {};
+
+
+
         $(".navigation .nav-item").each(function(){
 
 
@@ -52,6 +88,17 @@ class Navigator{
                 js = "js/page/"+name+".js";
             }
 
+
+            // LoggedIn rules
+            // 0: for not logged in users
+            // 1: for logged in users
+            // 2: for both
+            let loggedIn = 2;
+            if(typeof obj.data('logged-in') !== "undefined"){
+                loggedIn = obj.data('logged-in') === true;
+            }
+
+
             // Set the url
             switch (type) {
                 case "html":
@@ -67,6 +114,19 @@ class Navigator{
                     });
 
                     break;
+                case "js":
+                    url = null;
+
+                    // Set onclick handler
+                    obj.find("a").click(function (e) {
+                        e.preventDefault();
+
+                        navigator.loadJs(js);
+
+                        return false;
+                    });
+
+                    break;
                 case "extern":
                     url = obj.find('a').attr('href');
                     break;
@@ -77,14 +137,25 @@ class Navigator{
                 element: obj,
                 type: type,
                 url: url,
-                js: js
+                js: js,
+                loggedIn: loggedIn
             };
+
+
+            if(authorised !== null && loggedIn === 0){
+                obj.hide();
+            }
+            if(authorised === null && loggedIn === 1){
+                obj.hide();
+            }
+
+
         });
-
-        // Update the navigation items
-        this.navigationItems = navigationItems;
-
+        // return navigationItems
+        return navigationItems;
     }
+
+
 
     load(page){
         if(debug) console.log("Load page " + page);
@@ -114,29 +185,7 @@ class Navigator{
                 window.location.hash = page;
 
                 if(navigationItem.js !== ""){
-
-                    $.ajax({
-                        url: navigationItem.js + (debug ? '?_=' + new Date().getTime() : ''),
-                        method: "get",
-                        success: function (data) {
-                            // contentElement.append("<script>"+data+"</script>");
-                        }
-                    });
-
-
-                    //
-                    // // var script = document.createElement('script');
-                    // let script = $("<script></script>");
-                    // script.on('load', function(){
-                    //     console.log('test');
-                    //     console.log(this);
-                    //
-                    // });
-                    // script.attr('src', navigationItem.js);
-                    //
-                    // contentElement.append(script);
-
-                    // document.head.appendChild(script);
+                    navigator.loadJs(navigationItem.js);
                 }
             },
             error: function(){
@@ -145,6 +194,27 @@ class Navigator{
         });
 
 
+    }
+
+    loadJs(js){
+        $.ajax({
+            url: js + (debug ? '?_=' + new Date().getTime() : ''),
+            method: "get",
+            success: function (data) {
+                // Don't need
+            }
+        });
+    }
+
+    setAuthentication(authentication){
+        this.authentication = authentication;
+        if(authentication == null){
+            window.localStorage.removeItem('authentication');
+        }else{
+            window.localStorage.setItem('authentication', this.authentication);
+        }
+
+        this.updateNavigation();
     }
 }
 let navigator;

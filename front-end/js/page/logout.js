@@ -1,0 +1,6 @@
+
+
+$(function(){
+
+    navigator.setAuthentication(null);
+});
