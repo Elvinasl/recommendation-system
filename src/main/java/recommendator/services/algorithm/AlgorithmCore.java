@@ -23,17 +23,14 @@ public class AlgorithmCore {
 
     private ProjectService projectService;
     private UserService userService;
-    private CellService cellService;
     private FilterManager filterManager;
 
     @Autowired
     public AlgorithmCore(ProjectService projectService,
                          UserService userService,
-                         CellService cellService,
                          FilterManager filterManager) {
         this.projectService = projectService;
         this.userService = userService;
-        this.cellService = cellService;
         this.filterManager = filterManager;
     }
 
