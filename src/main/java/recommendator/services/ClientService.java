@@ -38,6 +38,6 @@ public class ClientService  {
             return new Response("Client created!");
         }
 
-        throw new RowAlreadyExistsException("Client with this email already exists!");
+        throw new SomethingWentWrongException("Client with this email already exists!");
     }
 }
