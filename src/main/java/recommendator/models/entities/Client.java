@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -40,5 +41,6 @@ public class Client {
     private boolean activated = true;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Project> project = new ArrayList<>();
 }

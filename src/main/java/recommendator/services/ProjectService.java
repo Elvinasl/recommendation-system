@@ -1,9 +1,13 @@
 package recommendator.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import recommendator.dto.DatasetDTO;
+import recommendator.dto.ProjectDTO;
 import recommendator.exceptions.responses.Response;
+import recommendator.models.entities.Client;
 import recommendator.models.entities.Project;
 import recommendator.repositories.ProjectRepository;
 
@@ -15,36 +19,39 @@ public class ProjectService {
     private ProjectRepository projectRepository;
     private ColumnNameService columnNameService;
     private RowService rowService;
+    private final ClientPrincipalDetailsService clientPrincipalDetailsService;
 
     @Autowired
     public ProjectService(
             ProjectRepository projectRepository,
             ColumnNameService columnNameService,
-            RowService rowService
-    ) {
+            RowService rowService,
+            ClientPrincipalDetailsService clientService) {
         this.projectRepository = projectRepository;
         this.columnNameService = columnNameService;
         this.rowService = rowService;
+        this.clientPrincipalDetailsService = clientService;
     }
 
     /**
      * Generate api key for the {@link Project} and persist it to the database
      *
-     * @param project The project where to create api key for
-     * @return the generated api key
+     * @param projectDTO The project where to create api key for
+     * @return projectDTO containing the name and api-key
      */
-    public String add(Project project) {
-        // Generate api key
-        String apiKey = UUID.randomUUID().toString();
+    public ProjectDTO add(ProjectDTO projectDTO) {
+        String clientUsername = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Client client = clientPrincipalDetailsService.getClientByUsername(clientUsername);
 
-        // Set api key
-        project.setApiKey(apiKey);
+        Project project = new Project();
+        project.setName(projectDTO.getName());
+        project.setClient(client);
+        project.setApiKey(UUID.randomUUID().toString());
 
         // Add project
         projectRepository.add(project);
 
-        // Return api key
-        return apiKey;
+        return new ProjectDTO(project.getName(), project.getApiKey());
     }
 
     /**
