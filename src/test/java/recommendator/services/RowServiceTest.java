@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -44,14 +45,10 @@ class RowServiceTest {
     @Test
     void addOrUpdate() {
 
-        // Initialize row
         List<DatasetCellDTO> datasetRow = Arrays.asList(new DatasetCellDTO(), new DatasetCellDTO());
-
-        // Set column names
         datasetRow.get(0).setColumnName("column");
         datasetRow.get(1).setColumnName("column");
 
-        // Initialize project
         Project project = new Project();
 
         Mockito.when(columnNameRepository.getByNameAndProject("column", project))
@@ -63,37 +60,14 @@ class RowServiceTest {
                 .thenReturn(false); // Return second time that the row not exists
 
 
-        try{
-            // Call the method for the first time
-            rowService.addOrUpdate(datasetRow, project);
-
-            // It didn't gave an exception, so test failed
-            fail("Should give an exception");
-        } catch (NotFoundException e){
-            // Check if the exception is correct
-            assertThat(e)
+        // Check if the exception is correct
+        assertThatThrownBy(() -> rowService.addOrUpdate(datasetRow, project))
                 .hasMessage("Unknown column with name: column")
                 .isExactlyInstanceOf(NotFoundException.class);
-        } catch (Exception e) {
-            // Wrong exception was given
-            fail("Wrong exception");
-        }
 
-        try{
-            // Call the method for the second time
-            rowService.addOrUpdate(datasetRow, project);
-
-            // It didn't gave an exception, so test failed
-            fail("Should give an exception");
-        } catch (RowAlreadyExistsException e){
-            // Check if the exception is correct
-            assertThat(e)
-                    .hasMessage("Row duplicate found for row: null, null")
-                    .isExactlyInstanceOf(RowAlreadyExistsException.class);
-        } catch (Exception e) {
-            // Wrong exception was given
-            fail("Wrong exception");
-        }
+        assertThatThrownBy(() -> rowService.addOrUpdate(datasetRow, project))
+                .hasMessage("Row duplicate found for row: null, null")
+                .isExactlyInstanceOf(RowAlreadyExistsException.class);
 
         // Call the method for the third time
         rowService.addOrUpdate(datasetRow, project);
@@ -106,21 +80,15 @@ class RowServiceTest {
     @Test
     void getRowByCellDTOAndProject() {
 
-        // Initialize list of cellDTO
         List<CellDTO> cellDTOList = Arrays.asList(new CellDTO(), new CellDTO());
-
-        // Initialize list of cell values
         List<String> cellValues = Arrays.asList(null, null);
 
-        // Initialize project
         Project project = new Project();
-
-        // Initialize row
         Row row = new Row();
 
         // Mock method
         Mockito.when(rowRepository.findRowByCellsAndProject(cellValues, project))
-                .thenReturn(row); // Return a row
+                .thenReturn(row);
 
         // Call method to test
         Row response = rowService.getRowByCellDTOAndProject(cellDTOList, project);
@@ -136,13 +104,9 @@ class RowServiceTest {
     @Test
     void getMostLikedContentForProjectAndUser() {
 
-        // Initialize project
         Project project = new Project();
-
-        // Initialize User
         User user = new User();
 
-        // Initialize list of RowWithPoints
         List<RowWithPoints> rowWithPointsList = Arrays.asList(new RowWithPoints(), new RowWithPoints());
 
         // Mock method

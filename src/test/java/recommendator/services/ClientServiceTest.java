@@ -30,11 +30,13 @@ class ClientServiceTest {
 
     @Test
     void add() {
+        // creating a fake client
         String email = "email@email.com";
         Client client = new Client();
         client.setEmail(email);
         client.setPassword("password");
 
+        // if client doesn't exists, we allow to register
         Mockito.when(clientRepository.getByEmail(email)).thenThrow(EmptyResultDataAccessException.class);
         Mockito.when(clientRepository.add(any(Client.class))).thenReturn(client);
 

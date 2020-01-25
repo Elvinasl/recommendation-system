@@ -37,9 +37,7 @@ class ProjectServiceTest {
     @Test
     void add() {
 
-        // Initialize project
         String apiKey = projectService.add(new Project());
-
         // Check the length of the key
         assertThat(apiKey.length()).isEqualTo(36);
     }
@@ -47,13 +45,8 @@ class ProjectServiceTest {
     @Test
     void getByApiKey() {
 
-        // Initialize project
         Project project = new Project();
-
-        // Set key
         String key = "key";
-
-        // Set key to project
         project.setApiKey(key);
 
         // Mock getByApiKey which returns a project
@@ -74,13 +67,8 @@ class ProjectServiceTest {
         // a method in projectService which is tested separately
         ProjectService mockedProjectService = Mockito.mock(projectService.getClass());
 
-        // Initialize key
         String key = "key";
-
-        // Initialize datasetDTO
         DatasetDTO datasetDTO = new DatasetDTO();
-
-        // Initialize project
         Project project = new Project();
 
         // Not the mocked version must be called

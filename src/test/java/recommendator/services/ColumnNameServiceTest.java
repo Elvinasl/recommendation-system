@@ -26,13 +26,10 @@ class ColumnNameServiceTest {
     @Test
     void addOrUpdate() {
 
-        // Initialize columnName
         ColumnName columnName = new ColumnName();
-
         // Set id to be sure it's every time the correct columnName
         columnName.setId(1L);
 
-        // Initialize project
         Project project = new Project();
 
         // Mock some methods of the columnNameRepository
@@ -48,7 +45,6 @@ class ColumnNameServiceTest {
                 .thenReturn(columnName); // This should return the columnName
 
 
-        // Call the method
         ColumnName updated = columnNameService.addOrUpdate(columnName, project);
 
         // Check if it is returning the columnName
@@ -77,7 +73,6 @@ class ColumnNameServiceTest {
     @Test
     void getCountForProject() {
 
-        // Initialize project
         Project project = new Project();
 
         // Mock a method of the columnNameRepository
@@ -85,7 +80,6 @@ class ColumnNameServiceTest {
                 .thenReturn(10L) // Returning 10 first call
                 .thenReturn(20L); // Returning 20 the second call
 
-        // Create variable
         long count;
 
         // Call count the first time
