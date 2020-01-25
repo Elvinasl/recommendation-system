@@ -29,7 +29,7 @@ database.properties
 
 .idea
 
-RS-Front-end/anders/.idea
+front-end/.idea
 
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
