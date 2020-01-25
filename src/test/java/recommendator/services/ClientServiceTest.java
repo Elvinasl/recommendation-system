@@ -9,10 +9,13 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import recommendator.dto.LoginDTO;
 import recommendator.exceptions.SomethingWentWrongException;
 import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Client;
 import recommendator.repositories.ClientRepository;
+
+import javax.persistence.NoResultException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,25 +33,31 @@ class ClientServiceTest {
 
     @Test
     void add() {
+        // creating a fake client
         String email = "email@email.com";
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setEmail(email);
+        loginDTO.setPassword("password");
+
         Client client = new Client();
         client.setEmail(email);
         client.setPassword("password");
 
-        Mockito.when(clientRepository.getByEmail(email)).thenThrow(EmptyResultDataAccessException.class);
+        // if client doesn't exists, we allow to register
+        Mockito.when(clientRepository.getByEmail(email)).thenThrow(NoResultException.class);
         Mockito.when(clientRepository.add(any(Client.class))).thenReturn(client);
 
         // creating a client
-        Response response = clientService.add(client);
+        Response response = clientService.add(loginDTO);
 
         // checking the exception
         assertThatThrownBy(() -> clientService
-                .add(new Client(1L, "m", null, null, true, null)))
+                .add(new LoginDTO("m", null)))
                 .isExactlyInstanceOf(SomethingWentWrongException.class)
                 .hasMessage("Client with this email already exists!");
 
         // verifying that password was encrypted and client was added (catch block was executed"
-        verify(clientRepository, times(1)).add(client);
+        verify(clientRepository, times(1)).add(any(Client.class));
         verify(passwordEncoder, times(1)).encode("password");
         Assertions.assertThat(response.getMessage()).isEqualTo("Client created!");
     }

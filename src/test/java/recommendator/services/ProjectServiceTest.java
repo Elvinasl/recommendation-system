@@ -6,9 +6,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import recommendator.dto.DatasetDTO;
 import recommendator.dto.DatasetRowDTO;
+import recommendator.dto.ProjectDTO;
 import recommendator.exceptions.responses.Response;
+import recommendator.models.entities.Client;
 import recommendator.models.entities.ColumnName;
 import recommendator.models.entities.Project;
 import recommendator.repositories.ProjectRepository;
@@ -16,6 +21,7 @@ import recommendator.repositories.ProjectRepository;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -31,14 +37,23 @@ class ProjectServiceTest {
     @Mock
     private RowService rowService;
 
+    @Mock
+    private ClientPrincipalDetailsService clientPrincipalDetailsService;
+
     @InjectMocks
     private ProjectService projectService;
 
     @Test
     void add() {
+        Authentication authentication = Mockito.mock(Authentication.class);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        Mockito.when(authentication.getPrincipal()).thenReturn("test@gmail.com");
+        Mockito.when(clientPrincipalDetailsService.getClientByUsername(anyString())).thenReturn(new Client());
+        SecurityContextHolder.setContext(securityContext);
 
         // Initialize project
-        String apiKey = projectService.add(new Project());
+        String apiKey = projectService.add(new ProjectDTO("testProject")).getApiKey();
 
         // Check the length of the key
         assertThat(apiKey.length()).isEqualTo(36);
@@ -47,13 +62,8 @@ class ProjectServiceTest {
     @Test
     void getByApiKey() {
 
-        // Initialize project
         Project project = new Project();
-
-        // Set key
         String key = "key";
-
-        // Set key to project
         project.setApiKey(key);
 
         // Mock getByApiKey which returns a project
@@ -74,13 +84,8 @@ class ProjectServiceTest {
         // a method in projectService which is tested separately
         ProjectService mockedProjectService = Mockito.mock(projectService.getClass());
 
-        // Initialize key
         String key = "key";
-
-        // Initialize datasetDTO
         DatasetDTO datasetDTO = new DatasetDTO();
-
-        // Initialize project
         Project project = new Project();
 
         // Not the mocked version must be called
@@ -102,10 +107,7 @@ class ProjectServiceTest {
     @Test
     void seed() {
 
-        // Initialize datasetDTO
         DatasetDTO datasetDTO = new DatasetDTO();
-
-        // Initialize project
         Project project = new Project();
 
         // Call the seed method

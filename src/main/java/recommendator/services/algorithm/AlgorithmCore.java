@@ -23,17 +23,14 @@ public class AlgorithmCore {
 
     private ProjectService projectService;
     private UserService userService;
-    private CellService cellService;
     private FilterManager filterManager;
 
     @Autowired
     public AlgorithmCore(ProjectService projectService,
                          UserService userService,
-                         CellService cellService,
                          FilterManager filterManager) {
         this.projectService = projectService;
         this.userService = userService;
-        this.cellService = cellService;
         this.filterManager = filterManager;
     }
 
@@ -54,12 +51,16 @@ public class AlgorithmCore {
         });
 
         // Sort list by points
-        Comparator<RowWithPoints> compareRowsByPoints = Comparator.comparing(RowWithPoints::getPoints).reversed();
-        Collections.sort(filtersData.getRows(), compareRowsByPoints);
+        filtersData.getRows().sort(AlgorithmPointsComparator.comparator);
+
+        // eliminating possibility to get index out of bounds
+        int amount = recommendationDTO.getAmount();
+        if(filtersData.getRows().size() < amount) {
+            amount = filtersData.getRows().size();
+        }
 
         // Get only the amount that is given
-        List<RowWithPoints> rows = filtersData.getRows().subList(0, recommendationDTO.getAmount());
-
+        List<RowWithPoints> rows = filtersData.getRows().subList(0, amount);
 
         return generateDTO(rows);
     }
