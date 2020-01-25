@@ -36,7 +36,7 @@ public class ClientService  {
             client.setEmail(loginDTO.getEmail());
             // encrypting password
             client.setPassword(passwordEncoder.encode(loginDTO.getPassword()));
-            client.setRole("ROLE_USER");
+            client.setRole("USER");
             clientRepository.add(client);
             return new Response("Client created!");
         }
@@ -46,7 +46,7 @@ public class ClientService  {
 
     public Response makeAdmin(Long clientId) {
         Client client = getById(clientId);
-        client.setRole("ROLE_ADMIN");
+        client.setRole("ADMIN");
         clientRepository.update(client);
         return new Response("Client " + client.getEmail() + " is now admin!");
     }
