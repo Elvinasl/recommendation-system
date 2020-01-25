@@ -21,7 +21,15 @@ public class ClientPrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Client client = this.clientRepository.getByEmail(email);
-        return new ClientPrincipal(client);
+        return new ClientPrincipal(getClientByUsername(email));
+    }
+
+    /**
+     * Grabs the client object from the database by a given email
+     * @param email of the client
+     * @return client object
+     */
+    public Client getClientByUsername(String email){
+        return this.clientRepository.getByEmail(email);
     }
 }
