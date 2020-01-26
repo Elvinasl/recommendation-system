@@ -1,13 +1,13 @@
 package recommendator.repositories;
 
 
-import recommendator.exceptions.NotFoundException;
-import recommendator.models.entities.Project;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import recommendator.exceptions.NotFoundException;
+import recommendator.models.entities.Client;
+import recommendator.models.entities.Project;
 
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Repository
 public class ProjectRepository extends DatabaseRepository<Project> {
@@ -21,5 +21,11 @@ public class ProjectRepository extends DatabaseRepository<Project> {
         return em.createQuery("SELECT p FROM Project p WHERE p.apiKey = ?1", Project.class)
               .setParameter(1, key)
                 .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Project not found"));
+    }
+
+    public List<Project> listByClient(Client client) {
+        return em.createQuery("SELECT p FROM Project p WHERE p.client = :client", Project.class)
+                .setParameter("client", client)
+                .getResultList();
     }
 }

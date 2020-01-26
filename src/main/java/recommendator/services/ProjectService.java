@@ -2,11 +2,11 @@ package recommendator.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import recommendator.dto.DatasetDTO;
-import recommendator.dto.ProjectDTO;
 import recommendator.dto.DatasetRowDTO;
+import recommendator.dto.ProjectDTO;
+import recommendator.dto.ReturnObjectDTO;
 import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Client;
 import recommendator.models.entities.ColumnName;
@@ -15,6 +15,7 @@ import recommendator.repositories.ProjectRepository;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
@@ -55,6 +56,31 @@ public class ProjectService {
         projectRepository.add(project);
 
         return new ProjectDTO(project.getName(), project.getApiKey());
+    }
+
+    /**
+     * Get projects for the client from the database
+     *
+     * @return List of projectDTOs containing the name and api-key
+     */
+    public ReturnObjectDTO<ProjectDTO> listByCurrentClient() {
+        String clientUsername = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Client client = clientPrincipalDetailsService.getClientByUsername(clientUsername);
+
+        List<Project> projects = projectRepository.listByClient(client);
+
+//        Map<Integer, ProjectDTO> projectDTOMap = new HashMap<>();
+//        projects.forEach(project -> {
+//            projectDTOMap.put(,, new ProjectDTO(project.getName(), project.getApiKey()));
+//        });
+//
+        List<ProjectDTO> projectDTOS = projects.stream()
+                .map(project -> new ProjectDTO(project.getName(), project.getApiKey()))
+                .collect(Collectors.toList());
+
+
+
+        return new ReturnObjectDTO<>(projectDTOS);
     }
 
     /**
