@@ -27,6 +27,7 @@ import recommendator.repositories.ClientRepository;
 import recommendator.services.ClientPrincipalDetailsService;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 
 /**
@@ -125,7 +126,6 @@ public class SecurityConfig {
                         .authorizeRequests()
                         // configure access rules
                         .antMatchers(HttpMethod.POST, "/login", "/register").permitAll()
-                        .antMatchers("/admin/*").hasRole("ADMIN")
                         .anyRequest().authenticated();
 
                 // add jwt filters (1. authentication, 2. authorization)
@@ -156,11 +156,22 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Collections.singletonList("*"));
         configuration.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
-        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
         source.registerCorsConfiguration("/**", configuration);
+
+
+        configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:*"));
+        configuration.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
+        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+
+        source.registerCorsConfiguration("/login", configuration);
+        source.registerCorsConfiguration("/register", configuration);
+        source.registerCorsConfiguration("/project/*", configuration);
 
         return source;
     }

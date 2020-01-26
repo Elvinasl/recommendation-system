@@ -7,7 +7,7 @@ class Helpers{
 
         $.ajax({
             method: typeof options['method'] === "undefined" ? "GET" : options['method'],
-            url: options['url'],
+            url: host + options['url'],
             data: JSON.stringify(typeof options['data'] === "undefined" ? "" : options['data']),
             crossDomain: true,
             contentType: "application/json; charset=utf-8",

@@ -12,12 +12,12 @@ $(function(){
 
         helpers.ajax({
             method: "POST",
-            url: "http://localhost:8081/register",
+            url: "/register",
             data: body,
             success: function (data) {
                 // Do something with the data?
                 helpers.alert("You've been successful registered.", "success");
-
+                navigator.load('login');
             },
             error: function (response) {
                 // Do something with the response

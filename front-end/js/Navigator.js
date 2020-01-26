@@ -1,5 +1,6 @@
 
 let debug = true;
+let host = "http://localhost:8080";
 
 
 class Navigator{

@@ -12,7 +12,7 @@ $(function(){
 
         helpers.ajax({
             method: "POST",
-            url: "http://localhost:8081/login",
+            url: "/login",
             data: body,
             success: function (data) {
                 // Not coming here, because there's no content
@@ -21,6 +21,7 @@ $(function(){
                 if(response.status === 200){
                     helpers.alert('Logged in successfully', 'success');
                     navigator.setAuthentication(response.getResponseHeader('Authorization'));
+                    navigator.load('index');
                 }else{
                     helpers.alert('Credentials are wrong', 'danger');
                 }
