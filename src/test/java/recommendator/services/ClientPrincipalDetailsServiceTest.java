@@ -26,7 +26,11 @@ class ClientPrincipalDetailsServiceTest {
         Client client = new Client();
         String email = "test";
         client.setEmail(email);
+
         Mockito.when(clientRepository.getByEmail(email)).thenReturn(client);
+
+        // if we pass null it should throw an exception
+        Mockito.when(clientRepository.getByEmail(null)).thenThrow(new UsernameNotFoundException("not found"));
 
         UserDetails response = clientPrincipalDetailsService.loadUserByUsername(email);
 
@@ -34,9 +38,7 @@ class ClientPrincipalDetailsServiceTest {
         assertEquals(response.getUsername(), email);
 
         // checking username not found exception
-        assertThatThrownBy(() -> {
-            throw new UsernameNotFoundException("not found");
-        })
+        assertThatThrownBy(() -> clientPrincipalDetailsService.loadUserByUsername(null))
         .hasMessage("not found")
         .isExactlyInstanceOf(UsernameNotFoundException.class);
 

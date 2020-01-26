@@ -1,8 +1,8 @@
 package recommendator.services;
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import recommendator.dto.LoginDTO;
+import recommendator.exceptions.RowAlreadyExistsException;
 import recommendator.exceptions.SomethingWentWrongException;
 import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Client;
@@ -27,7 +27,7 @@ public class ClientService  {
     public Response add(LoginDTO loginDTO) {
         try {
             clientRepository.getByEmail(loginDTO.getEmail());
-        } catch (EmptyResultDataAccessException e) {
+        } catch (NoResultException e) {
 
             Client client = new Client();
             client.setEmail(loginDTO.getEmail());

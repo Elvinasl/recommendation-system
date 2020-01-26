@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 public class LoginDTO {
     @Email(message = "Incorrect email format!")
     private String email;
-
-    @Length(min=6, message = "Password has to be longer than 6 characters!")
+    @Length(min = 6, message = "Password has to be longer than 6 characters!")
     private String password;
 }
