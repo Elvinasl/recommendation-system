@@ -38,10 +38,14 @@ class Helpers{
     }
 
 
-    alert(msg, type, time = 3000){
+    alert(msg, type, time = 3000, element){
         let alert = $("<div class='alert alert-"+type+"'>"+msg+"</div>");
 
-        $("#alerts").append(alert);
+        if(typeof element !== "undefined"){
+            element.append(alert);
+        }else{
+            $("#alerts").append(alert);
+        }
 
         setTimeout(function(){
             alert.slideUp(300, function(){
