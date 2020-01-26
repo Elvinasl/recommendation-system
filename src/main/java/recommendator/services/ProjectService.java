@@ -44,12 +44,9 @@ public class ProjectService {
      * @return projectDTO containing the name and api-key
      */
     public ProjectDTO add(ProjectDTO projectDTO) {
-        String clientUsername = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Client client = clientPrincipalDetailsService.getClientByUsername(clientUsername);
-
         Project project = new Project();
         project.setName(projectDTO.getName());
-        project.setClient(client);
+        project.setClient(this.getCurrentClient());
         project.setApiKey(UUID.randomUUID().toString());
 
         // Add project
@@ -64,24 +61,69 @@ public class ProjectService {
      * @return List of projectDTOs containing the name and api-key
      */
     public ReturnObjectDTO<ProjectDTO> listByCurrentClient() {
-        String clientUsername = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Client client = clientPrincipalDetailsService.getClientByUsername(clientUsername);
 
-        List<Project> projects = projectRepository.listByClient(client);
+        // Get the list of projects from the database by the client which is authenticated
+        List<Project> projects = projectRepository.listByClient(this.getCurrentClient());
 
-//        Map<Integer, ProjectDTO> projectDTOMap = new HashMap<>();
-//        projects.forEach(project -> {
-//            projectDTOMap.put(,, new ProjectDTO(project.getName(), project.getApiKey()));
-//        });
-//
+        // Convert the list of projects into the list of projectDTOs
         List<ProjectDTO> projectDTOS = projects.stream()
                 .map(project -> new ProjectDTO(project.getName(), project.getApiKey()))
                 .collect(Collectors.toList());
 
-
-
         return new ReturnObjectDTO<>(projectDTOS);
     }
+
+
+    /**
+     * Get an projectDTO from the repository by a client and api key
+     *
+     * @param key the project api key
+     * @return {@link ProjectDTO}
+     */
+    public ProjectDTO getByApiKeyAndCurrentClient(String key) {
+        Project project = projectRepository.getByApiKeyAndClient(key, this.getCurrentClient());
+        return new ProjectDTO(project.getName(), project.getApiKey());
+    }
+
+    /**
+     * Delete a project for a client by api key
+     *
+     * @param key the project api key
+     * @return Deleted response
+     */
+    public Response deleteForCurrentClient(String key) {
+
+        // Find the project and get the id
+        Project project = projectRepository.getByApiKeyAndClient(key, this.getCurrentClient());
+
+        // Remove the project by id
+        projectRepository.remove(project.getId());
+
+        return new Response("Project deleted");
+    }
+
+    public ProjectDTO updateNameForCurrentClient(String key, ProjectDTO projectDTO) {
+
+        Project project = projectRepository.getByApiKeyAndClient(key, this.getCurrentClient());
+
+        project.setName(projectDTO.getName());
+
+        projectRepository.update(project);
+
+        return new ProjectDTO(project.getName(), project.getApiKey());
+    }
+
+    public ProjectDTO refreshKeyForCurrentClient(String key) {
+
+        Project project = projectRepository.getByApiKeyAndClient(key, this.getCurrentClient());
+
+        project.setApiKey(UUID.randomUUID().toString());
+
+        projectRepository.update(project);
+
+        return new ProjectDTO(project.getName(), project.getApiKey());
+    }
+
 
     /**
      * Gets the project belonging to the given api key
@@ -130,5 +172,13 @@ public class ProjectService {
             datasetRowDTOs.forEach(row -> rowService.addOrUpdate(row.getCells(), project));
 
         }
+    }
+
+    Client currentClient = null;
+
+    private Client getCurrentClient(){
+        if(currentClient != null) return currentClient;
+        String clientUsername = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return currentClient = clientPrincipalDetailsService.getClientByUsername(clientUsername);
     }
 }

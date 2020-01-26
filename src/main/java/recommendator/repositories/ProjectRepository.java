@@ -23,9 +23,18 @@ public class ProjectRepository extends DatabaseRepository<Project> {
                 .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Project not found"));
     }
 
+    @Transactional
     public List<Project> listByClient(Client client) {
         return em.createQuery("SELECT p FROM Project p WHERE p.client = :client", Project.class)
                 .setParameter("client", client)
                 .getResultList();
+    }
+
+    @Transactional
+    public Project getByApiKeyAndClient(String key, Client client) {
+        return em.createQuery("SELECT p FROM Project p WHERE p.apiKey = :key AND p.client = :client", Project.class)
+                .setParameter("key", key)
+                .setParameter("client", client)
+                .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Project not found"));
     }
 }
