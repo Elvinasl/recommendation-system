@@ -22,17 +22,17 @@ class Navigator{
             // TODO: check authentication
         }
 
-        var url = window.location.href;
-
-        if(url.indexOf("#") !== -1){
-            var hash = url.substring(url.indexOf("#")+1);
-            if(typeof this.navigationItems[hash] !== "undefined"){
-                page = hash;
-            }
-        }
 
 
         this.updateNavigation(function(navigator){
+
+            let url = window.location.href;
+            if(url.indexOf("#") !== -1){
+                let hash = url.substring(url.indexOf("#")+1);
+                if(typeof navigator.navigationItems[hash] !== "undefined"){
+                    page = hash;
+                }
+            }
             navigator.load(page);
         });
 

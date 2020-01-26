@@ -157,21 +157,10 @@ public class SecurityConfig {
 
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Collections.singletonList("*"));
-        configuration.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
         configuration.setExposedHeaders(Collections.singletonList("Authorization"));
         source.registerCorsConfiguration("/**", configuration);
-
-
-        configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:*"));
-        configuration.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
-        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-
-        source.registerCorsConfiguration("/login", configuration);
-        source.registerCorsConfiguration("/register", configuration);
-        source.registerCorsConfiguration("/project/*", configuration);
 
         return source;
     }
