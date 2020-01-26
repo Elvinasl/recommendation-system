@@ -21,7 +21,17 @@ $(function(){
             },
             error: function (response) {
                 // Do something with the response
-                helpers.alert("Unfortunately we couldn't register you. We need to work on exceptions, so we can't say you what's wrong.", "danger", 5000);
+                if(response.status === 409){
+                    let data = response.responseJSON;
+
+                    if(typeof data['message'] !== "undefined"){
+                        helpers.alert(data['message'], "danger", 5000);
+                    }else{
+                        helpers.alert("Something went wrong", "danger", 5000);
+                    }
+                }else{
+                    helpers.alert("Something went wrong", "danger", 5000);
+                }
             }
         });
 
