@@ -25,11 +25,11 @@ function loadRecommendations(){
                 typeof data["rows"][0]["cells"] !== "undefined" &&
                 helpers.objectSize(typeof data["rows"][0]["cells"]) > 0){
 
-                let columns = [ "#" ];
+                let columns = [];
                 let rows = data["rows"];
                 let cellsOfFirstObject = data["rows"][0]["cells"];
                 let headOfTable = $("#list-of-recommendations").find("thead");
-                let headRow = $("<tr><td>#</td></tr>");
+                let headRow = $("<tr></tr>");
                 for(let i in cellsOfFirstObject){
                     columns[columns.length] = cellsOfFirstObject[i]["columnName"];
                     headRow.append("<th>"+cellsOfFirstObject[i]["columnName"]+"</th>");
@@ -40,7 +40,7 @@ function loadRecommendations(){
                 for(let i in rows){
                     if(!rows.hasOwnProperty(i)) continue;
                     let cellObjects = rows[i]["cells"];
-                    let cells = { "#": helpers.objectSize(rows)-i };
+                    let cells = {};
                     for(let j in cellObjects){
                         if(!cellObjects.hasOwnProperty(j)) continue;
                         cells[cellObjects[j]["columnName"]] = cellObjects[j]["value"];
@@ -52,30 +52,8 @@ function loadRecommendations(){
             }
         },
         error: function (response) {
-            console.log(response);
+            helpers.alert("Something went wrong", "danger", 5000);
         }
     })
 
-    // helpers.clearTableData($("#list-of-projects"));
-    // helpers.ajax({
-    //     method: "GET",
-    //     url: "/projects",
-    //     success: function (data) {
-    //         let rows = data["objects"];
-    //
-    //
-    //         for(let row in rows){
-    //             if(!rows.hasOwnProperty(row)) continue;
-    //             rows[row]['refresh-key'] = getRefreshKeyBtn(rows[row]['apiKey']);
-    //             rows[row]['edit'] = getEditBtn(rows[row]['name'], rows[row]['apiKey']);
-    //             rows[row]['delete'] = getDeleteBtn(rows[row]['apiKey']);
-    //         }
-    //         helpers.addTableData($("#list-of-projects"), data["objects"], ["name", "apiKey", "refresh-key", "edit", "delete"],true);
-    //     },
-    //     error: function (response) {
-    //         helpers.alert("Something went wrong", "danger", 5000);
-    //     }
-    // });
-    //
-    // $("#add-project-btn").click(addProject);
 }

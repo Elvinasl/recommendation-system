@@ -16,11 +16,9 @@ class ParameterManager{
     }
     remove(parameter){
         delete this.parameters[parameter];
-        navigator.updateHash();
     }
     set(parameter, data){
         this.parameters[parameter] = data;
-        navigator.updateHash();
     }
     get(parameter){
         return this.parameters[parameter];

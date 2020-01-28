@@ -16,6 +16,8 @@ class Navigator{
 
     parameterManager = new ParameterManager(this);
 
+    doNotUpdateHash = false;
+
     constructor(page = "index") {
         this.contentElement = $("#content");
 
@@ -25,15 +27,12 @@ class Navigator{
             this.authentication = authentication;
         }
 
-
-
         this.updateNavigation(function(navigator){
-
             let convertedHash = navigator.convertHash();
             if(typeof convertedHash.page !== "undefined"){
                 page = convertedHash.page;
             }
-            navigator.load(page);
+            navigator.load(page, true);
         });
 
     }
@@ -167,7 +166,7 @@ class Navigator{
 
 
 
-    load(page){
+    load(page, firstTime = false){
         if(debug) console.log("Load page " + page);
         if(typeof this.navigationItems[page] === "undefined"){
             alert('Page don\'t exists');
@@ -181,6 +180,7 @@ class Navigator{
         if(navigationItem.type === "extern"){
             return;
         }
+
 
         this.currentPage = page;
 
@@ -243,11 +243,19 @@ class Navigator{
             if(!params.hasOwnProperty(key)) continue;
             hash += "/" + key + "/" + params[key];
         }
-        window.location.hash = hash;
+        if(!this.doNotUpdateHash){
+            if(window.location.hash !== hash){
+                window.location.hash = hash;
+            }
+        }else{
+            this.doNotUpdateHash = false;
+        }
     }
-    convertHash(){
+    convertHash(url){
         let data = {};
-        let url = window.location.href;
+        if(typeof url === "undefined"){
+            url = window.location.href;
+        }
 
         if(url.indexOf("#") !== -1){
             let hash = url.substring(url.indexOf("#")+1);
@@ -266,6 +274,17 @@ class Navigator{
 }
 let navigator;
 $(function(){
+
     navigator = new Navigator();
+    navigator.doNotUpdateHash = true;
+
+    window.onpopstate = function(event) {
+
+        let convertedHash = navigator.convertHash(window.location.href);
+        if(typeof convertedHash.page !== "undefined" && convertedHash.page !== navigator.currentPage){
+            navigator = new Navigator();
+            navigator.doNotUpdateHash = true;
+        }
+    };
     // console.log('hi');
 });

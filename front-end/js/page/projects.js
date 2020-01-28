@@ -51,7 +51,7 @@ function getShowRowsBtn(key){
     return btn;
 }
 function getRecommendationsBtn(key){
-    let btn = $("<button class='btn btn-sm btn-primary'><i class='fa fa-eye'></i></button>");
+    let btn = $("<button class='btn btn-sm btn-primary'><i class='fa fa-list-ol'></i></button>");
     btn.click(function(){
         navigator.parameterManager.set("api-key", $(this).data('key'));
         navigator.load('recommendations');
