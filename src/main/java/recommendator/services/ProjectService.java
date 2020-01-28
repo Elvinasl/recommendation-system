@@ -23,7 +23,7 @@ public class ProjectService {
     private ProjectRepository projectRepository;
     private ColumnNameService columnNameService;
     private RowService rowService;
-    private final ClientPrincipalDetailsService clientPrincipalDetailsService;
+    private ClientPrincipalDetailsService clientPrincipalDetailsService;
 
     @Autowired
     public ProjectService(
@@ -174,11 +174,9 @@ public class ProjectService {
         }
     }
 
-    Client currentClient = null;
 
     private Client getCurrentClient(){
-        if(currentClient != null) return currentClient;
         String clientUsername = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return currentClient = clientPrincipalDetailsService.getClientByUsername(clientUsername);
+        return clientPrincipalDetailsService.getClientByUsername(clientUsername);
     }
 }
