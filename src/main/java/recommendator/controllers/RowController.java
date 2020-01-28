@@ -1,10 +1,12 @@
 package recommendator.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import recommendator.dto.ReturnObjectDTO;
+import recommendator.dto.RowDTO;
 import recommendator.exceptions.responses.Response;
 import recommendator.services.RowService;
 
@@ -24,9 +26,12 @@ public class RowController {
     }
 
     @DeleteMapping(path = "/rows/{rowId}")
-    public ResponseEntity<Response> getByApiKey(@PathVariable("rowId") long rowId) {
+    public ResponseEntity<Response> deleteRow(@PathVariable("rowId") long rowId) {
         return ResponseEntity.ok(rowService.deleteRow(rowId));
     }
 
-    // TODO: update row
+    @PutMapping(path = "/rows/{rowId}")
+    public ResponseEntity<Response> update(@PathVariable("rowId") long rowId, @RequestBody RowDTO rowDTO) {
+        return ResponseEntity.ok(rowService.updateRow(rowId, rowDTO));
+    }
 }

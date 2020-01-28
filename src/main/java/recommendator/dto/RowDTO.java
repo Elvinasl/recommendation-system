@@ -20,6 +20,7 @@ public class RowDTO {
         this.cells = cells.stream()
                 .map(cell -> {
                     CellDTO cellDTO = new CellDTO();
+                    cellDTO.setId(cell.getId());
                     cellDTO.setColumnName(cell.getColumnName().getName());
                     cellDTO.setValue(cell.getValue());
                     return cellDTO;

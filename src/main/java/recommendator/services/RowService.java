@@ -12,7 +12,6 @@ import recommendator.exceptions.RowAlreadyExistsException;
 import recommendator.exceptions.responses.Response;
 import recommendator.models.containers.RowWithPoints;
 import recommendator.models.entities.*;
-import recommendator.repositories.ColumnNameRepository;
 import recommendator.repositories.RowRepository;
 
 import javax.persistence.NoResultException;
@@ -24,11 +23,13 @@ public class RowService {
 
     private RowRepository rowRepository;
     private ColumnNameService columnNameService;
+    private CellService cellService;
 
     @Autowired
-    public RowService(RowRepository rowRepository, ColumnNameService columnNameService) {
+    public RowService(RowRepository rowRepository, ColumnNameService columnNameService, CellService cellService) {
         this.rowRepository = rowRepository;
         this.columnNameService = columnNameService;
+        this.cellService = cellService;
     }
 
     /**
@@ -143,5 +144,24 @@ public class RowService {
     public Response deleteRow(long rowId) {
         rowRepository.remove(rowId);
         return new Response("Row deleted!");
+    }
+
+    /**
+     * Updates row: updates cell values based on rowDTO
+     *
+     * @param rowId Id of the row to be updated
+     * @param rowDTO rowDto with cell values to be updated
+     * @return Global response with a message
+     */
+    public Response updateRow(long rowId, RowDTO rowDTO) {
+        Row row = rowRepository.getById(rowId);
+        if (row == null) {
+            throw new NotFoundException("Row with this id was not found!");
+        }
+
+        List<Cell> cells = cellService.updateCellValues(rowDTO.getCells());
+        row.setCells(cells);
+
+        return new Response("Row updated!");
     }
 }
