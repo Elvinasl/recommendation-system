@@ -1,6 +1,7 @@
 package recommendator.services;
 
 import recommendator.dto.BehaviorDTO;
+import recommendator.exceptions.NotFoundException;
 import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Behavior;
 import recommendator.models.entities.Project;
@@ -30,16 +31,31 @@ public class BehaviorService {
         this.userPreferenceService = userPreferenceService;
     }
 
+    /**
+     * This method creates a behavior (liken or disliked) for the content.
+     * If the row is not existing, it also creates a row. If it exists, just references it (foreign key)
+     * If the user if sending a feedback (behavior) for the first time, we also save his id.
+     * It also creates (or adjusts if exists) user preferences, which later can be used for more accurate recommendation
+     * @param apiKey api key of the project
+     * @param behaviorDTO
+     * @return general response
+     */
     public Response add(String apiKey, BehaviorDTO behaviorDTO) {
         Project project = projectService.getByApiKey(apiKey);
 
-        // TODO: create a row if not exists!
-        Row row = rowService.getRowByCellDTOAndProject(behaviorDTO.getCells(), project);
+        // if we don't have a row in our db, lets create a new one!
+        Row row;
+        try {
+            row = rowService.getRowByCellDTOAndProject(behaviorDTO.getCells(), project);
+        } catch (NotFoundException e) {
+            row = rowService.create(behaviorDTO.getCells(), project);
+        }
 
         String externalUserId = behaviorDTO.getUserId();
 
         User user = userService.findByExternalIdAndProjectOrNull(externalUserId, project);
 
+        // this is a new user, we never saw them in this project. Lets save him
         if (user == null) {
             user = new User();
             user.setProject(project);

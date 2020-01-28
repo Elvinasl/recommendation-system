@@ -164,4 +164,23 @@ public class RowService {
 
         return new Response("Row updated!");
     }
+
+    /**
+     * Creates a row
+     * @param cellDTOs
+     * @param project
+     * @return saved row
+     */
+    public Row create(List<CellDTO> cellDTOs, Project project) {
+        Row row = new Row();
+        row.setProject(project);
+        Row persistedRow = rowRepository.add(row);
+
+        List<Cell> cells = cellDTOs.stream()
+                .map(cellDTO -> cellService.create(cellDTO, project, persistedRow))
+                .collect(Collectors.toList());
+
+        row.setCells(cells);
+        return rowRepository.update(persistedRow);
+    }
 }

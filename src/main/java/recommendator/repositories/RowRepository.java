@@ -73,7 +73,10 @@ public class RowRepository extends DatabaseRepository<Row> {
                 .setParameter("cellValues", cellValues)
                 .setParameter("project", project)
                 .setParameter("size", (long) cellValues.size())
-                .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Unknown row"));
+                .getResultList()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Unknown row"));
 
     }
 
