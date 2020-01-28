@@ -34,8 +34,8 @@ public class AlgorithmCore {
     public GeneratedRecommendationDTO generateRecommendation(String apiKey, String externalUserId, int amount) {
         if(amount < 0){
             amount = 1;
-        }else if(amount > 10){
-            amount = 10;
+        }else if(amount > 20){
+            amount = 20;
         }
 
         Project project = projectService.getByApiKey(apiKey);

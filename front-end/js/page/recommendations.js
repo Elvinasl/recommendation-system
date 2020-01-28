@@ -14,10 +14,10 @@ function loadRecommendations(){
 
     helpers.ajax({
         method: "GET",
-        url: "/recommendation/user/1",
+        url: "/recommendation",
         "api-key": navigator.parameterManager.get("api-key"),
         data: {
-            "amount": 10
+            "amount": 15
         },
         success: function (data) {
             if( typeof data["rows"] !== "undefined" &&
