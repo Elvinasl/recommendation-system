@@ -116,6 +116,7 @@ public class RowRepository extends DatabaseRepository<Row> {
                 "COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END)) " +
                 "FROM Row r " +
                 "INNER JOIN r.behaviors b " +
+                "FETCH ALL PROPERTIES " +
                 "WHERE r.project.apiKey = :apiKey " +
                 "GROUP BY r ", RowWithPoints.class)
                 .setParameter("apiKey", apiKey)

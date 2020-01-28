@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class RowDTO {
     private List<CellDTO> cells;
+    private Integer reactions;
 
     public void convertCellsToDTO(List<Cell> cells) {
         this.cells = cells.stream()

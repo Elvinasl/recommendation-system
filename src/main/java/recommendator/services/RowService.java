@@ -2,6 +2,7 @@ package recommendator.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import recommendator.dto.CellDTO;
 import recommendator.dto.DatasetCellDTO;
 import recommendator.dto.ReturnObjectDTO;
@@ -108,10 +109,26 @@ public class RowService {
         return rowRepository.getMostLikedContentForProjectAndUser(project, user);
     }
 
+    /**
+     * Returns a list of rows which belongs to the project based on the api key.
+     * It also provides points which are number of likes (like +1 or dislike -1) for each row.
+     *
+     * @param apiKey Api key of the project
+     * @return List of rows belonging to that project
+     */
+    @Transactional
     public ReturnObjectDTO getByApiKey(String apiKey) {
-
        List<RowWithPoints> rows = rowRepository.findAllByApiKey(apiKey);
 
-       return null;
+       List<RowDTO> rowDTOs = rows.stream()
+           .map(row -> {
+            RowDTO rowDTO = new RowDTO();
+            rowDTO.convertCellsToDTO(row.getCells());
+            rowDTO.setReactions(Math.round(row.getPoints()));
+            return rowDTO;
+           })
+           .collect(Collectors.toList());
+
+       return new ReturnObjectDTO<>(rowDTOs);
     }
 }
