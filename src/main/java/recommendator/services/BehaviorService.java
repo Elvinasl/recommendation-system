@@ -33,6 +33,7 @@ public class BehaviorService {
     public Response add(String apiKey, BehaviorDTO behaviorDTO) {
         Project project = projectService.getByApiKey(apiKey);
 
+        // TODO: create a row if not exists!
         Row row = rowService.getRowByCellDTOAndProject(behaviorDTO.getCells(), project);
 
         String externalUserId = behaviorDTO.getUserId();

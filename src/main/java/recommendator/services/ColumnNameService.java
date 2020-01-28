@@ -57,4 +57,8 @@ public class ColumnNameService {
     public long getCountForProject(Project project) {
         return columnNameRepository.getCountForProject(project);
     }
+
+    public ColumnName getByNameAndProject(String columnName, Project project) {
+        return columnNameRepository.getByNameAndProject(columnName, project);
+    }
 }

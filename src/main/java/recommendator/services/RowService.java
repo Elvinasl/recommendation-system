@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import recommendator.dto.CellDTO;
 import recommendator.dto.DatasetCellDTO;
+import recommendator.dto.ReturnObjectDTO;
+import recommendator.dto.RowDTO;
 import recommendator.exceptions.NotFoundException;
 import recommendator.exceptions.RowAlreadyExistsException;
 import recommendator.models.containers.RowWithPoints;
@@ -19,12 +21,12 @@ import java.util.stream.Collectors;
 public class RowService {
 
     private RowRepository rowRepository;
-    private ColumnNameRepository columnNameRepository;
+    private ColumnNameService columnNameService;
 
     @Autowired
-    public RowService(RowRepository rowRepository, ColumnNameRepository columnNameRepository) {
+    public RowService(RowRepository rowRepository, ColumnNameService columnNameService) {
         this.rowRepository = rowRepository;
-        this.columnNameRepository = columnNameRepository;
+        this.columnNameService = columnNameService;
     }
 
     /**
@@ -53,7 +55,7 @@ public class RowService {
 
             try {
                 // Try to get the columnName for the by the columnName of cellDTO and the project
-                ColumnName columnName = columnNameRepository.getByNameAndProject(cellDTO.getColumnName(), project);
+                ColumnName columnName = columnNameService.getByNameAndProject(cellDTO.getColumnName(), project);
 
                 // Set the columnName which comes from the repository
                 cell.setColumnName(columnName);
@@ -104,5 +106,12 @@ public class RowService {
 
         // Get the most liked content from the repository
         return rowRepository.getMostLikedContentForProjectAndUser(project, user);
+    }
+
+    public ReturnObjectDTO getByApiKey(String apiKey) {
+
+       List<RowWithPoints> rows = rowRepository.findAllByApiKey(apiKey);
+
+       return null;
     }
 }
