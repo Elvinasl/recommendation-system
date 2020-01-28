@@ -80,4 +80,9 @@ abstract class DatabaseRepository<T> {
         throw new NonUniqueResultException();
     }
 
+    @Transactional
+    public void deleteAll(){
+        em.createQuery("DELETE FROM  " + type.getName())
+                .executeUpdate();
+    }
 }

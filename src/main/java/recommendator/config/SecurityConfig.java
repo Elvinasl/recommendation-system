@@ -124,6 +124,7 @@ public class SecurityConfig {
                         .authorizeRequests()
                         // configure access rules
                         .antMatchers(HttpMethod.POST, "/login", "/register", "/behavior").permitAll()
+                        .antMatchers(HttpMethod.GET, "/recommendation").permitAll()
                         .anyRequest().authenticated();
 
                 // add jwt filters (1. authentication, 2. authorization)

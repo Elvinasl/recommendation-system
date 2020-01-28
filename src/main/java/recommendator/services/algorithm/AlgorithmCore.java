@@ -1,20 +1,16 @@
 package recommendator.services.algorithm;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import recommendator.dto.GeneratedRecommendationDTO;
-import recommendator.dto.RecommendationDTO;
 import recommendator.dto.RowDTO;
 import recommendator.models.containers.RowWithPoints;
 import recommendator.models.entities.Project;
 import recommendator.models.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import recommendator.services.CellService;
 import recommendator.services.ProjectService;
 import recommendator.services.UserService;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,14 +31,20 @@ public class AlgorithmCore {
     }
 
     @Transactional
-    public GeneratedRecommendationDTO generateRecommendation(String apiKey, RecommendationDTO recommendationDTO) {
+    public GeneratedRecommendationDTO generateRecommendation(String apiKey, String externalUserId, int amount) {
+        if(amount < 0){
+            amount = 1;
+        }else if(amount > 20){
+            amount = 20;
+        }
+
         Project project = projectService.getByApiKey(apiKey);
-        User user = userService.findByExternalIdAndProjectOrNull(recommendationDTO.getUserId(), project);
+        User user = userService.findByExternalIdAndProjectOrNull(externalUserId, project);
 
         FiltersData filtersData = new FiltersData();
         filtersData.setProject(project);
         filtersData.setUser(user);
-        filtersData.setAmount(recommendationDTO.getAmount());
+        filtersData.setAmount(amount);
 
         filterManager.getFilters().forEach(f -> {
             if (!filtersData.isFinished()) {
@@ -54,7 +56,6 @@ public class AlgorithmCore {
         filtersData.getRows().sort(AlgorithmPointsComparator.comparator);
 
         // eliminating possibility to get index out of bounds
-        int amount = recommendationDTO.getAmount();
         if(filtersData.getRows().size() < amount) {
             amount = filtersData.getRows().size();
         }
