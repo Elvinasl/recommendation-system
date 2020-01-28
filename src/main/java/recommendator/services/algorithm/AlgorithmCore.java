@@ -1,6 +1,7 @@
 package recommendator.services.algorithm;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import recommendator.dto.GeneratedRecommendationDTO;
@@ -21,6 +22,9 @@ public class AlgorithmCore {
     private UserService userService;
     private FilterManager filterManager;
 
+    @Value("${max_number_of_recommendations}")
+    private int maxNumberOfRecommendations;
+
     @Autowired
     public AlgorithmCore(ProjectService projectService,
                          UserService userService,
@@ -34,8 +38,8 @@ public class AlgorithmCore {
     public GeneratedRecommendationDTO generateRecommendation(String apiKey, String externalUserId, int amount) {
         if(amount < 0){
             amount = 1;
-        }else if(amount > 20){
-            amount = 20;
+        }else if(amount > this.maxNumberOfRecommendations){
+            amount = this.maxNumberOfRecommendations;
         }
 
         Project project = projectService.getByApiKey(apiKey);
