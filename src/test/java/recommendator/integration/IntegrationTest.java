@@ -36,6 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { AppConfig.class, DatabaseConfig.class})
@@ -115,7 +116,7 @@ public abstract class IntegrationTest {
     public void createClientAndProject() throws Exception {
         clientService.add(client);
         login();
-        String response = postRequest(new ProjectDTO("movies"), "/project").getContentAsString();
+        String response = postRequest(new ProjectDTO("movies"), "/projects").getContentAsString();
 
         httpHeaders.add("api-key", new ObjectMapper().readValue(response, ProjectDTO.class).getApiKey());
     }

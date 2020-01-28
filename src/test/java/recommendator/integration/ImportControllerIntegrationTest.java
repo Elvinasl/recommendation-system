@@ -9,8 +9,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
 import recommendator.dto.*;
 import recommendator.models.entities.ColumnName;
-import recommendator.repositories.ClientRepository;
-import recommendator.repositories.ProjectRepository;
+import recommendator.repositories.*;
 import recommendator.services.ClientService;
 
 import javax.servlet.ServletContext;
@@ -23,6 +22,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ImportControllerIntegrationTest extends IntegrationTest {
 
     @Autowired
+    CellRepository cellRepository;
+    @Autowired
+    ColumnNameRepository columnNameRepository;
+    @Autowired
+    RowRepository rowRepository;
+    @Autowired
     ClientRepository clientRepository;
     @Autowired
     ProjectRepository projectRepository;
@@ -33,7 +38,12 @@ public class ImportControllerIntegrationTest extends IntegrationTest {
     }
 
     @AfterEach
-    void cleanupClient(){
+    void cleanupDatabase(){
+        cellRepository.deleteAll();
+        columnNameRepository.deleteAll();
+        rowRepository.deleteAll();
+        projectRepository.deleteAll();
+        clientRepository.deleteAll();
         projectRepository.deleteAll();
         clientRepository.deleteAll();
         logout();
@@ -60,7 +70,13 @@ public class ImportControllerIntegrationTest extends IntegrationTest {
         // Creating a new project and validating if a api-key is handed back
         MockHttpServletResponse projectRequest = postRequest(datasetDTO, "/import");
         assertThat(projectRequest.getStatus()).isEqualTo(201);
-        assertThat(projectRequest.getContentAsString()).contains("name").contains("apiKey");
+        assertThat(projectRequest.getContentAsString()).contains("message").contains("Data has been added");
+
+        // Inserting the same row again (should give a duplicate row exception)
+        projectRequest = postRequest(datasetDTO, "/import");
+        assertThat(projectRequest.getStatus()).isEqualTo(409);
+        assertThat(projectRequest.getContentAsString()).contains("message").contains("duplicate");
+
     }
 
     private ColumnName createColumn(String name, int weight){
