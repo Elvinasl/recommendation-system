@@ -1,23 +1,12 @@
 package recommendator.integration;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
 import recommendator.dto.LoginDTO;
-import recommendator.repositories.ClientRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClientControllerIntegrationTest extends IntegrationTest {
-
-    @Autowired
-    ClientRepository clientRepository;
-
-    @AfterEach
-    void cleanupClient(){
-        clientRepository.deleteAll();
-    }
 
     @Test
     public void register() throws Exception {

@@ -1,15 +1,11 @@
 package recommendator.integration;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
 import recommendator.dto.ProjectDTO;
 import recommendator.exceptions.NotFoundException;
 import recommendator.models.entities.Project;
-import recommendator.repositories.ClientRepository;
-import recommendator.repositories.ProjectRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,22 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ProjectControllerIntegrationTest extends IntegrationTest {
 
-    @Autowired
-    ClientRepository clientRepository;
-    @Autowired
-    ProjectRepository projectRepository;
-
     @BeforeEach
     void createClientAndLogin() throws Exception {
         clientService.add(client);
         login();
-    }
-
-    @AfterEach
-    void cleanupClient(){
-        projectRepository.deleteAll();
-        clientRepository.deleteAll();
-        logout();
     }
 
     @Test

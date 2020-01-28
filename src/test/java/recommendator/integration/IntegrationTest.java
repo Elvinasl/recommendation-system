@@ -2,6 +2,7 @@ package recommendator.integration;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -22,6 +23,7 @@ import recommendator.config.AppConfig;
 import recommendator.config.DatabaseConfig;
 import recommendator.dto.LoginDTO;
 import recommendator.dto.ProjectDTO;
+import recommendator.repositories.*;
 import recommendator.services.ClientService;
 import recommendator.services.ProjectService;
 
@@ -38,12 +40,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class IntegrationTest {
 
-    @Autowired
-    protected WebApplicationContext wac;
-    @Autowired
-    protected ClientService clientService;
-    @Autowired
-    protected ProjectService projectService;
+    @Autowired protected WebApplicationContext wac;
+    @Autowired protected RowRepository rowRepository;
+    @Autowired protected UserPreferenceRepository userPreferenceRepository;
+    @Autowired protected UserRepository userRepository;
+    @Autowired protected ColumnNameRepository columnNameRepository;
+    @Autowired protected CellRepository cellRepository;
+    @Autowired protected BehaviorRepository behaviorRepository;
+    @Autowired protected ClientRepository clientRepository;
+    @Autowired protected ProjectRepository projectRepository;
+
+    @Autowired protected ProjectService projectService;
+    @Autowired protected ClientService clientService;
+
     protected MockMvc mockMvc;
     protected HttpHeaders httpHeaders;
     protected ObjectMapper objectMapper;
@@ -60,6 +69,18 @@ public abstract class IntegrationTest {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
     }
 
+    @AfterEach
+    void cleanupDatbase(){
+        behaviorRepository.deleteAll();
+        userPreferenceRepository.deleteAll();
+        cellRepository.deleteAll();
+        columnNameRepository.deleteAll();
+        rowRepository.deleteAll();
+        userRepository.deleteAll();
+        projectRepository.deleteAll();
+        clientRepository.deleteAll();
+        logout();
+    }
     @Test
     public void testSetup(){
         ServletContext servletContext = wac.getServletContext();

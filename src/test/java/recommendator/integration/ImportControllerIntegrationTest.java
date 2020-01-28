@@ -1,18 +1,13 @@
 package recommendator.integration;
 
 import org.assertj.core.util.Lists;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockServletContext;
-import recommendator.dto.*;
+import recommendator.dto.DatasetCellDTO;
+import recommendator.dto.DatasetDTO;
+import recommendator.dto.DatasetRowDTO;
 import recommendator.models.entities.ColumnName;
-import recommendator.repositories.*;
-import recommendator.services.ClientService;
-
-import javax.servlet.ServletContext;
 
 import java.util.List;
 
@@ -21,32 +16,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ImportControllerIntegrationTest extends IntegrationTest {
 
-    @Autowired
-    CellRepository cellRepository;
-    @Autowired
-    ColumnNameRepository columnNameRepository;
-    @Autowired
-    RowRepository rowRepository;
-    @Autowired
-    ClientRepository clientRepository;
-    @Autowired
-    ProjectRepository projectRepository;
-
     @BeforeEach
     void createClientAndLogin() throws Exception {
         createClientAndProject();
-    }
-
-    @AfterEach
-    void cleanupDatabase(){
-        cellRepository.deleteAll();
-        columnNameRepository.deleteAll();
-        rowRepository.deleteAll();
-        projectRepository.deleteAll();
-        clientRepository.deleteAll();
-        projectRepository.deleteAll();
-        clientRepository.deleteAll();
-        logout();
     }
 
     @Test
@@ -70,12 +42,12 @@ public class ImportControllerIntegrationTest extends IntegrationTest {
         // Creating a new project and validating if a api-key is handed back
         MockHttpServletResponse projectRequest = postRequest(datasetDTO, "/import");
         assertThat(projectRequest.getStatus()).isEqualTo(201);
-        assertThat(projectRequest.getContentAsString()).contains("message").contains("Data has been added");
+        assertThat(projectRequest.getContentAsString()).isEqualTo("{\"message\":\"Data has been added\"}");
 
         // Inserting the same row again (should give a duplicate row exception)
         projectRequest = postRequest(datasetDTO, "/import");
         assertThat(projectRequest.getStatus()).isEqualTo(409);
-        assertThat(projectRequest.getContentAsString()).contains("message").contains("duplicate");
+        assertThat(projectRequest.getContentAsString()).isEqualTo("{\"message\":\"Row duplicate found for row: Mr. Bean, Humor\"}");
 
     }
 

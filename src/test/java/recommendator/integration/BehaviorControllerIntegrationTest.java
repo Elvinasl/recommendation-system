@@ -1,63 +1,24 @@
 package recommendator.integration;
 
 import org.assertj.core.util.Lists;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
 import recommendator.dto.BehaviorDTO;
 import recommendator.dto.CellDTO;
-import recommendator.dto.DatasetDTO;
-import recommendator.dto.ProjectDTO;
-import recommendator.exceptions.NotFoundException;
 import recommendator.models.entities.Cell;
 import recommendator.models.entities.ColumnName;
 import recommendator.models.entities.Project;
 import recommendator.models.entities.Row;
-import recommendator.repositories.*;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class BehaviorControllerIntegrationTest extends IntegrationTest {
 
-    @Autowired
-    RowRepository rowRepository;
-    @Autowired
-    UserPreferenceRepository userPreferenceRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    ColumnNameRepository columnNameRepository;
-    @Autowired
-    CellRepository cellRepository;
-    @Autowired
-    BehaviorRepository behaviorRepository;
-    @Autowired
-    ClientRepository clientRepository;
-    @Autowired
-    ProjectRepository projectRepository;
-
     @BeforeEach
     void createClientAndLogin() throws Exception {
         createClientAndProject();
-    }
-
-    @AfterEach
-    void cleanupDatabase(){
-        behaviorRepository.deleteAll();
-        userPreferenceRepository.deleteAll();
-        cellRepository.deleteAll();
-        columnNameRepository.deleteAll();
-        rowRepository.deleteAll();
-        userRepository.deleteAll();
-        projectRepository.deleteAll();
-        clientRepository.deleteAll();
-        logout();
     }
 
     @Test
@@ -75,7 +36,7 @@ public class BehaviorControllerIntegrationTest extends IntegrationTest {
         // Insert behavior and check the result
         MockHttpServletResponse projectRequest = postRequest(behaviorDTO, "/behavior");
         assertThat(projectRequest.getStatus()).isEqualTo(202);
-        assertThat(projectRequest.getContentAsString()).contains("message").contains("Behavior recorded");
+        assertThat(projectRequest.getContentAsString()).isEqualTo("{\"message\":\"Behavior recorded\"}");
 
         // Insert behavior without api-key
         logout();
