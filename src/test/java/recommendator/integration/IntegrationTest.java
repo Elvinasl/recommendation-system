@@ -6,15 +6,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -26,17 +22,14 @@ import recommendator.config.AppConfig;
 import recommendator.config.DatabaseConfig;
 import recommendator.dto.LoginDTO;
 import recommendator.dto.ProjectDTO;
-import recommendator.models.entities.Client;
 import recommendator.services.ClientService;
 import recommendator.services.ProjectService;
 
 import javax.servlet.ServletContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { AppConfig.class, DatabaseConfig.class})
@@ -84,6 +77,45 @@ public abstract class IntegrationTest {
      */
     public MockHttpServletResponse postRequest(Object body, String route) throws Exception {
         return this.mockMvc.perform(post(route)
+                .headers(httpHeaders)
+                .content(objectMapper.writeValueAsString(body)))
+                .andReturn().getResponse();
+    }
+
+    /**
+     * Creates a get request to the given route and returns the response
+     * @param route url to call
+     * @return Request response
+     * @throws Exception
+     */
+    public MockHttpServletResponse getRequest(String route) throws Exception {
+        return this.mockMvc.perform(get(route)
+                .headers(httpHeaders))
+                .andReturn()
+                .getResponse();
+    }
+
+    /**
+     * Creates a delete request to the given route and returns the response
+     * @param route url to call
+     * @return Request response
+     * @throws Exception
+     */
+    public MockHttpServletResponse deleteRequest(String route) throws Exception {
+        return this.mockMvc.perform(delete(route)
+                .headers(httpHeaders))
+                .andReturn()
+                .getResponse();
+    }
+
+    /**
+     * Creates a patch request to the given route and returns the response
+     * @param route url to call
+     * @return Request response
+     * @throws Exception
+     */
+    public MockHttpServletResponse patchRequest(Object body, String route) throws Exception {
+        return this.mockMvc.perform(patch(route)
                 .headers(httpHeaders)
                 .content(objectMapper.writeValueAsString(body)))
                 .andReturn().getResponse();
