@@ -1,24 +1,18 @@
 package recommendator.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.Environment;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import recommendator.repositories.ClientRepository;
-import recommendator.services.ClientPrincipalDetailsService;
-import recommendator.config.security.jwt.JwtAuthenticationFilter;
-import recommendator.config.security.jwt.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -27,6 +21,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import recommendator.config.security.jwt.JwtAuthenticationFilter;
+import recommendator.config.security.jwt.JwtAuthorizationFilter;
+import recommendator.repositories.ClientRepository;
+import recommendator.services.ClientPrincipalDetailsService;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -95,9 +93,14 @@ public class SecurityConfig {
             @Override
             protected void configure(HttpSecurity http) throws Exception {
                 // First we configure it to allow authentication and authorization in REST
+
+
+
                 enableRESTAuthentication(http)
                         // Now let's say which requests we want to authorize
                         .authorizeRequests()
+//                        .and()
+//                        .cors()
                         .and()
                         .cors()
                         .and()
@@ -138,18 +141,6 @@ public class SecurityConfig {
             }
 
             @Bean
-            public CorsConfigurationSource corsConfigurationSource() {
-                CorsConfiguration configuration = new CorsConfiguration();
-                configuration.setAllowedOrigins(Arrays.asList("http://localhost"));
-                configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-                configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
-                configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                source.registerCorsConfiguration("/**", configuration);
-                return source;
-            }
-
-            @Bean
             DaoAuthenticationProvider authenticationProvider(){
                 DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
                 daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
@@ -157,6 +148,21 @@ public class SecurityConfig {
                 return daoAuthenticationProvider;
             }
         };
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Collections.singletonList("*"));
+        configuration.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE", "PATCH"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
+        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
     }
 
     @Bean

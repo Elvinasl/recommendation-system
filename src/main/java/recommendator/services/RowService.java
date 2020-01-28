@@ -69,8 +69,9 @@ public class RowService {
             return cell;
         }).collect(Collectors.toList());
 
+        List<String> cellValues = cells.stream().map(Cell::getValue).collect(Collectors.toList());
         // Check if a row already exists with those cells
-        if (rowRepository.rowExists(project, cells)) {
+        if (rowRepository.rowExists(project, cellValues)) {
             // Throw an exception when the row exists
             throw new RowAlreadyExistsException("Row duplicate found for row: " + cells.stream().map(Cell::getValue).collect(Collectors.joining(", ")));
         } else {

@@ -60,7 +60,7 @@ abstract class DatabaseRepository<T> {
     }
 
     @Transactional
-    public void remove(int id) {
+    public void remove(long id) {
         T o = this.getById(id);
         if (null != o) {
             em.remove(o);
