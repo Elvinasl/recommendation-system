@@ -12,7 +12,7 @@ class Helpers{
         if(typeof options["api-key"] !== "undefined"){
             headers["api-key"] = options["api-key"];
         }
-        console.log(headers);
+        // console.log(headers);
         // console.log(options);
         let data = "";
         let method = typeof options['method'] === "undefined" ? "GET" : options['method'];
@@ -74,6 +74,7 @@ class Helpers{
     }
     addTableData(table, rows, columnOrder = null, reverse = false){
         let resultElement = table.find("tbody");
+        console.log(rows);
         for(let row in rows){
             if(!rows.hasOwnProperty(row)) continue;
             let tr = $("<tr></tr>");
@@ -92,6 +93,12 @@ class Helpers{
             }
         }
     }
-
+    objectSize(obj) {
+        let size = 0, key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) size++;
+        }
+        return size;
+    };
 }
 let helpers = new Helpers();
