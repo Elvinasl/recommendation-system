@@ -79,6 +79,12 @@ public class ImportControllerIntegrationTest extends IntegrationTest {
 
     }
 
+    /**
+     * Creates a new column with the given data
+     * @param name of the column
+     * @param weight of the column
+     * @return New ColumnName object
+     */
     private ColumnName createColumn(String name, int weight){
         ColumnName columnName = new ColumnName();
         columnName.setName(name);
