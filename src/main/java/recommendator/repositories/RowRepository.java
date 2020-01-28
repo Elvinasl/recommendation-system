@@ -1,19 +1,16 @@
 package recommendator.repositories;
 
 
+import org.springframework.stereotype.Repository;
 import recommendator.exceptions.NotFoundException;
 import recommendator.models.containers.RowWithPoints;
-import recommendator.models.entities.Cell;
 import recommendator.models.entities.Project;
 import recommendator.models.entities.Row;
 import recommendator.models.entities.User;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class RowRepository extends DatabaseRepository<Row> {
@@ -28,12 +25,12 @@ public class RowRepository extends DatabaseRepository<Row> {
      * true will be given.
      *
      * @param project the cells belong to
-     * @param cells   containing the values that should be inserted into the database
+     * @param cellValues containing the values that should all match for a specific row
      * @return true if a row exists with the given cells
      * @throws NoResultException get's thrown when there is no row found
      */
     @Transactional
-    public boolean rowExists(Project project, List<Cell> cells) throws NoResultException {
+    public boolean rowExists(Project project, List<String> cellValues) throws NoResultException {
         long count = em.createQuery(
                 "SELECT COUNT(cell.id) FROM Cell cell " +
                         "INNER JOIN cell.row r " +
@@ -42,9 +39,10 @@ public class RowRepository extends DatabaseRepository<Row> {
                         "WHERE cell.row.id IN " +
                         "(SELECT MIN(c.row.id) FROM Cell c " +
                         "WHERE c.value IN :cellValues AND c.row.project = :project " +
-                        "GROUP BY c.row.id HAVING COUNT(c.id) = SIZE(f))", Long.class)
-                .setParameter("cellValues", cells.stream().map(Cell::getValue).collect(Collectors.toList()))
+                        "GROUP BY c.row.id HAVING COUNT(c.id) = :size)", Long.class)
+                .setParameter("cellValues", cellValues)
                 .setParameter("project", project)
+                .setParameter("size", (long) cellValues.size())
                 .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Unknown row"));
 
             return count > 0;
@@ -68,9 +66,10 @@ public class RowRepository extends DatabaseRepository<Row> {
                         "WHERE cell.row.id IN " +
                         "(SELECT MIN(c.row.id) FROM Cell c " +
                         "WHERE c.value IN :cellValues AND c.row.project = :project " +
-                        "GROUP BY c.row.id HAVING COUNT(c.id) = SIZE(f))", Row.class)
+                        "GROUP BY c.row.id HAVING COUNT(c.id) = :size)", Row.class)
                 .setParameter("cellValues", cellValues)
                 .setParameter("project", project)
+                .setParameter("size", (long) cellValues.size())
                 .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Unknown row"));
 
     }
