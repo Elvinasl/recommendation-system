@@ -9,6 +9,7 @@ import recommendator.dto.ReturnObjectDTO;
 import recommendator.dto.RowDTO;
 import recommendator.exceptions.NotFoundException;
 import recommendator.exceptions.RowAlreadyExistsException;
+import recommendator.exceptions.responses.Response;
 import recommendator.models.containers.RowWithPoints;
 import recommendator.models.entities.*;
 import recommendator.repositories.ColumnNameRepository;
@@ -123,6 +124,7 @@ public class RowService {
        List<RowDTO> rowDTOs = rows.stream()
            .map(row -> {
             RowDTO rowDTO = new RowDTO();
+            rowDTO.setId(row.getId());
             rowDTO.convertCellsToDTO(row.getCells());
             rowDTO.setReactions(Math.round(row.getPoints()));
             return rowDTO;
@@ -130,5 +132,16 @@ public class RowService {
            .collect(Collectors.toList());
 
        return new ReturnObjectDTO<>(rowDTOs);
+    }
+
+    /**
+     * Deletes a row by the given row id
+     *
+     * @param rowId Id of the row
+     * @return global response class
+     */
+    public Response deleteRow(long rowId) {
+        rowRepository.remove(rowId);
+        return new Response("Row deleted!");
     }
 }

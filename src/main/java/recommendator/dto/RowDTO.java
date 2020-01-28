@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RowDTO {
+    private Long id;
     private List<CellDTO> cells;
     private Integer reactions;
 

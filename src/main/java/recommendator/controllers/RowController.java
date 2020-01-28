@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import recommendator.dto.ReturnObjectDTO;
+import recommendator.exceptions.responses.Response;
 import recommendator.services.RowService;
 
 @RestController
@@ -22,7 +23,10 @@ public class RowController {
         return ResponseEntity.ok(rowService.getByApiKey(apiKey));
     }
 
-    // TODO: update row
+    @DeleteMapping(path = "/rows/{rowId}")
+    public ResponseEntity<Response> getByApiKey(@PathVariable("rowId") long rowId) {
+        return ResponseEntity.ok(rowService.deleteRow(rowId));
+    }
 
-    // TODO: delete a row
+    // TODO: update row
 }
