@@ -1,11 +1,10 @@
 package recommendator.controllers;
 
-import recommendator.dto.GeneratedRecommendationDTO;
-import recommendator.dto.RecommendationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import recommendator.dto.GeneratedRecommendationDTO;
 import recommendator.services.algorithm.AlgorithmCore;
 
 @RestController
@@ -19,8 +18,9 @@ public class AlgorithmController {
         this.algorithmCore = algorithmCore;
     }
 
-    @GetMapping
-    public ResponseEntity<GeneratedRecommendationDTO> getRecommendation(@RequestHeader("api-key") String apiKey, @RequestBody RecommendationDTO recommendationDTO) {
-        return new ResponseEntity<>(algorithmCore.generateRecommendation(apiKey, recommendationDTO), HttpStatus.OK);
+    @GetMapping(path = "user/{external-user-id}")
+    public ResponseEntity<GeneratedRecommendationDTO> getRecommendation(@RequestHeader("api-key") String apiKey, @PathVariable("external-user-id") String externalUserId, @RequestParam("amount") int amount) {
+
+        return new ResponseEntity<>(algorithmCore.generateRecommendation(apiKey, externalUserId, amount), HttpStatus.OK);
     }
 }

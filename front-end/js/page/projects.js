@@ -1,11 +1,8 @@
 
 
 $(function(){
-
-    $("#title").html("Projects");
-
+    navigator.parameterManager.remove("api-key");
     loadProjects();
-
 });
 function loadProjects(){
 
@@ -14,16 +11,18 @@ function loadProjects(){
         method: "GET",
         url: "/projects",
         success: function (data) {
-            let rows = data["objects"];
 
+            let rows = data["objects"];
 
             for(let row in rows){
                 if(!rows.hasOwnProperty(row)) continue;
                 rows[row]['refresh-key'] = getRefreshKeyBtn(rows[row]['apiKey']);
+                rows[row]['show'] = getShowRowsBtn(rows[row]['apiKey']);
+                rows[row]['recommendations'] = getRecommendationsBtn(rows[row]['apiKey']);
                 rows[row]['edit'] = getEditBtn(rows[row]['name'], rows[row]['apiKey']);
                 rows[row]['delete'] = getDeleteBtn(rows[row]['apiKey']);
             }
-            helpers.addTableData($("#list-of-projects"), data["objects"], ["name", "apiKey", "refresh-key", "edit", "delete"],true);
+            helpers.addTableData($("#list-of-projects"), data["objects"], ["name", "apiKey", "refresh-key", "show", "recommendations", "edit", "delete"],true);
         },
         error: function (response) {
             helpers.alert("Something went wrong", "danger", 5000);
@@ -41,6 +40,24 @@ function getRefreshKeyBtn(key){
     });
     editBtn.data('key', key);
     return editBtn;
+}
+function getShowRowsBtn(key){
+    let btn = $("<button class='btn btn-sm btn-primary'><i class='fa fa-eye'></i></button>");
+    btn.click(function(){
+        navigator.parameterManager.set("api-key", $(this).data('key'));
+        navigator.load('show-project');
+    });
+    btn.data('key', key);
+    return btn;
+}
+function getRecommendationsBtn(key){
+    let btn = $("<button class='btn btn-sm btn-primary'><i class='fa fa-eye'></i></button>");
+    btn.click(function(){
+        navigator.parameterManager.set("api-key", $(this).data('key'));
+        navigator.load('recommendations');
+    });
+    btn.data('key', key);
+    return btn;
 }
 function getEditBtn(name, key){
     let editBtn = $("<button class='btn btn-sm btn-primary'><i class='fa fa-edit'></i></button>");
