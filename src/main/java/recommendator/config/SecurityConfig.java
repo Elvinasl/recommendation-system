@@ -99,8 +99,6 @@ public class SecurityConfig {
                 enableRESTAuthentication(http)
                         // Now let's say which requests we want to authorize
                         .authorizeRequests()
-//                        .and()
-//                        .cors()
                         .and()
                         .cors()
                         .and()
@@ -125,7 +123,7 @@ public class SecurityConfig {
                 http
                         .authorizeRequests()
                         // configure access rules
-                        .antMatchers(HttpMethod.POST, "/login", "/register").permitAll()
+                        .antMatchers(HttpMethod.POST, "/login", "/register", "/behavior").permitAll()
                         .anyRequest().authenticated();
 
                 // add jwt filters (1. authentication, 2. authorization)
