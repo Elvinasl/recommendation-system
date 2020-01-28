@@ -9,11 +9,25 @@ class Helpers{
         if(navigator.authentication !== null){
             headers["Authorization"] = navigator.authentication;
         }
+        if(typeof options["api-key"] !== "undefined"){
+            headers["api-key"] = options["api-key"];
+        }
+        console.log(headers);
+        // console.log(options);
+        let data = "";
+        let method = typeof options['method'] === "undefined" ? "GET" : options['method'];
+        if(typeof options['data'] !== "undefined"){
+            data = options['data'];
+            if(method.toLowerCase() !== "get"){
+                data = JSON.stringify(data);
+            }
+        }
+
         $.ajax({
             headers: headers,
-            method: typeof options['method'] === "undefined" ? "GET" : options['method'],
+            method: method,
             url: host + options['url'],
-            data: JSON.stringify(typeof options['data'] === "undefined" ? "" : options['data']),
+            data: data,
             crossDomain: true,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
