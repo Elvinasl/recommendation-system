@@ -3,10 +3,10 @@ package recommendator.services.algorithm.filters;
 import org.springframework.stereotype.Service;
 import recommendator.services.algorithm.FiltersData;
 
-@Service
 /**
  *  Sums upp cell, columnName (column) and row weights. After that it also takes row points into account.
-**/
+ */
+@Service
 public class WeightsFilter implements AlgorithmFilter {
 
     @Override
