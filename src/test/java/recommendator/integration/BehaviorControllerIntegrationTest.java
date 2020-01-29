@@ -41,7 +41,7 @@ public class BehaviorControllerIntegrationTest extends IntegrationTest {
         // Insert behavior without api-key
         logout();
         projectRequest = postRequest(behaviorDTO, "/behavior");
-        assertThat(projectRequest.getStatus()).isEqualTo(403);
+        assertThat(projectRequest.getStatus()).isEqualTo(400);
     }
 
     /**
