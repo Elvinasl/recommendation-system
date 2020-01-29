@@ -1,20 +1,33 @@
 
 
 $(function(){
+
     loadRecommendations();
+
+
+    $("#recommendation-for-user-btn").click(function(){
+        let userId = $("#user-id").val();
+        navigator.parameterManager.set("user", userId);
+        navigator.updateHash();
+        loadRecommendations(userId);
+
+    });
 });
 
-function loadRecommendations(){
+function loadRecommendations(userId){
 
-    // console.log(navigator.parameterManager.all());
-    // console.log(navigator.parameterManager.get("api-key"));
-    // console.log("--------");
+    let url = "/recommendation";
+    if(typeof userId !== "undefined" && userId.length > 0){
+        url += "/user/" + userId;
+    }
 
-
+    let table = $("#list-of-recommendations");
+    helpers.clearTableHeaders(table);
+    helpers.clearTableData(table);
 
     helpers.ajax({
         method: "GET",
-        url: "/recommendation",
+        url: url,
         "api-key": navigator.parameterManager.get("api-key"),
         data: {
             "amount": 15
@@ -28,7 +41,7 @@ function loadRecommendations(){
                 let columns = [];
                 let rows = data["rows"];
                 let cellsOfFirstObject = data["rows"][0]["cells"];
-                let headOfTable = $("#list-of-recommendations").find("thead");
+                let headOfTable = table.find("thead");
                 let headRow = $("<tr></tr>");
                 for(let i in cellsOfFirstObject){
                     columns[columns.length] = cellsOfFirstObject[i]["columnName"];
@@ -48,12 +61,12 @@ function loadRecommendations(){
                     tableData[tableData.length] = cells;
                 }
 
-                helpers.addTableData($("#list-of-recommendations"), tableData, columns,true);
+                helpers.addTableData(table, tableData, columns,true);
             }
         },
         error: function (response) {
             helpers.alert("Something went wrong", "danger", 5000);
         }
-    })
+    });
 
 }

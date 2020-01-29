@@ -16,13 +16,20 @@ function loadProjects(){
 
             for(let row in rows){
                 if(!rows.hasOwnProperty(row)) continue;
-                rows[row]['refresh-key'] = getRefreshKeyBtn(rows[row]['apiKey']);
-                rows[row]['show'] = getShowRowsBtn(rows[row]['apiKey']);
-                rows[row]['recommendations'] = getRecommendationsBtn(rows[row]['apiKey']);
-                rows[row]['edit'] = getEditBtn(rows[row]['name'], rows[row]['apiKey']);
-                rows[row]['delete'] = getDeleteBtn(rows[row]['apiKey']);
+
+                rows[row]["actions"] = $("<div class='actions'></div>");
+                rows[row]["actions"].append(getRefreshKeyBtn(rows[row]['apiKey']));
+                rows[row]["actions"].append(getShowRowsBtn(rows[row]['name'], rows[row]['apiKey']));
+                rows[row]["actions"].append(getRecommendationsBtn(rows[row]['apiKey']));
+                rows[row]["actions"].append(getEditBtn(rows[row]['name'], rows[row]['apiKey']));
+                rows[row]["actions"].append(getDeleteBtn(rows[row]['apiKey']));
+                // rows[row]['refresh-key'] = getRefreshKeyBtn(rows[row]['apiKey']);
+                // rows[row]['show'] = getShowRowsBtn(rows[row]['apiKey']);
+                // rows[row]['recommendations'] = getRecommendationsBtn(rows[row]['apiKey']);
+                // rows[row]['edit'] = getEditBtn(rows[row]['name'], rows[row]['apiKey']);
+                // rows[row]['delete'] = getDeleteBtn(rows[row]['apiKey']);
             }
-            helpers.addTableData($("#list-of-projects"), data["objects"], ["name", "apiKey", "refresh-key", "show", "recommendations", "edit", "delete"],true);
+            helpers.addTableData($("#list-of-projects"), data["objects"], ["name", "apiKey", "actions"],true);
         },
         error: function (response) {
             helpers.alert("Something went wrong", "danger", 5000);
@@ -41,12 +48,14 @@ function getRefreshKeyBtn(key){
     editBtn.data('key', key);
     return editBtn;
 }
-function getShowRowsBtn(key){
+function getShowRowsBtn(name, key){
     let btn = $("<button class='btn btn-sm btn-primary'><i class='fa fa-eye'></i></button>");
     btn.click(function(){
         navigator.parameterManager.set("api-key", $(this).data('key'));
-        navigator.load('show-project');
+        navigator.parameterManager.set("project-name", $(this).data('name'));
+        navigator.load('rows');
     });
+    btn.data('name', name);
     btn.data('key', key);
     return btn;
 }

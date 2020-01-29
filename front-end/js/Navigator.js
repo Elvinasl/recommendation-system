@@ -286,5 +286,4 @@ $(function(){
             navigator.doNotUpdateHash = true;
         }
     };
-    // console.log('hi');
 });
