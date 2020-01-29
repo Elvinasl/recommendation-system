@@ -15,6 +15,9 @@ import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This service contains all the logic for everything that has something to do with Clients.
+ */
 @Service
 public class ClientService  {
 
@@ -27,6 +30,11 @@ public class ClientService  {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Creates a new {@link Client} if the requested client does not yet exist
+     * @param loginDTO containing login information
+     * @return message with the status
+     */
     public Response add(LoginDTO loginDTO) {
         try {
             clientRepository.getByEmail(loginDTO.getEmail());
@@ -44,6 +52,11 @@ public class ClientService  {
         throw new SomethingWentWrongException("Client with this email already exists!");
     }
 
+    /**
+     * Makes the {@link Client} with a specific ID Admin.
+     * @param clientId of the client that should be made admin.
+     * @return message with the status
+     */
     public Response makeAdmin(Long clientId) {
         Client client = getById(clientId);
         client.setRole("ADMIN");
@@ -51,6 +64,11 @@ public class ClientService  {
         return new Response("Client " + client.getEmail() + " is now admin!");
     }
 
+    /**
+     * Disables a {@link Client} with a specific ID.
+     * @param clientId of the client that should be disabled
+     * @return message with the status
+     */
     public Response disable(Long clientId) {
         Client client = getById(clientId);
         client.setActivated(false);
@@ -58,10 +76,19 @@ public class ClientService  {
         return new Response("Client deleted!");
     }
 
+    /**
+     * Gathers a {@link Client} with a specific ID.
+     * @param clientId to find
+     * @return the client that has bin found
+     */
     private Client getById(Long clientId) {
         return clientRepository.getById(clientId);
     }
 
+    /**
+     * Gathers all the clients and returns them as a DTO.
+     * @return DTO of all clients
+     */
     public AllClientsDTO getAllClients() {
         List<ClientDTO> clients = clientRepository.getAllByActivated(true)
                 .stream()

@@ -18,6 +18,9 @@ import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This service contains all the logic for everything that has something to do with Rows.
+ */
 @Service
 public class RowService {
 

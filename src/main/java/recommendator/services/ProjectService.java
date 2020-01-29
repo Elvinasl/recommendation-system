@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * This service contains all the logic for everything that has something to do with Projects.
+ */
 @Service
 public class ProjectService {
 
@@ -98,29 +101,31 @@ public class ProjectService {
 
         // Remove the project by id
         projectRepository.remove(project.getId());
-
         return new Response("Project deleted");
     }
 
+    /**
+     * Updates the name of the project with a specific api-key.
+     * @param key to identify the project
+     * @param projectDTO with the new name
+     * @return updated Project information
+     */
     public ProjectDTO updateNameForCurrentClient(String key, ProjectDTO projectDTO) {
-
         Project project = projectRepository.getByApiKeyAndClient(key, this.getCurrentClient());
-
         project.setName(projectDTO.getName());
-
         projectRepository.update(project);
-
         return new ProjectDTO(project.getName(), project.getApiKey());
     }
 
+    /**
+     * Updates the api-key for a specific project.
+     * @param key to identify the project
+     * @return updated Project information
+     */
     public ProjectDTO refreshKeyForCurrentClient(String key) {
-
         Project project = projectRepository.getByApiKeyAndClient(key, this.getCurrentClient());
-
         project.setApiKey(UUID.randomUUID().toString());
-
         projectRepository.update(project);
-
         return new ProjectDTO(project.getName(), project.getApiKey());
     }
 
@@ -174,7 +179,9 @@ public class ProjectService {
         }
     }
 
-
+    /**
+     * @return currently authenticated {@link Client}
+     */
     private Client getCurrentClient(){
         String clientUsername = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return clientPrincipalDetailsService.getClientByUsername(clientUsername);
