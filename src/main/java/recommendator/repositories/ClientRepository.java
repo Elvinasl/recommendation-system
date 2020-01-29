@@ -16,14 +16,14 @@ public class ClientRepository extends DatabaseRepository<Client> {
 
     @Transactional
     public Client getByEmail(String email) throws NoResultException {
-        return (Client) em.createQuery("SELECT c FROM Client c WHERE c.email = :email")
+        return em.createQuery("SELECT c FROM Client c WHERE c.email = :email", Client.class)
                 .setParameter("email", email)
                 .getSingleResult();
     }
 
     @Transactional
     public List<Client> getAllByActivated(boolean isActivated) {
-        return em.createQuery("SELECT c FROM Client c WHERE c.activated = :isActivated")
+        return em.createQuery("SELECT c FROM Client c WHERE c.activated = :isActivated", Client.class)
                 .setParameter("isActivated", isActivated)
                 .getResultList();
     }
