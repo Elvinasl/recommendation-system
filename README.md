@@ -1,5 +1,13 @@
 # recommendation-system
 
+### Build status
+| Branch  | Status |
+| ------------- | ------------- |
+| master  |  ![](https://github.com/Elvinasl/recommendation-system/workflows/Build/badge.svg?branch=master)
+ |
+| develop  | ![](https://github.com/Elvinasl/recommendation-system/workflows/Build/badge.svg?branch=develop)
+ |
+
 The idea is to create a system that could be used to generate recommendations for the content based on the previous user’s liked content.
 
 By using the REST API, the client could create a new project and fill it with the desired data that will be used for future predictions. Data has to contain labels (column names). These labels can be anything, for instance, music genre or image resolutions, it’s all up to the client.
