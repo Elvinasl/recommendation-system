@@ -8,6 +8,9 @@ import recommendator.models.entities.shared.Weight;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+/**
+ * UserPreference is a dynamic weight that is adjusted for each user individual based on there {@link Behavior}.
+ */
 @Entity
 @Data
 @AllArgsConstructor
