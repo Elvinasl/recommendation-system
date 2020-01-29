@@ -13,6 +13,11 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A client can be seen as a customer from the service. Clients should not be confused with {@link User}'s
+ * since a client is the person that can create/update/delete projects while an user is the one using
+ * the client's projects.
+ */
 @Entity
 @Data
 @AllArgsConstructor

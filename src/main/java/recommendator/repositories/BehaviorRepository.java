@@ -16,6 +16,14 @@ public class BehaviorRepository extends DatabaseRepository<Behavior> {
         super(Behavior.class);
     }
 
+    /**
+     * Gathers all the {@link Behavior} records from the database for a specific user and project.
+     * It also filters the records by like or dislike.
+     * @param user the {@link Behavior} belongs to
+     * @param liked or disliked
+     * @param project the {@link recommendator.models.entities.Row} belongs to
+     * @return list of all the {@link Behavior}'s
+     */
     @Transactional
     public List<Behavior> getBehaviorsByUserAndTypeAndProject(User user, boolean liked, Project project) {
         return em.createQuery("SELECT b " +
@@ -30,9 +38,13 @@ public class BehaviorRepository extends DatabaseRepository<Behavior> {
                 .getResultList();
     }
 
+    /**
+     * Gathers all the {@link Behavior} records from the database for a specific user
+     * @param user the {@link Behavior} belongs to
+     * @return list of all the {@link Behavior}'s
+     */
     @Transactional
     public List<Behavior> getBehaviorsByUser(User user) {
-
         return em.createQuery("SELECT b " +
                 "FROM Behavior b " +
                 "JOIN FETCH b.row r " +

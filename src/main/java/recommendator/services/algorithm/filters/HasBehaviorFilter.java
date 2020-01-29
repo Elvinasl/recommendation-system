@@ -10,6 +10,10 @@ import recommendator.repositories.RowRepository;
 
 import java.util.List;
 
+/**
+ * This filter checks if FilterData has a {@link User}, if not it sets
+ * the rows with the most liked rows from the {@link Project}.
+ */
 @Service
 public class HasBehaviorFilter implements AlgorithmFilter {
 

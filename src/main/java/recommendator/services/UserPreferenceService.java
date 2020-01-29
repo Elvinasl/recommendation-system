@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import recommendator.repositories.UserPreferenceRepository;
 
+/**
+ * This service contains all the logic for everything that has something to do with UserPreferences.
+ */
 @Service
 @PropertySource("classpath:algorithm.properties")
 public class UserPreferenceService {
@@ -25,6 +28,12 @@ public class UserPreferenceService {
         this.userPreferenceRepository = userPreferenceRepository;
     }
 
+    /**
+     * Creates or adjusts the userPreference for a specific user.
+     * @param user to create or adjust for
+     * @param row to create or adjust the cells for
+     * @param behavior containing the liked/disliked info
+     */
     @Transactional
     public void createOrAdjust(User user, Row row, Behavior behavior) {
         row.getCells().forEach(cell -> {

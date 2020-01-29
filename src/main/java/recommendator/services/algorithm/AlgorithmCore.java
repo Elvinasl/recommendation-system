@@ -1,23 +1,31 @@
 package recommendator.services.algorithm;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import recommendator.dto.GeneratedRecommendationDTO;
-import recommendator.dto.RecommendationDTO;
 import recommendator.dto.RowDTO;
 import recommendator.models.containers.RowWithPoints;
 import recommendator.models.entities.Project;
 import recommendator.models.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import recommendator.services.CellService;
 import recommendator.services.ProjectService;
 import recommendator.services.UserService;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The AlgorithmCore handles everything that has something to do with filtering for the recommendations.
+ *
+ * <b>Recommendations</b><br>
+ * In order to generate recommendations there is a filter system. This filter system is a chain of filters that are
+ * being executed after each other. This order is specified in the {@link FilterManager}. Every filter shares the
+ * {@link FiltersData} object that keeps track of the information required for filtering.
+ * Every filter gets called with that object and can modify the score for each {@link recommendator.models.entities.Row}.
+ * This score defines how likely the user is going to like that specific {@link recommendator.models.entities.Row}.
+ *
+ * At the end of filtering the list will be sorted based on the points and be converted to a {@link GeneratedRecommendationDTO}.
+ */
 @Service
 public class AlgorithmCore {
 
@@ -34,15 +42,28 @@ public class AlgorithmCore {
         this.filterManager = filterManager;
     }
 
+    /**
+     * Creates recommendations for an user from a {@link Project} with the given api-key.
+     * @param apiKey of the project to recommend for
+     * @param externalUserId to recommend for
+     * @param amount limit the amount of results
+     * @return All the rows that are being recommended
+     */
     @Transactional
-    public GeneratedRecommendationDTO generateRecommendation(String apiKey, RecommendationDTO recommendationDTO) {
+    public GeneratedRecommendationDTO generateRecommendation(String apiKey, String externalUserId, int amount) {
+        if(amount < 0){
+            amount = 1;
+        }else if(amount > 20){
+            amount = 20;
+        }
+
         Project project = projectService.getByApiKey(apiKey);
-        User user = userService.findByExternalIdAndProjectOrNull(recommendationDTO.getUserId(), project);
+        User user = userService.findByExternalIdAndProjectOrNull(externalUserId, project);
 
         FiltersData filtersData = new FiltersData();
         filtersData.setProject(project);
         filtersData.setUser(user);
-        filtersData.setAmount(recommendationDTO.getAmount());
+        filtersData.setAmount(amount);
 
         filterManager.getFilters().forEach(f -> {
             if (!filtersData.isFinished()) {
@@ -54,7 +75,6 @@ public class AlgorithmCore {
         filtersData.getRows().sort(AlgorithmPointsComparator.comparator);
 
         // eliminating possibility to get index out of bounds
-        int amount = recommendationDTO.getAmount();
         if(filtersData.getRows().size() < amount) {
             amount = filtersData.getRows().size();
         }
@@ -65,7 +85,12 @@ public class AlgorithmCore {
         return generateDTO(rows);
     }
 
-
+    /**
+     * Converts a {@link List<RowWithPoints>} to {@link GeneratedRecommendationDTO}. This because the filter
+     * does work with {@link List<RowWithPoints>} but the client should receive a DTO.
+     * @param rows to convert
+     * @return DTO containing all the rows
+     */
     private GeneratedRecommendationDTO generateDTO(List<RowWithPoints> rows) {
         GeneratedRecommendationDTO generatedRecommendationDTO = new GeneratedRecommendationDTO();
         generatedRecommendationDTO.setRows(rows.stream()

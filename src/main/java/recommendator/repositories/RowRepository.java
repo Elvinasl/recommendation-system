@@ -1,19 +1,19 @@
 package recommendator.repositories;
 
 
+import org.springframework.stereotype.Repository;
+import recommendator.dto.RowDTO;
 import recommendator.exceptions.NotFoundException;
 import recommendator.models.containers.RowWithPoints;
-import recommendator.models.entities.Cell;
 import recommendator.models.entities.Project;
 import recommendator.models.entities.Row;
 import recommendator.models.entities.User;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Repository
 public class RowRepository extends DatabaseRepository<Row> {
@@ -28,12 +28,12 @@ public class RowRepository extends DatabaseRepository<Row> {
      * true will be given.
      *
      * @param project the cells belong to
-     * @param cells   containing the values that should be inserted into the database
+     * @param cellValues containing the values that should all match for a specific row
      * @return true if a row exists with the given cells
      * @throws NoResultException get's thrown when there is no row found
      */
     @Transactional
-    public boolean rowExists(Project project, List<Cell> cells) throws NoResultException {
+    public boolean rowExists(Project project, List<String> cellValues) throws NoResultException {
         long count = em.createQuery(
                 "SELECT COUNT(cell.id) FROM Cell cell " +
                         "INNER JOIN cell.row r " +
@@ -42,9 +42,10 @@ public class RowRepository extends DatabaseRepository<Row> {
                         "WHERE cell.row.id IN " +
                         "(SELECT MIN(c.row.id) FROM Cell c " +
                         "WHERE c.value IN :cellValues AND c.row.project = :project " +
-                        "GROUP BY c.row.id HAVING COUNT(c.id) = SIZE(f))", Long.class)
-                .setParameter("cellValues", cells.stream().map(Cell::getValue).collect(Collectors.toList()))
+                        "GROUP BY c.row.id HAVING COUNT(c.id) = :size)", Long.class)
+                .setParameter("cellValues", cellValues)
                 .setParameter("project", project)
+                .setParameter("size", (long) cellValues.size())
                 .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Unknown row"));
 
             return count > 0;
@@ -68,13 +69,24 @@ public class RowRepository extends DatabaseRepository<Row> {
                         "WHERE cell.row.id IN " +
                         "(SELECT MIN(c.row.id) FROM Cell c " +
                         "WHERE c.value IN :cellValues AND c.row.project = :project " +
-                        "GROUP BY c.row.id HAVING COUNT(c.id) = SIZE(f))", Row.class)
+                        "GROUP BY c.row.id HAVING COUNT(c.id) = :size)", Row.class)
                 .setParameter("cellValues", cellValues)
                 .setParameter("project", project)
-                .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Unknown row"));
+                .setParameter("size", (long) cellValues.size())
+                .getResultList()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Unknown row"));
 
     }
 
+    /**
+     * Gathers the most liked {@link Row}'s from the database and converts them into {@link List<RowWithPoints>}
+     * containing the row and the amount of likes/dislikes.
+     * @param project the {@link Row}'s should belong to
+     * @param amount limit the total results
+     * @return list of the most liked {@link Row}'s including there likes/dislike points.
+     */
     @Transactional
     public List<RowWithPoints> findMostLiked(Project project, int amount) {
         return em.createQuery("SELECT " +
@@ -92,6 +104,13 @@ public class RowRepository extends DatabaseRepository<Row> {
                 .getResultList();
     }
 
+    /**
+     * Gathers the most liked {@link Row}'s from the database for a specific {@link User} and converts
+     * them into {@link List<RowWithPoints>} containing the {@link Row} and the amount of likes/dislikes.
+     * @param project the {@link Row}'s should belong to
+     * @param user the {@link recommendator.models.entities.Behavior} should belong to
+     * @return list of the most liked {@link Row}'s for a specific user including there likes/dislike points.
+     */
     @Transactional
     public List<RowWithPoints> getMostLikedContentForProjectAndUser(Project project, User user) {
         return em.createQuery("SELECT " +
@@ -103,6 +122,26 @@ public class RowRepository extends DatabaseRepository<Row> {
                 "ORDER BY COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", RowWithPoints.class)
                 .setParameter("project", project)
                 .setParameter("user", user)
+                .getResultList();
+    }
+
+    /**
+     * Gathers all {@link Row}'s with the amount of likes/dislikes with it and converts it into a {@link List<RowWithPoints>}
+     * @param apiKey of the project
+     * @return list of the all liked/disliked {@link Row}'s including there likes/dislike points.
+     */
+    @Transactional
+    public List<RowWithPoints> findAllByApiKey(String apiKey) {
+        return em.createQuery("SELECT " +
+                "NEW recommendator.models.containers.RowWithPoints(" +
+                "r, " +
+                "COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END)) " +
+                "FROM Row r " +
+                "INNER JOIN r.behaviors b " +
+                "FETCH ALL PROPERTIES " +
+                "WHERE r.project.apiKey = :apiKey " +
+                "GROUP BY r ", RowWithPoints.class)
+                .setParameter("apiKey", apiKey)
                 .getResultList();
     }
 }

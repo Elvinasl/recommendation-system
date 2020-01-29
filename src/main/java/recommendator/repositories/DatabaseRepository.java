@@ -8,6 +8,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
+/**
+ * Defines the basic operations for each repository (database related)
+ * @param <T> Object type of the repository
+ */
 abstract class DatabaseRepository<T> {
 
     private final Class<T> type;
@@ -60,11 +64,16 @@ abstract class DatabaseRepository<T> {
     }
 
     @Transactional
-    public void remove(int id) {
+    public void remove(long id) {
         T o = this.getById(id);
         if (null != o) {
             em.remove(o);
         }
+    }
+
+    @Transactional
+    public void flush() {
+        em.flush();
     }
 
     @Transactional
@@ -75,4 +84,9 @@ abstract class DatabaseRepository<T> {
         throw new NonUniqueResultException();
     }
 
+    @Transactional
+    public void deleteAll(){
+        em.createQuery("DELETE FROM  " + type.getName())
+                .executeUpdate();
+    }
 }
