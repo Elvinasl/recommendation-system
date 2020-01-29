@@ -123,7 +123,7 @@ public class SecurityConfig {
                 http
                         .authorizeRequests()
                         // configure access rules
-                        .antMatchers(HttpMethod.POST, "/login", "/register").permitAll()
+                        .antMatchers(HttpMethod.POST, "/login", "/register", "/behavior").permitAll()
                         .antMatchers(HttpMethod.GET, "/recommendation").permitAll()
                         .anyRequest().authenticated();
 

@@ -68,6 +68,11 @@ abstract class DatabaseRepository<T> {
     }
 
     @Transactional
+    public void flush() {
+        em.flush();
+    }
+
+    @Transactional
     public T getSingleResultOrNull(Query query){
         List results = query.getResultList();
         if (results.isEmpty()) return null;

@@ -11,6 +11,8 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 public class CellDTO {
 
+    private Long id;
+
     @NotEmpty
     private String columnName;
 
