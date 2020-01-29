@@ -4,9 +4,7 @@
 | Branch  | Status |
 | ------------- | ------------- |
 | master  |  ![](https://github.com/Elvinasl/recommendation-system/workflows/Build/badge.svg?branch=master)
- |
-| develop  | ![](https://github.com/Elvinasl/recommendation-system/workflows/Build/badge.svg?branch=develop)
- |
+| develop  | ![](https://github.com/Elvinasl/recommendation-system/workflows/Build/badge.svg?branch=develop)|
 
 The idea is to create a system that could be used to generate recommendations for the content based on the previous user’s liked content.
 
