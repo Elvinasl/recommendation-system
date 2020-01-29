@@ -39,6 +39,9 @@ class RowServiceTest {
     @Mock
     private ColumnNameRepository columnNameRepository;
 
+    @Mock
+    private ColumnNameService columnNameService;
+
     @InjectMocks
     RowService rowService;
 
@@ -51,7 +54,7 @@ class RowServiceTest {
 
         Project project = new Project();
 
-        Mockito.when(columnNameRepository.getByNameAndProject("column", project))
+        Mockito.when(columnNameService.getByNameAndProject("column", project))
                 .thenThrow(NoResultException.class) // Throw an NoResultException first time
                 .thenReturn(new ColumnName()); // Return a ColumnName object the second time
 
