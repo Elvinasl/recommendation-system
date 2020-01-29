@@ -12,12 +12,15 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RowDTO {
+    private Long id;
     private List<CellDTO> cells;
+    private Integer reactions;
 
     public void convertCellsToDTO(List<Cell> cells) {
         this.cells = cells.stream()
                 .map(cell -> {
                     CellDTO cellDTO = new CellDTO();
+                    cellDTO.setId(cell.getId());
                     cellDTO.setColumnName(cell.getColumnName().getName());
                     cellDTO.setValue(cell.getValue());
                     return cellDTO;

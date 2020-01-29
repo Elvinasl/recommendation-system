@@ -2,6 +2,7 @@ package recommendator.repositories;
 
 
 import org.springframework.stereotype.Repository;
+import recommendator.dto.RowDTO;
 import recommendator.exceptions.NotFoundException;
 import recommendator.models.containers.RowWithPoints;
 import recommendator.models.entities.Project;
@@ -10,7 +11,9 @@ import recommendator.models.entities.User;
 
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class RowRepository extends DatabaseRepository<Row> {
@@ -70,7 +73,10 @@ public class RowRepository extends DatabaseRepository<Row> {
                 .setParameter("cellValues", cellValues)
                 .setParameter("project", project)
                 .setParameter("size", (long) cellValues.size())
-                .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Unknown row"));
+                .getResultList()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Unknown row"));
 
     }
 
@@ -102,6 +108,21 @@ public class RowRepository extends DatabaseRepository<Row> {
                 "ORDER BY COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", RowWithPoints.class)
                 .setParameter("project", project)
                 .setParameter("user", user)
+                .getResultList();
+    }
+
+    @Transactional
+    public List<RowWithPoints> findAllByApiKey(String apiKey) {
+        return em.createQuery("SELECT " +
+                "NEW recommendator.models.containers.RowWithPoints(" +
+                "r, " +
+                "COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END)) " +
+                "FROM Row r " +
+                "INNER JOIN r.behaviors b " +
+                "FETCH ALL PROPERTIES " +
+                "WHERE r.project.apiKey = :apiKey " +
+                "GROUP BY r ", RowWithPoints.class)
+                .setParameter("apiKey", apiKey)
                 .getResultList();
     }
 }

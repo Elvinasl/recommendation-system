@@ -2,13 +2,16 @@ package recommendator.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import recommendator.dto.CellDTO;
 import recommendator.dto.DatasetCellDTO;
+import recommendator.dto.ReturnObjectDTO;
+import recommendator.dto.RowDTO;
 import recommendator.exceptions.NotFoundException;
 import recommendator.exceptions.RowAlreadyExistsException;
+import recommendator.exceptions.responses.Response;
 import recommendator.models.containers.RowWithPoints;
 import recommendator.models.entities.*;
-import recommendator.repositories.ColumnNameRepository;
 import recommendator.repositories.RowRepository;
 
 import javax.persistence.NoResultException;
@@ -19,12 +22,14 @@ import java.util.stream.Collectors;
 public class RowService {
 
     private RowRepository rowRepository;
-    private ColumnNameRepository columnNameRepository;
+    private ColumnNameService columnNameService;
+    private CellService cellService;
 
     @Autowired
-    public RowService(RowRepository rowRepository, ColumnNameRepository columnNameRepository) {
+    public RowService(RowRepository rowRepository, ColumnNameService columnNameService, CellService cellService) {
         this.rowRepository = rowRepository;
-        this.columnNameRepository = columnNameRepository;
+        this.columnNameService = columnNameService;
+        this.cellService = cellService;
     }
 
     /**
@@ -53,7 +58,7 @@ public class RowService {
 
             try {
                 // Try to get the columnName for the by the columnName of cellDTO and the project
-                ColumnName columnName = columnNameRepository.getByNameAndProject(cellDTO.getColumnName(), project);
+                ColumnName columnName = columnNameService.getByNameAndProject(cellDTO.getColumnName(), project);
 
                 // Set the columnName which comes from the repository
                 cell.setColumnName(columnName);
@@ -104,5 +109,78 @@ public class RowService {
 
         // Get the most liked content from the repository
         return rowRepository.getMostLikedContentForProjectAndUser(project, user);
+    }
+
+    /**
+     * Returns a list of rows which belongs to the project based on the api key.
+     * It also provides points which are number of likes (like +1 or dislike -1) for each row.
+     *
+     * @param apiKey Api key of the project
+     * @return List of rows belonging to that project
+     */
+    @Transactional
+    public ReturnObjectDTO getByApiKey(String apiKey) {
+       List<RowWithPoints> rows = rowRepository.findAllByApiKey(apiKey);
+
+       List<RowDTO> rowDTOs = rows.stream()
+           .map(row -> {
+            RowDTO rowDTO = new RowDTO();
+            rowDTO.setId(row.getId());
+            rowDTO.convertCellsToDTO(row.getCells());
+            rowDTO.setReactions(Math.round(row.getPoints()));
+            return rowDTO;
+           })
+           .collect(Collectors.toList());
+
+       return new ReturnObjectDTO<>(rowDTOs);
+    }
+
+    /**
+     * Deletes a row by the given row id
+     *
+     * @param rowId Id of the row
+     * @return global response class
+     */
+    public Response deleteRow(long rowId) {
+        rowRepository.remove(rowId);
+        return new Response("Row deleted!");
+    }
+
+    /**
+     * Updates row: updates cell values based on rowDTO
+     *
+     * @param rowId Id of the row to be updated
+     * @param rowDTO rowDto with cell values to be updated
+     * @return Global response with a message
+     */
+    public Response updateRow(long rowId, RowDTO rowDTO) {
+        Row row = rowRepository.getById(rowId);
+        if (row == null) {
+            throw new NotFoundException("Row with this id was not found!");
+        }
+
+        List<Cell> cells = cellService.updateCellValues(rowDTO.getCells());
+        row.setCells(cells);
+
+        return new Response("Row updated!");
+    }
+
+    /**
+     * Creates a row
+     * @param cellDTOs
+     * @param project
+     * @return saved row
+     */
+    public Row create(List<CellDTO> cellDTOs, Project project) {
+        Row row = new Row();
+        row.setProject(project);
+        Row persistedRow = rowRepository.add(row);
+
+        List<Cell> cells = cellDTOs.stream()
+                .map(cellDTO -> cellService.create(cellDTO, project, persistedRow))
+                .collect(Collectors.toList());
+
+        row.setCells(cells);
+        return rowRepository.update(persistedRow);
     }
 }
