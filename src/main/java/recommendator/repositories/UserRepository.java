@@ -15,6 +15,12 @@ public class UserRepository extends DatabaseRepository<User> {
         super(User.class);
     }
 
+    /**
+     * Gathers an {@link User} from the database that match the given userId and {@link Project}.
+     * @param externalUserId, the userId given by the client
+     * @param project the user belongs to
+     * @return A user if any was found, otherwise null will be returned.
+     */
     @Transactional
     public User findByExternalIdAndProjectOrNull(String externalUserId, Project project) {
         return getSingleResultOrNull(findByExternalIdAndProjectQuery(externalUserId, project));

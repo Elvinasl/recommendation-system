@@ -8,6 +8,10 @@ import recommendator.services.algorithm.FiltersData;
 
 import java.util.List;
 
+/**
+ * This filter sets the {@link FiltersData} rows with the most liked content
+ * for a specific {@link recommendator.models.entities.User} and {@link recommendator.models.entities.Project}
+ */
 @Service
 public class HasLikesFilter implements AlgorithmFilter {
 

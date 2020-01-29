@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * CellPointsFilter class is changing the rowList by the cell points
- * In example:
+ * For example:
  * If you like comedy movies a lot, than that cell gets more points and
  * rows which having that cell value are getting those points too so they
  * climb in the list of rows and give more relevant rows
@@ -57,10 +57,10 @@ public class CellPointsFilter implements AlgorithmFilter {
     }
 
     /**
-     * Getting the behaviors from the filteredData or get it from
+     * Getting the {@link Behavior}'s from the filteredData or get it from
      * the database and set it into filtered containers.
      *
-     * @param filtersData
+     * @param filtersData from the previous filter
      */
     private void setBehaviors(FiltersData filtersData) {
         // Get the list of behaviors

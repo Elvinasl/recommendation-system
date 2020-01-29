@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * This DTO holds a list of all clients
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

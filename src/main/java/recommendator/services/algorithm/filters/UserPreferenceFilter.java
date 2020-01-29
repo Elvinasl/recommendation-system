@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import recommendator.services.algorithm.FiltersData;
 import recommendator.services.UserPreferenceService;
 
-@Service
 /**
  * This filter takes user preference depending on a row cell and adjusts row points based on that
  */
+@Service
 public class UserPreferenceFilter implements AlgorithmFilter {
 
     @Override

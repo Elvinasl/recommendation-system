@@ -5,6 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import recommendator.models.entities.Cell;
 
+/**
+ * This model is an extension to the regular {@link Cell} It adds points to a cell that can be used
+ * int he algorithm to score a {@link Cell}.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

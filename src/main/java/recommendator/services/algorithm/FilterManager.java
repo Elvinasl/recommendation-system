@@ -7,6 +7,9 @@ import recommendator.services.algorithm.filters.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This FilterManager keeps track of each filter and defines the order of which they are executed.
+ */
 @Service
 public class FilterManager {
 
@@ -28,6 +31,9 @@ public class FilterManager {
         this.filters.add(cellPointsFilter);
     }
 
+    /**
+     * @return list of all filters in the right order.
+     */
     public List<AlgorithmFilter> getFilters() {
         return this.filters;
     }

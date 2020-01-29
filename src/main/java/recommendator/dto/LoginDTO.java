@@ -10,6 +10,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * This DTO is used for a login request. It holds information to authenticate.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
