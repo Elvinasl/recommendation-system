@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * This DTO is used to interact with the client about cells.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
