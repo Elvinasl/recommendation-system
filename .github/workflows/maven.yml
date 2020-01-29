@@ -1,9 +1,7 @@
 name: Java CI
 
-on:
-  push:
-    branches:
-      - maventests
+on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
