@@ -1,7 +1,10 @@
 
-
 $(function(){
     loadProjectRows();
+
+    $("#upload-data-input").change(uploadDataInputChange);
+
+    $("#upload-data-modal .modal-save-btn").hide().click(convertFile);
 });
 
 function loadProjectRows(){
@@ -27,10 +30,6 @@ function loadProjectRows(){
                 headOfTable.html("");
                 let headRow = $("<tr></tr>");
 
-                // Id column
-                headRow.append("<th>#</th>");
-                columns[columns.length] = "id";
-
                 for(let i in cellsOfFirstObject){
                     columns[columns.length] = cellsOfFirstObject[i]["columnName"];
                     headRow.append("<th>"+cellsOfFirstObject[i]["columnName"]+"</th>");
@@ -54,7 +53,6 @@ function loadProjectRows(){
                     let cellObjects = rows[i]["cells"];
                     let cells = {};
 
-                    cells["id"] = rows[i]["id"];
                     cells["reactions"] = rows[i]["reactions"];
                     cells["actions"] = $("<div class='actions'></div>");
                     cells["actions"].append(getEditBtn(rows[i]["id"], cellObjects));
@@ -69,6 +67,28 @@ function loadProjectRows(){
                 }
 
                 helpers.addTableData(table, tableData, columns,false);
+
+
+                //
+                // for(let i in data["objects"]){
+                //     delete data["objects"][i]["id"];
+                //     delete data["objects"][i]["reactions"];
+                //     for(let j in data["objects"][i]["cells"]){
+                //         delete data["objects"][i]["cells"][j]["id"];
+                //         data["objects"][i]["cells"][j]["weight"] = 50;
+                //     }
+                // }
+                // data["columns"] = [];
+                // for(let i=0; i<columns.length-2;i++){
+                //     data["columns"][data["columns"].length] = {
+                //         name: columns[i],
+                //         weight: 50
+                //     }
+                // }
+                //
+                // data["rows"] = data["objects"];
+                // delete data["objects"];
+                // console.log(data);
             }
         },
         error: function (response) {
@@ -170,4 +190,58 @@ function deleteRow(id){
             helpers.alert("Something went wrong", "danger", 5000);
         }
     });
+}
+
+
+function uploadDataInputChange(e){
+    let file = e.target.files[0];
+    $("label[for='upload-data-input']").html(file.name);
+    let reader = new FileReader();
+    reader.onload = function(e){
+        try{
+            window.uploadData = JSON.parse(reader.result);
+            $("#upload-data-modal .modal-save-btn").fadeIn(300);
+        }catch (e) {
+            $("#upload-data-modal .modal-save-btn").fadeOut(300);
+            window.uploadData = null;
+            helpers.alert("Can't read file. It must be an JSON file.", "danger", 5000, $(".upload-data-errors"));
+        }
+    };
+    reader.readAsText(file);
+}
+
+function convertFile() {
+    if(window.uploadData == null){
+        helpers.alert("No file to upload", "danger", 3000, $(".upload-data-errors"));
+        return;
+    }
+
+    helpers.ajax({
+        method: "POST",
+        url: "/import",
+        "api-key": navigator.parameterManager.get("api-key"),
+        data: uploadData,
+        success: function (data) {
+            if(typeof data["message"] !== "undefined"){
+                helpers.alert(data["message"], "success", 3000);
+            }
+            $("#upload-data-modal").modal('hide');
+            loadProjectRows();
+        },
+        error: function(response){
+            let text = "Something went wrong";
+            if(response.status === 409){
+
+                try{
+                    data = JSON.parse(response.responseText);
+                    text = data['message'];
+                }catch (e) {
+                    // Do nothing
+                }
+            }
+            helpers.alert(text, "danger", 5000, $(".upload-data-errors"));
+        }
+    })
+
+
 }
