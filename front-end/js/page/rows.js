@@ -69,7 +69,7 @@ function loadProjectRows(){
                 helpers.addTableData(table, tableData, columns,false);
 
 
-                //
+                // // Generate import data
                 // for(let i in data["objects"]){
                 //     delete data["objects"][i]["id"];
                 //     delete data["objects"][i]["reactions"];
@@ -92,7 +92,7 @@ function loadProjectRows(){
             }
         },
         error: function (response) {
-            console.log(response);
+            helpers.alert("Something went wrong", "danger", 5000);
         }
     });
 
@@ -241,7 +241,5 @@ function convertFile() {
             }
             helpers.alert(text, "danger", 5000, $(".upload-data-errors"));
         }
-    })
-
-
+    });
 }
