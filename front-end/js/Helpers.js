@@ -22,7 +22,7 @@ class Helpers{
                 data = JSON.stringify(data);
             }
         }
-
+        this.showLoader();
         $.ajax({
             headers: headers,
             method: method,
@@ -32,11 +32,13 @@ class Helpers{
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function (data) {
+                helpers.hideLoader();
                 if(typeof options['success'] !== "undefined"){
                     options['success'](data);
                 }
             },
             error: function (response){
+                helpers.hideLoader();
                 if(response.status === 403){
                     navigator.setAuthentication(null);
                     navigator.updateNavigation(function(navigator){
@@ -68,13 +70,18 @@ class Helpers{
         }, time);
     }
 
+
+    clearTableHeaders(table) {
+        let resultElement = table.find("thead");
+        if(typeof resultElement !== "undefined") resultElement.html("");
+    }
+
     clearTableData(table){
         let resultElement = table.find("tbody");
         if(typeof resultElement !== "undefined") resultElement.html("");
     }
     addTableData(table, rows, columnOrder = null, reverse = false){
         let resultElement = table.find("tbody");
-        console.log(rows);
         for(let row in rows){
             if(!rows.hasOwnProperty(row)) continue;
             let tr = $("<tr></tr>");
@@ -99,6 +106,12 @@ class Helpers{
             if (obj.hasOwnProperty(key)) size++;
         }
         return size;
-    };
+    }
+    showLoader(){
+        $("#loader").fadeIn(300);
+    }
+    hideLoader(){
+        $("#loader").fadeOut(300);
+    }
 }
 let helpers = new Helpers();
