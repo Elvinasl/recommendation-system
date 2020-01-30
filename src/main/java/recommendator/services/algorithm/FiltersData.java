@@ -10,6 +10,10 @@ import recommendator.models.entities.User;
 
 import java.util.List;
 
+/**
+ * This FiltersData is passed between filters. It contains all the important information required for recommending
+ * and filtering.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

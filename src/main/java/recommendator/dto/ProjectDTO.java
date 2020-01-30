@@ -6,6 +6,9 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * This DTO is used to sent the client information about a project.
+ */
 @RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor

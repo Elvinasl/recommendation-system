@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+/**
+ * This model/entity is used for liking/disliking (behavior).
+ */
 @Entity
 @Data
 @AllArgsConstructor

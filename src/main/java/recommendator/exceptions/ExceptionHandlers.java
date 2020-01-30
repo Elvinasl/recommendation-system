@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.persistence.NoResultException;
 
+/**
+ * This class handles the exception thrown by the application and makes sure the client
+ * receives a clear message.
+ */
 @RestControllerAdvice
 public class ExceptionHandlers {
 

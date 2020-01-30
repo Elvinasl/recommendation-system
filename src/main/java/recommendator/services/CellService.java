@@ -11,6 +11,9 @@ import recommendator.repositories.CellRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This service contains all the logic for everything that has something to do with Cells.
+ */
 @Service
 public class CellService {
 
@@ -23,16 +26,26 @@ public class CellService {
         this.columnNameService = columnNameService;
     }
 
+    /**
+     * Gathers all {@link Cell}s belonging to a specific row.
+     * @param row to get the {@link Cell}s from
+     * @return list of cells
+     */
     public List<Cell> getByRow(Row row) {
         return cellRepository.getByRow(row);
     }
 
+    /**
+     * Gathers a specific cell by ID
+     * @param id of the cell
+     * @return cell with the given id
+     */
     private Cell getById(long id) {
         return cellRepository.getById(id);
     }
 
     /**
-     * Updates cell values
+     * Finds the cells and updates the values
      *
      * @param cells list of CellDTO
      * @return list of updated cells
@@ -47,11 +60,11 @@ public class CellService {
     }
 
     /**
-     * Creates a cell
+     * Creates a cell and inserts it into the database
      * @param cellDTO Cell dto with values
      * @param project Project for this row
      * @param row persisted row
-     * @return
+     * @return Created cell
      */
     public Cell create(CellDTO cellDTO, Project project, Row row) {
         Cell cell = new Cell();

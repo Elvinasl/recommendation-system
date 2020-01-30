@@ -9,6 +9,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * This DTO is used by clients to request recommendations
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

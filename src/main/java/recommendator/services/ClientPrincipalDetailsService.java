@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import recommendator.models.entities.Client;
 import recommendator.repositories.ClientRepository;
 
+/**
+ * This service contains all the logic for everything that has something to do with ClientPrincipalDetails.
+ */
 @Service
 public class ClientPrincipalDetailsService implements UserDetailsService {
 

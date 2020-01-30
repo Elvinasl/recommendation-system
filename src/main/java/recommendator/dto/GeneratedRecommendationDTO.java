@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * This DTO contains all the {@link RowDTO}'s that are being recommended to a user.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
