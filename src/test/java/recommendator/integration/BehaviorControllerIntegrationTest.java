@@ -27,8 +27,8 @@ public class BehaviorControllerIntegrationTest extends IntegrationTest {
 
         BehaviorDTO behaviorDTO = new BehaviorDTO();
         behaviorDTO.setCells(Lists.list(
-                new CellDTO(1L, "title", "Mr. Bean"),
-                new CellDTO(2L, "genre", "Comedy")
+                new CellDTO("title", "Mr. Bean"),
+                new CellDTO("genre", "Comedy")
         ));
         behaviorDTO.setLiked(true);
         behaviorDTO.setUserId("user1");
