@@ -35,7 +35,7 @@ public class AlgorithmCore {
     private FilterManager filterManager;
 
     @Value("${max_number_of_recommendations}")
-    private int maxNumberOfRecommendations;
+    private int maxNumberOfRecommendations = 10;
 
     @Autowired
     public AlgorithmCore(ProjectService projectService,
@@ -55,7 +55,7 @@ public class AlgorithmCore {
      */
     @Transactional
     public GeneratedRecommendationDTO generateRecommendation(String apiKey, String externalUserId, int amount) {
-        if(amount < 0){
+        if(amount < 1){
             amount = 1;
         }else if(amount > this.maxNumberOfRecommendations){
             amount = this.maxNumberOfRecommendations;
