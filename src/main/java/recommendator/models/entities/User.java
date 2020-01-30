@@ -25,7 +25,7 @@ public class User {
 
     @NotNull
     @NotEmpty
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String externalUserId;
 
     @ManyToOne(optional = false)

@@ -91,7 +91,7 @@ public class RowRepository extends DatabaseRepository<Row> {
                 "FROM Project p " +
                 "INNER JOIN p.rows r " +
                 "INNER JOIN r.cells c " +
-                "INNER JOIN r.behaviors b " +
+                "LEFT JOIN r.behaviors b " +
                 "FETCH ALL PROPERTIES " +
                 "WHERE r.project = :project " +
                 "GROUP BY r.id " +
