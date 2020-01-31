@@ -29,10 +29,12 @@ function loadProjectRows(){
                 let headOfTable = table.find("thead");
                 headOfTable.html("");
                 let headRow = $("<tr></tr>");
-
                 for(let i in cellsOfFirstObject){
                     columns[columns.length] = cellsOfFirstObject[i]["columnName"];
-                    headRow.append("<th>"+cellsOfFirstObject[i]["columnName"]+"</th>");
+                }
+                columns.sort();
+                for(let i=0;i<columns.length;i++){
+                    headRow.append("<th>"+columns[i]+"</th>");
                 }
 
                 // Reactions column
