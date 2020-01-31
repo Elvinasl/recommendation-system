@@ -1,0 +1,2374 @@
+{
+  "columns": [
+    {
+      "name": "author",
+      "weight": 50
+    },
+    {
+      "name": "genre",
+      "weight": 50
+    },
+    {
+      "name": "publisher",
+      "weight": 50
+    },
+    {
+      "name": "title",
+      "weight": 50
+    }
+  ],
+  "rows": [
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Murl Littel DDS",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Mystery",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Open Court Publishing Company",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Soldier",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Van Lubowitz",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Biography/Autobiography",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "United States Government Publishing Office",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Heart Is Deceitful Above All Things",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Austen Lehner",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Essay",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Dedalus Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "When the Green Woods Laugh",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Susana Bode",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Essay",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Pavilion Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Pale Kings and Princes",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Emmett Renner",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fairy tale",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Hawthorne Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Beneath the Bleeding",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Berry Lesch",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fanfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Cengage Learning",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "An Acceptable Time",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Bridgette Quitzon",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Mythopoeia",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Elsevier",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "In a Glass Darkly",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Dolores Funk",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fanfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Velazquez Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Painted Veil",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Tyshawn Kunde",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Narrative nonfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "George H. Doran Company",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Down to a Sunless Sea",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Zane Bauch",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Narrative nonfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "SAGE Publications",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Torment of Others",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Dr. Ruth Bode",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fanfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Caister Academic Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Paths of Glory",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Devin Nolan Jr.",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fantasy",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Verso Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Heart Is a Lonely Hunter",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Antone Cummings",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fanfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "McClelland and Stewart",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Everything is Illuminated",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Caesar Homenick",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fiction in verse",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Horizon Scientific Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Nectar in a Sieve",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Carson Howell",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Classic",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Darakwon Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Torment of Others",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Freddy Sawayn",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Reference book",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Legend Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Fair Stood the Wind for France",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Bailee Schimmel",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Short story",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "George Newnes",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Consider Phlebas",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Mrs. Dannie Kreiger",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Reference book",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Reed Publishing",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Fair Stood the Wind for France",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Mr. Hillary Rowe",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fiction narrative",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Hachette Book Group USA",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Nectar in a Sieve",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Hassan Bailey",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Historical fiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Tartarus Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "To Your Scattered Bodies Go",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Elyssa Schiller",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Mystery",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Mandrake Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Other Side of Silence",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Weldon Watsica",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Historical fiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "University of California Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Edna O'Brien",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Kaylah Larkin DVM",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Narrative nonfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Ignatius Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "In a Dry Season",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Mae Christiansen",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Mythopoeia",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "George Routledge & Sons",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Noli Me Tangere",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Buford Koepp",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Mystery",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Peace Hill Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Ego Dominus Tuus",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Mrs. Judd Bins",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Short story",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Focal Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Parliament of Man",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Ivory Frami",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Essay",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "New Holland Publishers",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "A Monstrous Regiment of Women",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Mrs. Terrence Lebsack",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Biography/Autobiography",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Manchester University Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "A Confederacy of Dunces",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Florencio Willms",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Mystery",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "University of California Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Line of Beauty",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Beatrice Hodkiewicz",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fiction narrative",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Carnegie Mellon University Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Gone with the Wind",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Brandy Oberbrunner",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Horror",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Reed Elsevier",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The World, the Flesh and the Devil",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Anjali Cronin",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Short story",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "T & T Clark",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Golden Bowl",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Nona Padberg IV",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fanfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Pen and Sword Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Gone with the Wind",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Mrs. Kale Kiehn",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fiction narrative",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Harvard University Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Yellow Meads of Asphodel",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Telly Auer",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Science fiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Marshall Cavendish",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Moab Is My Washpot",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Carissa Marvin",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Humor",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Vintage Books at Random House",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Absalom, Absalom!",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Miss Paul Beahan",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fairy tale",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Carlton Publishing Group",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Time To Murder And Create",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Cortney Marquardt",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Textbook",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Tachyon Publications",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Way of All Flesh",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Cooper Roob",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Legend",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Canongate Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Moon by Night",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Creola Cartwright",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Comic/Graphic Novel",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "T & T Clark",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Precious Bane",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Ms. Mitchel Littel",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Speech",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Shambhala Publications",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "No Highway",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Nicholaus Brekke",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fanfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Bison Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Glory and the Dream",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Velva Cummings",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fiction in verse",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Viking Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "A Glass of Blessings",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Dr. Kelton Powlowski",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Classic",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Hay House",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Dying of the Light",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Kavon Thompson Sr.",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Folklore",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Vintage Books at Random House",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "A Passage to India",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Mrs. Raymundo Kirlin",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Mythology",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Boydell & Brewer",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Nine Coaches Waiting",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Mrs. Lukas Reichel",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Mythology",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "George H. Doran Company",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Vile Bodies",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Lilliana Tromp",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Biography/Autobiography",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Hawthorne Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Consider Phlebas",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Ms. Adolph Beatty",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fanfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Atheneum Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Absalom, Absalom!",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Trudie Stokes III",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Realistic fiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Casemate Publishers",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Nectar in a Sieve",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Mrs. Schuyler Crist",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Comic/Graphic Novel",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Ignatius Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Infinite Jest",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Leanne Boehm",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Crime/Detective",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Mainstream Publishing",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Wings of the Dove",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Domenick Von",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Essay",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Charles Scribner's Sons",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Little Foxes",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Anahi Jast",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Mythopoeia",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Marshall Cavendish",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Needle's Eye",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Amos Mosciski",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Western",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Allen Ltd",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "A Darkling Plain",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Adrien McCullough",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Folklore",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "City Lights Publishers",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Sleep the Brave",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Brian Feil",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Legend",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Harry N. Abrams, Inc.",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Glory and the Dream",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Miss Leora Rohan",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Narrative nonfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Manning Publications",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "What's Become of Waring",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Julia Shanahan III",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Metafiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "D. Appleton & Company",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "That Good Night",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Jarod Howe",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fanfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Harvard University Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "An Acceptable Time",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Octavia Howe",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Tall tale",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Ignatius Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Rosemary Sutcliff",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Orie Swaniawski IV",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fable",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Focal Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Oh! To be in England",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "May Ernser",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Tall tale",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Blackstaff Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Jacob Have I Loved",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Mrs. Jeffry O'Keefe",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Mythopoeia",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "NavPress",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "To Say Nothing of the Dog",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Pascale Gerhold IV",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Biography/Autobiography",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Blue Ribbon Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "This Side of Paradise",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Josefa Ferry",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fiction narrative",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Hachette Book Group USA",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Fair Stood the Wind for France",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Fritz Emard",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Speech",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Chronicle Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Jesting Pilate",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Leilani Emard",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fiction narrative",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Lion Hudson",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Things Fall Apart",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Trever Aufderhar",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Textbook",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "FabJob",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Carrion Comfort",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Kameron Ernser",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fanfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Kensington Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "That Hideous Strength",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Fernando Leffler",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fanfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Virgin Publishing",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "To Say Nothing of the Dog",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Pauline Davis",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Reference book",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "FabJob",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "For Whom the Bell Tolls",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Henderson Littel IV",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Folklore",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Applewood Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Mother Night",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Natalia Champlin",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Narrative nonfiction",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Farrar, Straus & Giroux",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Widening Gyre",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Noe Bergnaum",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fiction in verse",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Blackie and Son Limited",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Ego Dominus Tuus",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Claud Jenkins II",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Humor",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Casemate Publishers",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Wives of Bath",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Althea Wintheiser",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Humor",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Ten Speed Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "By Grand Central Station I Sat Down and Wept",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Miss Betsy Schimmel",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Humor",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "T & T Clark",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Jacob Have I Loved",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Yvonne Steuber",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Humor",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Carcanet Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Things Fall Apart",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Murphy Abernathy",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Humor",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Adis International",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "No Highway",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Sydni Williamson",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fable",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Lethe Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Unweaving the Rainbow",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Bernadine Lindgren",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fable",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Banner of Truth Trust",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Ring of Bright Water",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Una Mueller MD",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fable",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Broadview Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Endless Night",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Dr. Jimmy Wehner",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fable",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Liberty Fund",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Other Side of Silence",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Sammy MacGyver",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Fable",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "City Lights Publishers",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Blood's a Rover",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Otilia Hettinger",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Western",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Ten Speed Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Cabbages and Kings",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Mia Runolfsson",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Western",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Harcourt Trade Publishers",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Millstone",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Cindy Abernathy",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Western",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Horizon Scientific Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Bury My Heart at Wounded Knee",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Kelton Cole",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Western",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Booktrope",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Oh! To be in England",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Kendra Quigley",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Western",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "McFarland & Company",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Yellow Meads of Asphodel",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Reyes Tremblay",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Western",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Leaf Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Jacob Have I Loved",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Romaine Ruecker MD",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Essay",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Tate Publishing & Enterprises",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The House of Mirth",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Naomie Price IV",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Essay",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Ignatius Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Cricket on the Hearth",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Donato Hirthe",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Essay",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Atlas Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Time To Murder And Create",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Lucas Bartoletti",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Essay",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "McClelland and Stewart",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "A Swiftly Tilting Planet",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Kaleb Macejkovic",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Horror",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Pavilion Books",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "Françoise Sagan",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Brionna Aufderhar",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Horror",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Gaspereau Press",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "That Hideous Strength",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "author",
+          "value": "Mrs. Anne Boehm",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "Horror",
+          "weight": 50
+        },
+        {
+          "columnName": "publisher",
+          "value": "Reed Elsevier",
+          "weight": 50
+        },
+        {
+          "columnName": "title",
+          "value": "The Torment of Others",
+          "weight": 50
+        }
+      ]
+    }
+  ]
+}

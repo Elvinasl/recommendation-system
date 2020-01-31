@@ -10,6 +10,11 @@ import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * In order to recommend something a project should be created. The project contains all the {@link Row}'s and
+ * data. Only a {@link Client} can create, delete or update a project. In order to interacht with the project a
+ * API-Key is required.
+ */
 @Entity
 @Data
 @AllArgsConstructor

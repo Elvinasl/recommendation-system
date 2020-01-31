@@ -1,0 +1,268 @@
+
+
+{
+  "columns": [
+    {
+      "weight": 60,
+      "name": "artist"
+    },
+    {
+      "weight": 90,
+      "name": "genre"
+    },
+    {
+      "weight": 10,
+      "name": "song"
+    }
+  ],
+  "rows": [
+    {
+      "cells": [
+        {
+          "columnName": "artist",
+          "value": "Elvis Presley",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "blues",
+          "weight": 50
+        },
+        {
+          "columnName": "song",
+          "value": "In the Ghetto",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "artist",
+          "value": "Elvis Presley",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "blues",
+          "weight": 50
+        },
+        {
+          "columnName": "song",
+          "value": "Jailhouse Rock",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "artist",
+          "value": "The Rolling Stones",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "blues",
+          "weight": 50
+        },
+        {
+          "columnName": "song",
+          "value": "Paint it Black",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "artist",
+          "value": "The Rolling Stones",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "blues",
+          "weight": 50
+        },
+        {
+          "columnName": "song",
+          "value": "Gimme Shelter",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "artist",
+          "value": "Ed Sheeran",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "pop",
+          "weight": 50
+        },
+        {
+          "columnName": "song",
+          "value": "Shape of You",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "artist",
+          "value": "Ed Sheeran",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "pop",
+          "weight": 50
+        },
+        {
+          "columnName": "song",
+          "value": "Perfect",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "artist",
+          "value": "Everly Brothers",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "pop",
+          "weight": 50
+        },
+        {
+          "columnName": "song",
+          "value": "Bye Bye Love",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "artist",
+          "value": "Everly Brothers",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "pop",
+          "weight": 50
+        },
+        {
+          "columnName": "song",
+          "value": "Cathy's Clown",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "artist",
+          "value": "ESam Cooke",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "pop",
+          "weight": 50
+        },
+        {
+          "columnName": "song",
+          "value": "You Send Me",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "artist",
+          "value": "Johnny Cash",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "country",
+          "weight": 50
+        },
+        {
+          "columnName": "song",
+          "value": "Hurt",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "artist",
+          "value": "Johnny Cash",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "country",
+          "weight": 50
+        },
+        {
+          "columnName": "song",
+          "value": "I Walk The Line",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "artist",
+          "value": "Alan Jackson",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "country",
+          "weight": 50
+        },
+        {
+          "columnName": "song",
+          "value": "Little Bitty",
+          "weight": 50
+        }
+      ]
+    },
+    {
+      "cells": [
+        {
+          "columnName": "artist",
+          "value": "Alan Jackson",
+          "weight": 50
+        },
+        {
+          "columnName": "genre",
+          "value": "blues",
+          "weight": 50
+        },
+        {
+          "columnName": "song",
+          "value": "Remember When",
+          "weight": 50
+        }
+      ]
+    }
+  ]
+}
+

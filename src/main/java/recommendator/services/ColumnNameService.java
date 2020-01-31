@@ -6,6 +6,9 @@ import recommendator.models.entities.ColumnName;
 import recommendator.models.entities.Project;
 import recommendator.repositories.ColumnNameRepository;
 
+/**
+ * This service contains all the logic for everything that has something to do with ColumnNames.
+ */
 @Service
 public class ColumnNameService {
 
@@ -49,12 +52,22 @@ public class ColumnNameService {
     }
 
     /**
-     * Get the number of column(Name)s which the project has
+     * Gathers the number of column(Name)s which the project has
      *
-     * @param project   The project to count for
+     * @param project The project to count for
      * @return the number of column(Name)s
      */
     public long getCountForProject(Project project) {
         return columnNameRepository.getCountForProject(project);
+    }
+
+    /**
+     * Gathers a {@link ColumnName} with a specific name and belonging to a specific {@link Project}.
+     * @param columnName to search for
+     * @param project the column should belong to
+     * @return found column
+     */
+    public ColumnName getByNameAndProject(String columnName, Project project) {
+        return columnNameRepository.getByNameAndProject(columnName, project);
     }
 }

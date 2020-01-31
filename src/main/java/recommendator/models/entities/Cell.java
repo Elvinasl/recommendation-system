@@ -11,6 +11,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * A cell is a single value from a {@link Row}. Each cell belongs to a {@link ColumnName} and has {@link Weight}.
+ */
 @Entity
 @Data
 @AllArgsConstructor

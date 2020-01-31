@@ -8,6 +8,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
+/**
+ * Defines the basic operations for each repository (database related)
+ * @param <T> Object type of the repository
+ */
 abstract class DatabaseRepository<T> {
 
     private final Class<T> type;
@@ -65,6 +69,11 @@ abstract class DatabaseRepository<T> {
         if (null != o) {
             em.remove(o);
         }
+    }
+
+    @Transactional
+    public void flush() {
+        em.flush();
     }
 
     @Transactional

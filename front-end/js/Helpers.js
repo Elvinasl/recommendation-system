@@ -9,20 +9,36 @@ class Helpers{
         if(navigator.authentication !== null){
             headers["Authorization"] = navigator.authentication;
         }
+        if(typeof options["api-key"] !== "undefined"){
+            headers["api-key"] = options["api-key"];
+        }
+        // console.log(headers);
+        // console.log(options);
+        let data = "";
+        let method = typeof options['method'] === "undefined" ? "GET" : options['method'];
+        if(typeof options['data'] !== "undefined"){
+            data = options['data'];
+            if(method.toLowerCase() !== "get"){
+                data = JSON.stringify(data);
+            }
+        }
+        this.showLoader();
         $.ajax({
             headers: headers,
-            method: typeof options['method'] === "undefined" ? "GET" : options['method'],
+            method: method,
             url: host + options['url'],
-            data: JSON.stringify(typeof options['data'] === "undefined" ? "" : options['data']),
+            data: data,
             crossDomain: true,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function (data) {
+                helpers.hideLoader();
                 if(typeof options['success'] !== "undefined"){
                     options['success'](data);
                 }
             },
             error: function (response){
+                helpers.hideLoader();
                 if(response.status === 403){
                     navigator.setAuthentication(null);
                     navigator.updateNavigation(function(navigator){
@@ -54,6 +70,12 @@ class Helpers{
         }, time);
     }
 
+
+    clearTableHeaders(table) {
+        let resultElement = table.find("thead");
+        if(typeof resultElement !== "undefined") resultElement.html("");
+    }
+
     clearTableData(table){
         let resultElement = table.find("tbody");
         if(typeof resultElement !== "undefined") resultElement.html("");
@@ -78,6 +100,18 @@ class Helpers{
             }
         }
     }
-
+    objectSize(obj) {
+        let size = 0, key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) size++;
+        }
+        return size;
+    }
+    showLoader(){
+        $("#loader").fadeIn(300);
+    }
+    hideLoader(){
+        $("#loader").fadeOut(300);
+    }
 }
 let helpers = new Helpers();

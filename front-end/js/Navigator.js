@@ -10,7 +10,13 @@ class Navigator{
 
     navigationItems = {};
 
+    currentPage = null;
+
     authentication = null;
+
+    parameterManager = new ParameterManager(this);
+
+    doNotUpdateHash = false;
 
     constructor(page = "index") {
         this.contentElement = $("#content");
@@ -19,21 +25,14 @@ class Navigator{
 
         if(authentication !== null){
             this.authentication = authentication;
-            // TODO: check authentication
         }
 
-
-
         this.updateNavigation(function(navigator){
-
-            let url = window.location.href;
-            if(url.indexOf("#") !== -1){
-                let hash = url.substring(url.indexOf("#")+1);
-                if(typeof navigator.navigationItems[hash] !== "undefined"){
-                    page = hash;
-                }
+            let convertedHash = navigator.convertHash();
+            if(typeof convertedHash.page !== "undefined"){
+                page = convertedHash.page;
             }
-            navigator.load(page);
+            navigator.load(page, true);
         });
 
     }
@@ -49,6 +48,7 @@ class Navigator{
             // TODO: check authentication
             navigationUrl = "logged-in";
         }
+
         let navigator = this;
         $.ajax({
             url: "navigation/" + navigationUrl + ".html" + (debug ? '?_=' + new Date().getTime() : ''),
@@ -99,7 +99,14 @@ class Navigator{
                 loggedIn = obj.data('logged-in') === true;
             }
 
+            let show = true;
+            if(typeof obj.data('show') !== "undefined"){
+                show = obj.data('show') === true;
+            }
 
+            if(!show){
+                obj.hide();
+            }
             // Set the url
             switch (type) {
                 case "html":
@@ -139,6 +146,7 @@ class Navigator{
                 type: type,
                 url: url,
                 js: js,
+                show: show,
                 loggedIn: loggedIn
             };
 
@@ -158,7 +166,7 @@ class Navigator{
 
 
 
-    load(page){
+    load(page, firstTime = false){
         if(debug) console.log("Load page " + page);
         if(typeof this.navigationItems[page] === "undefined"){
             alert('Page don\'t exists');
@@ -173,17 +181,26 @@ class Navigator{
             return;
         }
 
+
+        this.currentPage = page;
+
         $.ajax({
             url: navigationItem.url + (debug ? '?_=' + new Date().getTime() : ''),
             method: "get",
             success: function(data){
                 contentElement.html(data);
-                for (let i=0; i<navigationItems.length; i++){
-                    navigationItems[i].element.removeClass('active');
+                for (let name in navigationItems){
+                    if(!navigationItems.hasOwnProperty(name)) continue;
+                    navigationItems[name].element.removeClass('active');
+                    if(!navigationItems[name].show){
+                        navigationItems[name].element.hide();
+                    }
                 }
                 navigationItem.element.addClass('active');
+                navigationItem.element.show();
 
-                window.location.hash = page;
+
+                navigator.updateHash();
 
                 if(navigationItem.js !== ""){
                     navigator.loadJs(navigationItem.js);
@@ -217,9 +234,56 @@ class Navigator{
 
         this.updateNavigation();
     }
+
+    updateHash(){
+
+        let hash = this.currentPage;
+        let params = this.parameterManager.all();
+        for(let key in params){
+            if(!params.hasOwnProperty(key)) continue;
+            hash += "/" + key + "/" + params[key];
+        }
+        if(!this.doNotUpdateHash){
+            if(window.location.hash !== hash){
+                window.location.hash = hash;
+            }
+        }else{
+            this.doNotUpdateHash = false;
+        }
+    }
+    convertHash(url){
+        let data = {};
+        if(typeof url === "undefined"){
+            url = window.location.href;
+        }
+
+        if(url.indexOf("#") !== -1){
+            let hash = url.substring(url.indexOf("#")+1);
+            let splittedHash = hash.split("/");
+
+            data.page = splittedHash.shift();
+            data.params = {};
+
+            for(let i=0;i<splittedHash.length-1;i+=2){
+                data.params[splittedHash[i]] = splittedHash[i+1];
+            }
+        }
+        return data;
+    }
+
 }
 let navigator;
 $(function(){
+
     navigator = new Navigator();
-    // console.log('hi');
+    navigator.doNotUpdateHash = true;
+
+    window.onpopstate = function(event) {
+
+        let convertedHash = navigator.convertHash(window.location.href);
+        if(typeof convertedHash.page !== "undefined" && convertedHash.page !== navigator.currentPage){
+            navigator = new Navigator();
+            navigator.doNotUpdateHash = true;
+        }
+    };
 });

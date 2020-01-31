@@ -1,13 +1,13 @@
 package recommendator.services.algorithm.filters;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import recommendator.models.containers.CellWithPoints;
 import recommendator.models.entities.Behavior;
 import recommendator.models.entities.Cell;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import recommendator.services.BehaviorService;
 import recommendator.services.ColumnNameService;
 import recommendator.services.algorithm.FiltersData;
-import recommendator.services.BehaviorService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * CellPointsFilter class is changing the rowList by the cell points
- * In example:
+ * For example:
  * If you like comedy movies a lot, than that cell gets more points and
  * rows which having that cell value are getting those points too so they
  * climb in the list of rows and give more relevant rows
@@ -57,10 +57,10 @@ public class CellPointsFilter implements AlgorithmFilter {
     }
 
     /**
-     * Getting the behaviors from the filteredData or get it from
+     * Getting the {@link Behavior}'s from the filteredData or get it from
      * the database and set it into filtered containers.
      *
-     * @param filtersData
+     * @param filtersData from the previous filter
      */
     private void setBehaviors(FiltersData filtersData) {
         // Get the list of behaviors
@@ -87,14 +87,13 @@ public class CellPointsFilter implements AlgorithmFilter {
         this.uniqueCellsFromBehaviors = new HashMap<>();
         this.behaviors.forEach(behavior -> {
             behavior.getRow().getCells().forEach(cell -> {
-
-
                 CellWithPoints cellWithPoints = this.getOrAddUniqueCellWithPoints(cell);
 
                 // Get the points
                 Float points = cellWithPoints.getPoints();
 
                 // Calculate the points
+                // Calculation: ( (cell weight * column weight / 2) / nrOfcolumns ) / 10
                 points += (
                         behavior.isLiked() ? 1 : -1 // Make it positive or negative based on like
                 ) * (

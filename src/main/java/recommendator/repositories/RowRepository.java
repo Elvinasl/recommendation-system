@@ -70,10 +70,20 @@ public class RowRepository extends DatabaseRepository<Row> {
                 .setParameter("cellValues", cellValues)
                 .setParameter("project", project)
                 .setParameter("size", (long) cellValues.size())
-                .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Unknown row"));
+                .getResultList()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Unknown row"));
 
     }
 
+    /**
+     * Gathers the most liked {@link Row}'s from the database and converts them into {@link List<RowWithPoints>}
+     * containing the row and the amount of likes/dislikes.
+     * @param project the {@link Row}'s should belong to
+     * @param amount limit the total results
+     * @return list of the most liked {@link Row}'s including there likes/dislike points.
+     */
     @Transactional
     public List<RowWithPoints> findMostLiked(Project project, int amount) {
         return em.createQuery("SELECT " +
@@ -81,7 +91,7 @@ public class RowRepository extends DatabaseRepository<Row> {
                 "FROM Project p " +
                 "INNER JOIN p.rows r " +
                 "INNER JOIN r.cells c " +
-                "INNER JOIN r.behaviors b " +
+                "LEFT JOIN r.behaviors b " +
                 "FETCH ALL PROPERTIES " +
                 "WHERE r.project = :project " +
                 "GROUP BY r.id " +
@@ -91,6 +101,13 @@ public class RowRepository extends DatabaseRepository<Row> {
                 .getResultList();
     }
 
+    /**
+     * Gathers the most liked {@link Row}'s from the database for a specific {@link User} and converts
+     * them into {@link List<RowWithPoints>} containing the {@link Row} and the amount of likes/dislikes.
+     * @param project the {@link Row}'s should belong to
+     * @param user the {@link recommendator.models.entities.Behavior} should belong to
+     * @return list of the most liked {@link Row}'s for a specific user including there likes/dislike points.
+     */
     @Transactional
     public List<RowWithPoints> getMostLikedContentForProjectAndUser(Project project, User user) {
         return em.createQuery("SELECT " +
@@ -102,6 +119,26 @@ public class RowRepository extends DatabaseRepository<Row> {
                 "ORDER BY COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END) DESC ", RowWithPoints.class)
                 .setParameter("project", project)
                 .setParameter("user", user)
+                .getResultList();
+    }
+
+    /**
+     * Gathers all {@link Row}'s with the amount of likes/dislikes with it and converts it into a {@link List<RowWithPoints>}
+     * @param apiKey of the project
+     * @return list of the all liked/disliked {@link Row}'s including there likes/dislike points.
+     */
+    @Transactional
+    public List<RowWithPoints> findAllByApiKey(String apiKey) {
+        return em.createQuery("SELECT " +
+                "NEW recommendator.models.containers.RowWithPoints(" +
+                "r, " +
+                "COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END)) " +
+                "FROM Row r " +
+                "LEFT JOIN r.behaviors b " +
+                "FETCH ALL PROPERTIES " +
+                "WHERE r.project.apiKey = :apiKey " +
+                "GROUP BY r ", RowWithPoints.class)
+                .setParameter("apiKey", apiKey)
                 .getResultList();
     }
 }

@@ -8,6 +8,9 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+/**
+ * DatasetCellDTO is the same as a {@link CellDTO} but has weight added to it.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

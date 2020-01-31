@@ -14,16 +14,27 @@ public class ClientRepository extends DatabaseRepository<Client> {
         super(Client.class);
     }
 
+    /**
+     * Gathers a {@link Client} from the database by email.
+     * @param email to search for
+     * @return Client with the given email
+     * @throws NoResultException geths thrown whenever there is no {@link Client} with the given email
+     */
     @Transactional
     public Client getByEmail(String email) throws NoResultException {
-        return (Client) em.createQuery("SELECT c FROM Client c WHERE c.email = :email")
+        return em.createQuery("SELECT c FROM Client c WHERE c.email = :email", Client.class)
                 .setParameter("email", email)
                 .getSingleResult();
     }
 
+    /**
+     * Gathers all the {@link Client}'s that are activated (or not).
+     * @param isActivated define if you want to search clients that are activated
+     * @return all the {@link Client}'s that have been found
+     */
     @Transactional
     public List<Client> getAllByActivated(boolean isActivated) {
-        return em.createQuery("SELECT c FROM Client c WHERE c.activated = :isActivated")
+        return em.createQuery("SELECT c FROM Client c WHERE c.activated = :isActivated", Client.class)
                 .setParameter("isActivated", isActivated)
                 .getResultList();
     }

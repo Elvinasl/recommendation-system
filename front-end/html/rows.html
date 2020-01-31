@@ -1,0 +1,81 @@
+<script>
+    $("#title").html(navigator.parameterManager.get("project-name") + " rows");
+</script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-sm btn-primary" id="upload-data-btn" data-toggle="modal" data-target="#upload-data-modal"><i class="fa fa-plus"></i> Upload data</button>
+            <br/>
+            <br/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped table-hover" id="list-of-rows">
+                <thead>
+
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="edit-project-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-errors"></div>
+                <div class="edit-cells-content">
+
+                </div>
+<!--                <div class="form-group">-->
+<!--                    <label for="project-name-input">Name</label>-->
+<!--                    <input class="form-control" type="text" name="name" placeholder="Name" id="project-name-input" />-->
+<!--                </div>-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary modal-save-btn">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="upload-data-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Upload data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="upload-data-errors"></div>
+
+                <div class="form-group">
+                    <label>Upload json file</label>
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="upload-data-input" accept="application/json">
+                    <label class="custom-file-label" for="upload-data-input">Choose file</label>
+                </div>
+<!--                <div class="form-group">-->
+<!--                    <label for="project-name-input">Name</label>-->
+<!--                    <input class="form-control" type="text" name="name" placeholder="Name" id="project-name-input" />-->
+<!--                </div>-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary modal-save-btn">Upload</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

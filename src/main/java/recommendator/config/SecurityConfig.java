@@ -99,8 +99,6 @@ public class SecurityConfig {
                 enableRESTAuthentication(http)
                         // Now let's say which requests we want to authorize
                         .authorizeRequests()
-//                        .and()
-//                        .cors()
                         .and()
                         .cors()
                         .and()
@@ -125,7 +123,8 @@ public class SecurityConfig {
                 http
                         .authorizeRequests()
                         // configure access rules
-                        .antMatchers(HttpMethod.POST, "/login", "/register").permitAll()
+                        .antMatchers(HttpMethod.POST, "/login", "/register", "/behavior").permitAll()
+                        .antMatchers(HttpMethod.GET, "/recommendation").permitAll()
                         .anyRequest().authenticated();
 
                 // add jwt filters (1. authentication, 2. authorization)
@@ -158,7 +157,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Collections.singletonList("*"));
         configuration.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE", "PATCH"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "api-key", "content-type"));
         configuration.setExposedHeaders(Collections.singletonList("Authorization"));
         source.registerCorsConfiguration("/**", configuration);
 
