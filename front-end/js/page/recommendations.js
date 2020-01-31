@@ -45,7 +45,10 @@ function loadRecommendations(userId){
                 let headRow = $("<tr></tr>");
                 for(let i in cellsOfFirstObject){
                     columns[columns.length] = cellsOfFirstObject[i]["columnName"];
-                    headRow.append("<th>"+cellsOfFirstObject[i]["columnName"]+"</th>");
+                }
+                columns.sort();
+                for(let i=0;i<columns.length;i++){
+                    headRow.append("<th>"+columns[i]+"</th>");
                 }
 
                 if(typeof userId !== "undefined" && userId.length > 0){
@@ -92,9 +95,12 @@ function behaviorBtn(like, cells, userId){
     if(typeof userId === "undefined" || userId.length === 0){
         return "";
     }
-
-    let icon = like ? "thumbs-up" : "thumbs-down";
-    let btn = $("<button class='btn btn-sm btn-primary'><i class='fas fa-"+icon+"'></i></button>");
+    let btn;
+    if(like){
+        btn = $("<button class='btn btn-sm btn-success'><i class='fas fa-thumbs-up'></i></button>");
+    }else{
+        btn = $("<button class='btn btn-sm btn-danger'><i class='fas fa-thumbs-down'></i></button>");
+    }
     btn.click(function(){
         sendBehavior($(this).data('like'), $(this).data('cells'), $(this).data('user-id'));
     });
