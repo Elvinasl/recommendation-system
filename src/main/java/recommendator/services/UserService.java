@@ -1,9 +1,9 @@
 package recommendator.services;
 
-import recommendator.models.entities.Project;
-import recommendator.models.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import recommendator.models.entities.Project;
+import recommendator.models.entities.User;
 import recommendator.repositories.UserRepository;
 
 /**

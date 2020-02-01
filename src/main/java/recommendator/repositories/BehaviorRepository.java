@@ -1,11 +1,11 @@
 package recommendator.repositories;
 
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import recommendator.models.entities.Behavior;
 import recommendator.models.entities.Project;
 import recommendator.models.entities.User;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

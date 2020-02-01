@@ -7,7 +7,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import recommendator.models.containers.RowWithPoints;
-import recommendator.models.entities.*;
+import recommendator.models.entities.Behavior;
+import recommendator.models.entities.Project;
+import recommendator.models.entities.User;
 import recommendator.services.BehaviorService;
 import recommendator.services.ColumnNameService;
 import recommendator.services.algorithm.AlgorithmPointsComparator;
@@ -16,9 +18,8 @@ import recommendator.services.algorithm.FiltersData;
 import java.util.Arrays;
 import java.util.List;
 
-
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static recommendator.services.algorithm.AlgorithmHelper.generateRowWithPointsList;
 import static recommendator.services.algorithm.AlgorithmHelper.prepareRow;
 

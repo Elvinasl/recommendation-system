@@ -1,8 +1,8 @@
 package recommendator.repositories;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import recommendator.models.entities.Client;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import java.util.List;

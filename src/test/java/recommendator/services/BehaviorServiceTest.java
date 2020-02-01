@@ -1,12 +1,13 @@
 package recommendator.services;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
+import org.mockito.ArgumentMatchers;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import recommendator.dto.BehaviorDTO;
-import recommendator.dto.CellDTO;
 import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Behavior;
 import recommendator.models.entities.Project;
@@ -15,7 +16,6 @@ import recommendator.models.entities.User;
 import recommendator.repositories.BehaviorRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

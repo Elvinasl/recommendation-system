@@ -1,5 +1,7 @@
 package recommendator.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import recommendator.dto.BehaviorDTO;
 import recommendator.exceptions.NotFoundException;
 import recommendator.exceptions.responses.Response;
@@ -7,8 +9,6 @@ import recommendator.models.entities.Behavior;
 import recommendator.models.entities.Project;
 import recommendator.models.entities.Row;
 import recommendator.models.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import recommendator.repositories.BehaviorRepository;
 
 import java.util.List;

@@ -1,11 +1,11 @@
 package recommendator.controllers;
 
-import recommendator.dto.BehaviorDTO;
-import recommendator.exceptions.responses.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import recommendator.dto.BehaviorDTO;
+import recommendator.exceptions.responses.Response;
 import recommendator.services.BehaviorService;
 
 @RestController

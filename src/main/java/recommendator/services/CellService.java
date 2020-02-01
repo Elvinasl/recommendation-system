@@ -1,11 +1,11 @@
 package recommendator.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import recommendator.dto.CellDTO;
 import recommendator.models.entities.Cell;
 import recommendator.models.entities.Project;
 import recommendator.models.entities.Row;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import recommendator.repositories.CellRepository;
 
 import java.util.List;

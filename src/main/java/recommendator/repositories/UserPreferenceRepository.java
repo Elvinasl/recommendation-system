@@ -1,9 +1,9 @@
 package recommendator.repositories;
 
-import recommendator.models.entities.Cell;
-import recommendator.models.entities.UserPreference;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import recommendator.models.entities.Cell;
+import recommendator.models.entities.UserPreference;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;

@@ -1,14 +1,14 @@
 package recommendator.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import recommendator.dto.AllClientsDTO;
 import recommendator.dto.ClientDTO;
 import recommendator.dto.LoginDTO;
 import recommendator.exceptions.SomethingWentWrongException;
 import recommendator.exceptions.responses.Response;
 import recommendator.models.entities.Client;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import recommendator.repositories.ClientRepository;
 
 import javax.persistence.NoResultException;
