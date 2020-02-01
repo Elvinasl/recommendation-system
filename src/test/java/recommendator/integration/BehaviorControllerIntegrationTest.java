@@ -20,8 +20,6 @@ public class BehaviorControllerIntegrationTest extends IntegrationTest {
 
     @Test
     public void insertBehavior() throws Exception {
-        insertDummyRows();
-
         BehaviorDTO behaviorDTO = new BehaviorDTO();
         behaviorDTO.setCells(Lists.list(
                 new CellDTO("title", "Mr. Bean"),
