@@ -32,8 +32,8 @@ public class HasLikesFilter implements AlgorithmFilter {
 
             // When a row is liked or disliked, subtract 2 points so it wil not be
             // on top of the recommendations because the user has already seen it
-            if(rowWithPoints.getBehaviors() != null && rowWithPoints.getBehaviors().size() > 0){
-                rowWithPoints.setPoints(rowWithPoints.getPoints()-2);
+            if (rowWithPoints.getBehaviors() != null && rowWithPoints.getBehaviors().size() > 0) {
+                rowWithPoints.setPoints(rowWithPoints.getPoints() - 2);
             }
         });
 

@@ -29,10 +29,11 @@ public class ClientPrincipalDetailsService implements UserDetailsService {
 
     /**
      * Grabs the client object from the database by a given email
+     *
      * @param email of the client
      * @return client object
      */
-    public Client getClientByUsername(String email){
+    public Client getClientByUsername(String email) {
         return this.clientRepository.getByEmail(email);
     }
 }

@@ -39,30 +39,42 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { AppConfig.class, DatabaseConfig.class})
+@ContextConfiguration(classes = {AppConfig.class, DatabaseConfig.class})
 @WebAppConfiguration
 @ActiveProfiles({"default", "integration"})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class IntegrationTest {
 
-    @Autowired protected WebApplicationContext wac;
-    @Autowired protected RowRepository rowRepository;
-    @Autowired protected UserPreferenceRepository userPreferenceRepository;
-    @Autowired protected UserRepository userRepository;
-    @Autowired protected ColumnNameRepository columnNameRepository;
-    @Autowired protected CellRepository cellRepository;
-    @Autowired protected BehaviorRepository behaviorRepository;
-    @Autowired protected ClientRepository clientRepository;
-    @Autowired protected ProjectRepository projectRepository;
+    @Autowired
+    protected WebApplicationContext wac;
+    @Autowired
+    protected RowRepository rowRepository;
+    @Autowired
+    protected UserPreferenceRepository userPreferenceRepository;
+    @Autowired
+    protected UserRepository userRepository;
+    @Autowired
+    protected ColumnNameRepository columnNameRepository;
+    @Autowired
+    protected CellRepository cellRepository;
+    @Autowired
+    protected BehaviorRepository behaviorRepository;
+    @Autowired
+    protected ClientRepository clientRepository;
+    @Autowired
+    protected ProjectRepository projectRepository;
 
-    @Autowired protected RowService rowService;
-    @Autowired protected ProjectService projectService;
-    @Autowired protected ClientService clientService;
+    @Autowired
+    protected RowService rowService;
+    @Autowired
+    protected ProjectService projectService;
+    @Autowired
+    protected ClientService clientService;
 
     protected MockMvc mockMvc;
     protected HttpHeaders httpHeaders;
     protected ObjectMapper objectMapper;
-    protected final LoginDTO client = new LoginDTO("test@gmail.com","password123");
+    protected final LoginDTO client = new LoginDTO("test@gmail.com", "password123");
 
     @BeforeAll
     void setup() {
@@ -76,7 +88,7 @@ public abstract class IntegrationTest {
     }
 
     @AfterEach
-    void cleanupDatbase(){
+    void cleanupDatbase() {
         behaviorRepository.deleteAll();
         userPreferenceRepository.deleteAll();
         cellRepository.deleteAll();
@@ -87,8 +99,9 @@ public abstract class IntegrationTest {
         clientRepository.deleteAll();
         logout();
     }
+
     @Test
-    public void testSetup(){
+    public void testSetup() {
         ServletContext servletContext = wac.getServletContext();
         assertThat(servletContext).isNotNull();
         assertThat(servletContext instanceof MockServletContext).isTrue();
@@ -97,7 +110,8 @@ public abstract class IntegrationTest {
 
     /**
      * Creates a post request to the given route and returns the response
-     * @param body containing the request body
+     *
+     * @param body  containing the request body
      * @param route url to call
      * @return Request response
      * @throws Exception
@@ -111,6 +125,7 @@ public abstract class IntegrationTest {
 
     /**
      * Creates a get request to the given route and returns the response
+     *
      * @param route url to call
      * @return Request response
      * @throws Exception
@@ -124,6 +139,7 @@ public abstract class IntegrationTest {
 
     /**
      * Creates a delete request to the given route and returns the response
+     *
      * @param route url to call
      * @return Request response
      * @throws Exception
@@ -137,6 +153,7 @@ public abstract class IntegrationTest {
 
     /**
      * Creates a patch request to the given route and returns the response
+     *
      * @param route url to call
      * @return Request response
      * @throws Exception
@@ -150,6 +167,7 @@ public abstract class IntegrationTest {
 
     /**
      * Creates a put request to the given route and returns the response
+     *
      * @param route url to call
      * @return Request response
      * @throws Exception
@@ -163,21 +181,22 @@ public abstract class IntegrationTest {
 
     /**
      * Creates a login request and sets the httpheader authentication header
+     *
      * @throws Exception
      */
     public void login() throws Exception {
-          String bearer = mockMvc.perform(post("/login")
+        String bearer = mockMvc.perform(post("/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(client)))
                 .andReturn().getResponse().getHeader("Authorization");
 
-          httpHeaders.addIfAbsent("Authorization", bearer);
+        httpHeaders.addIfAbsent("Authorization", bearer);
     }
 
     /**
      * Removes the Authorization header from the httpheaders
      */
-    public void logout(){
+    public void logout() {
         httpHeaders.remove("Authorization");
         httpHeaders.remove("api-key");
     }
@@ -196,7 +215,7 @@ public abstract class IntegrationTest {
     /**
      * Creates two new rows in the database containing some columns and values
      */
-    protected void insertDummyRows(){
+    protected void insertDummyRows() {
         Project project = projectService.getByApiKey(httpHeaders.get("api-key").get(0));
         ColumnName columnTitle = insertColumnIntoDatabase("title", 70, project);
         ColumnName columnGenre = insertColumnIntoDatabase("genre", 50, project);
@@ -216,12 +235,13 @@ public abstract class IntegrationTest {
 
     /**
      * Creates and inserts a new column into the database with the given data
-     * @param name of the column
-     * @param weight of the column
+     *
+     * @param name    of the column
+     * @param weight  of the column
      * @param project to add the column to
      * @return created column fetched from the database
      */
-    protected ColumnName insertColumnIntoDatabase(String name, int weight, Project project){
+    protected ColumnName insertColumnIntoDatabase(String name, int weight, Project project) {
         ColumnName columnName = new ColumnName();
         columnName.setName(name);
         columnName.setWeight(weight);
@@ -233,12 +253,13 @@ public abstract class IntegrationTest {
 
     /**
      * Create and insert a cell into the database
+     *
      * @param columnName to add the cell to
-     * @param row to add the cell to
-     * @param value of the cell
-     * @param weight of the cell
+     * @param row        to add the cell to
+     * @param value      of the cell
+     * @param weight     of the cell
      */
-    protected void insertCellIntoDatabase(ColumnName columnName, Row row, String value, int weight){
+    protected void insertCellIntoDatabase(ColumnName columnName, Row row, String value, int weight) {
         Cell cell = new Cell();
         cell.setColumnName(columnName);
         cell.setRow(row);

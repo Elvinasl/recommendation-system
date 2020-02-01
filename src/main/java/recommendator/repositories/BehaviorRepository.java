@@ -19,8 +19,9 @@ public class BehaviorRepository extends DatabaseRepository<Behavior> {
     /**
      * Gathers all the {@link Behavior} records from the database for a specific user and project.
      * It also filters the records by like or dislike.
-     * @param user the {@link Behavior} belongs to
-     * @param liked or disliked
+     *
+     * @param user    the {@link Behavior} belongs to
+     * @param liked   or disliked
      * @param project the {@link recommendator.models.entities.Row} belongs to
      * @return list of all the {@link Behavior}'s
      */
@@ -40,6 +41,7 @@ public class BehaviorRepository extends DatabaseRepository<Behavior> {
 
     /**
      * Gathers all the {@link Behavior} records from the database for a specific user
+     *
      * @param user the {@link Behavior} belongs to
      * @return list of all the {@link Behavior}'s
      */

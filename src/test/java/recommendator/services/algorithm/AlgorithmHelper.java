@@ -33,11 +33,11 @@ public class AlgorithmHelper {
         return biggestRow;
     }
 
-    public static  Row prepareRow(String cellValue, int numOfCells) {
+    public static Row prepareRow(String cellValue, int numOfCells) {
         Row row = new Row();
 
         List<Cell> cells = new ArrayList<>();
-        for(int i = 0; i < numOfCells; i++) {
+        for (int i = 0; i < numOfCells; i++) {
             cells.add(prepareCell(cellValue));
         }
         row.setCells(cells);

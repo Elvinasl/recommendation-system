@@ -26,9 +26,12 @@ import static recommendator.services.algorithm.AlgorithmHelper.prepareRow;
 @ExtendWith(MockitoExtension.class)
 class CellPointsFilterTest {
 
-    @Mock ColumnNameService columnNameService;
-    @Mock BehaviorService behaviorService;
-    @InjectMocks CellPointsFilter cellPointsFilter;
+    @Mock
+    ColumnNameService columnNameService;
+    @Mock
+    BehaviorService behaviorService;
+    @InjectMocks
+    CellPointsFilter cellPointsFilter;
 
     @Test
     void filter() {

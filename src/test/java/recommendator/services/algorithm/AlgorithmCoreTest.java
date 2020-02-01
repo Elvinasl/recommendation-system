@@ -26,12 +26,18 @@ import static recommendator.services.algorithm.AlgorithmHelper.generateRowWithPo
 @ExtendWith(MockitoExtension.class)
 class AlgorithmCoreTest {
 
-    @Mock ProjectService projectService;
-    @Mock UserService userService;
-    @Mock FilterManager filterManager;
-    @InjectMocks AlgorithmCore algorithmCore;
-    @Mock RowRepository rowRepository;
-    @InjectMocks HasBehaviorFilter hasBehaviorFilter;
+    @Mock
+    ProjectService projectService;
+    @Mock
+    UserService userService;
+    @Mock
+    FilterManager filterManager;
+    @InjectMocks
+    AlgorithmCore algorithmCore;
+    @Mock
+    RowRepository rowRepository;
+    @InjectMocks
+    HasBehaviorFilter hasBehaviorFilter;
 
     @Test
     void generateRecommendation() {

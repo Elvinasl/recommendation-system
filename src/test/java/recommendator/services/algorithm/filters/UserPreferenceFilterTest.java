@@ -17,7 +17,8 @@ import static recommendator.services.algorithm.AlgorithmHelper.generateRowWithPo
 @ExtendWith(MockitoExtension.class)
 class UserPreferenceFilterTest {
 
-    @InjectMocks UserPreferenceFilter userPreferenceFilter;
+    @InjectMocks
+    UserPreferenceFilter userPreferenceFilter;
 
     @Test
     void filter() {
@@ -29,11 +30,11 @@ class UserPreferenceFilterTest {
         rows.forEach(rowWithPoints -> rowWithPoints.getCells().forEach(cell -> {
             // setting user preferences manually based on cell values
             UserPreference userPreference = new UserPreference();
-            if(cell.getValue().equals("biggest")) {
+            if (cell.getValue().equals("biggest")) {
                 userPreference.setWeight(100);
             }
 
-            if(cell.getValue().equals("medium")) {
+            if (cell.getValue().equals("medium")) {
                 userPreference.setWeight(70);
             }
 

@@ -22,8 +22,8 @@ public class ColumnNameService {
     /**
      * Add or updates the given {@link ColumnName} into the database.
      *
-     * @param columnName    The columnName that should be added or updated
-     * @param project       The project where the columnName belongs to
+     * @param columnName The columnName that should be added or updated
+     * @param project    The project where the columnName belongs to
      * @return the added or updated {@link ColumnName}
      */
     ColumnName addOrUpdate(ColumnName columnName, Project project) {
@@ -63,8 +63,9 @@ public class ColumnNameService {
 
     /**
      * Gathers a {@link ColumnName} with a specific name and belonging to a specific {@link Project}.
+     *
      * @param columnName to search for
-     * @param project the column should belong to
+     * @param project    the column should belong to
      * @return found column
      */
     public ColumnName getByNameAndProject(String columnName, Project project) {

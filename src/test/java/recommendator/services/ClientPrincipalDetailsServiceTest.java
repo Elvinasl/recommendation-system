@@ -17,9 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockitoExtension.class)
 class ClientPrincipalDetailsServiceTest {
 
-    @Mock ClientRepository clientRepository;
+    @Mock
+    ClientRepository clientRepository;
 
-    @InjectMocks ClientPrincipalDetailsService clientPrincipalDetailsService;
+    @InjectMocks
+    ClientPrincipalDetailsService clientPrincipalDetailsService;
 
     @Test
     void loadUserByUsername() {
@@ -39,8 +41,8 @@ class ClientPrincipalDetailsServiceTest {
 
         // checking username not found exception
         assertThatThrownBy(() -> clientPrincipalDetailsService.loadUserByUsername(null))
-        .hasMessage("not found")
-        .isExactlyInstanceOf(UsernameNotFoundException.class);
+                .hasMessage("not found")
+                .isExactlyInstanceOf(UsernameNotFoundException.class);
 
     }
 }

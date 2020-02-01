@@ -26,20 +26,20 @@ public class ImportController {
      * @param apiKey The api key to find project for
      * @param data   JSON structured dataset (One of these is enough: columns and rows): <br>
      *               <pre>
-     *                           {
-     *               	                "columns": [
-     *                                    {
-     *                   	                    "name": "artist",
-     *                   	                    "weight": 30
-     *                                    },
-     *                                ],
-     *                                "rows": [
-     *                                    {
-     *                     	                "artist": { "value": "Elvis", "weight": 40 },
-     *                                    },
-     *                                ]
-     *                            }
-     *               </pre>
+     *                                         {
+     *                             	                "columns": [
+     *                                                  {
+     *                                 	                    "name": "artist",
+     *                                 	                    "weight": 30
+     *                                                  },
+     *                                              ],
+     *                                              "rows": [
+     *                                                  {
+     *                                   	                "artist": { "value": "Elvis", "weight": 40 },
+     *                                                  },
+     *                                              ]
+     *                                          }
+     *                             </pre>
      */
     @PostMapping
     public ResponseEntity<Response> importJson(@RequestHeader("api-key") String apiKey, @RequestBody DatasetDTO data) {

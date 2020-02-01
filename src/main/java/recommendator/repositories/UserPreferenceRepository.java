@@ -17,6 +17,7 @@ public class UserPreferenceRepository extends DatabaseRepository<UserPreference>
 
     /**
      * Gathers {@link UserPreference} from the database for a specific {@link Cell}
+     *
      * @param cell the {@link UserPreference} should belong to
      * @return UserPreference from the given Cell or null if nothing was found
      */
@@ -26,7 +27,7 @@ public class UserPreferenceRepository extends DatabaseRepository<UserPreference>
                 .setParameter("cell", cell);
         try {
             return (UserPreference) query.getSingleResult();
-        }catch(NoResultException e){
+        } catch (NoResultException e) {
             return null;
         }
     }

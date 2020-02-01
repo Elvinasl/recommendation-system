@@ -25,6 +25,7 @@ public class ProjectController {
     public ResponseEntity<ReturnObjectDTO<ProjectDTO>> list() {
         return ResponseEntity.ok().body(projectService.listByCurrentClient());
     }
+
     @PostMapping
     public ResponseEntity<ProjectDTO> add(@RequestBody @Valid ProjectDTO project) {
         return ResponseEntity.ok().body(projectService.add(project));

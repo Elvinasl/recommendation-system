@@ -24,7 +24,7 @@ public class RowRepository extends DatabaseRepository<Row> {
      * matching the given cells. Another requirement is that the row belongs to the given project. If all these match
      * true will be given.
      *
-     * @param project the cells belong to
+     * @param project    the cells belong to
      * @param cellValues containing the values that should all match for a specific row
      * @return true if a row exists with the given cells
      * @throws NoResultException get's thrown when there is no row found
@@ -45,14 +45,14 @@ public class RowRepository extends DatabaseRepository<Row> {
                 .setParameter("size", (long) cellValues.size())
                 .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Unknown row"));
 
-            return count > 0;
+        return count > 0;
     }
 
     /**
      * Finds a row based on the cell values and the project
      *
      * @param cellValues containing the values that should all match for a specific row
-     * @param project the cells belong to
+     * @param project    the cells belong to
      * @return a row if the row is found
      * @throws NoResultException get's thrown when there is no row found
      */
@@ -80,8 +80,9 @@ public class RowRepository extends DatabaseRepository<Row> {
     /**
      * Gathers the most liked {@link Row}'s from the database and converts them into {@link List<RowWithPoints>}
      * containing the row and the amount of likes/dislikes.
+     *
      * @param project the {@link Row}'s should belong to
-     * @param amount limit the total results
+     * @param amount  limit the total results
      * @return list of the most liked {@link Row}'s including there likes/dislike points.
      */
     @Transactional
@@ -104,8 +105,9 @@ public class RowRepository extends DatabaseRepository<Row> {
     /**
      * Gathers the most liked {@link Row}'s from the database for a specific {@link User} and converts
      * them into {@link List<RowWithPoints>} containing the {@link Row} and the amount of likes/dislikes.
+     *
      * @param project the {@link Row}'s should belong to
-     * @param user the {@link recommendator.models.entities.Behavior} should belong to
+     * @param user    the {@link recommendator.models.entities.Behavior} should belong to
      * @return list of the most liked {@link Row}'s for a specific user including there likes/dislike points.
      */
     @Transactional
@@ -124,6 +126,7 @@ public class RowRepository extends DatabaseRepository<Row> {
 
     /**
      * Gathers all {@link Row}'s with the amount of likes/dislikes with it and converts it into a {@link List<RowWithPoints>}
+     *
      * @param apiKey of the project
      * @return list of the all liked/disliked {@link Row}'s including there likes/dislike points.
      */

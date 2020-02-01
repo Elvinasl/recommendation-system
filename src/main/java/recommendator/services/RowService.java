@@ -123,19 +123,19 @@ public class RowService {
      */
     @Transactional
     public ReturnObjectDTO getByApiKey(String apiKey) {
-       List<RowWithPoints> rows = rowRepository.findAllByApiKey(apiKey);
+        List<RowWithPoints> rows = rowRepository.findAllByApiKey(apiKey);
 
-       List<RowDTO> rowDTOs = rows.stream()
-           .map(row -> {
-            RowDTO rowDTO = new RowDTO();
-            rowDTO.setId(row.getId());
-            rowDTO.convertCellsToDTO(row.getCells());
-            rowDTO.setReactions(Math.round(row.getPoints()));
-            return rowDTO;
-           })
-           .collect(Collectors.toList());
+        List<RowDTO> rowDTOs = rows.stream()
+                .map(row -> {
+                    RowDTO rowDTO = new RowDTO();
+                    rowDTO.setId(row.getId());
+                    rowDTO.convertCellsToDTO(row.getCells());
+                    rowDTO.setReactions(Math.round(row.getPoints()));
+                    return rowDTO;
+                })
+                .collect(Collectors.toList());
 
-       return new ReturnObjectDTO<>(rowDTOs);
+        return new ReturnObjectDTO<>(rowDTOs);
     }
 
     /**
@@ -152,7 +152,7 @@ public class RowService {
     /**
      * Updates row: updates cell values based on rowDTO
      *
-     * @param rowId Id of the row to be updated
+     * @param rowId  Id of the row to be updated
      * @param rowDTO rowDto with cell values to be updated
      * @return Global response with a message
      */
@@ -170,6 +170,7 @@ public class RowService {
 
     /**
      * Creates a row
+     *
      * @param cellDTOs
      * @param project
      * @return saved row

@@ -79,7 +79,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sign(HMAC512(secret.getBytes()));
 
 
-        String fullToken = JwtProperties.TOKEN_PREFIX +  token;
+        String fullToken = JwtProperties.TOKEN_PREFIX + token;
         // Add token in response
         response.addHeader(JwtProperties.HEADER_STRING, fullToken);
         response.setContentType("application/json");

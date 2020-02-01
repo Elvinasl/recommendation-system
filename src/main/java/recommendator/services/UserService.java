@@ -21,6 +21,7 @@ public class UserService {
 
     /**
      * Adds an {@link User} to the database.
+     *
      * @param user to add
      * @return added user
      */
@@ -30,8 +31,9 @@ public class UserService {
 
     /**
      * Gathers an {@link User} from the database by userId and a specific {@link Project}
+     *
      * @param externalUserId to search for
-     * @param project the user should be part of
+     * @param project        the user should be part of
      * @return found user
      */
     public User findByExternalIdAndProjectOrNull(String externalUserId, Project project) {

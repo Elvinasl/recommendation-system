@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * This service contains all the logic for everything that has something to do with Clients.
  */
 @Service
-public class ClientService  {
+public class ClientService {
 
     private ClientRepository clientRepository;
     private PasswordEncoder passwordEncoder;
@@ -32,6 +32,7 @@ public class ClientService  {
 
     /**
      * Creates a new {@link Client} if the requested client does not yet exist
+     *
      * @param loginDTO containing login information
      * @return message with the status
      */
@@ -54,6 +55,7 @@ public class ClientService  {
 
     /**
      * Makes the {@link Client} with a specific ID Admin.
+     *
      * @param clientId of the client that should be made admin.
      * @return message with the status
      */
@@ -66,6 +68,7 @@ public class ClientService  {
 
     /**
      * Disables a {@link Client} with a specific ID.
+     *
      * @param clientId of the client that should be disabled
      * @return message with the status
      */
@@ -78,6 +81,7 @@ public class ClientService  {
 
     /**
      * Gathers a {@link Client} with a specific ID.
+     *
      * @param clientId to find
      * @return the client that has bin found
      */
@@ -87,6 +91,7 @@ public class ClientService  {
 
     /**
      * Gathers all the clients and returns them as a DTO.
+     *
      * @return DTO of all clients
      */
     public AllClientsDTO getAllClients() {

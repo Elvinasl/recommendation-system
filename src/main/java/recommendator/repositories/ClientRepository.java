@@ -16,6 +16,7 @@ public class ClientRepository extends DatabaseRepository<Client> {
 
     /**
      * Gathers a {@link Client} from the database by email.
+     *
      * @param email to search for
      * @return Client with the given email
      * @throws NoResultException geths thrown whenever there is no {@link Client} with the given email
@@ -29,6 +30,7 @@ public class ClientRepository extends DatabaseRepository<Client> {
 
     /**
      * Gathers all the {@link Client}'s that are activated (or not).
+     *
      * @param isActivated define if you want to search clients that are activated
      * @return all the {@link Client}'s that have been found
      */

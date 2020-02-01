@@ -19,7 +19,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "name", "project_id" } ) } )
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "project_id"})})
 public class ColumnName extends Weight {
 
     @Id

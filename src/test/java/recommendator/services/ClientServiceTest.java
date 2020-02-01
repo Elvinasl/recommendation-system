@@ -24,11 +24,14 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 @ExtendWith(MockitoExtension.class)
 class ClientServiceTest {
 
-    @Mock ClientRepository clientRepository;
+    @Mock
+    ClientRepository clientRepository;
 
-    @Mock PasswordEncoder passwordEncoder;
+    @Mock
+    PasswordEncoder passwordEncoder;
 
-    @InjectMocks ClientService clientService;
+    @InjectMocks
+    ClientService clientService;
 
     @Test
     void add() {

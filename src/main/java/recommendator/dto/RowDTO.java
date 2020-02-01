@@ -21,6 +21,7 @@ public class RowDTO {
 
     /**
      * Converts a {@link List<Cell>} into {@link List<CellDTO>}
+     *
      * @param cells to convert
      */
     public void convertCellsToDTO(List<Cell> cells) {
