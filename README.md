@@ -7,6 +7,7 @@
 | develop  | ![](https://github.com/Elvinasl/recommendation-system/workflows/Build/badge.svg?branch=develop)|
 
 ### Running the project
+#### Back-end
 Rename the *.properties.example to *.properties in src/main/java/recommendator/resources/
 And change the properties.
 
@@ -14,6 +15,11 @@ And change the properties.
 | ------------- | ------------- | ------------- | ------------- |
 | Run project | mvn clean package cargo:run | 8080 | Not integrated |
 | Integration tests |  mvn clean install -Pintegration | - | Integrated (h2) |
+
+#### Front-end
+This project includes a front-end to demonstrate the possibilities of the REST-API. In order to run this front-end, the user should set up his/her own webserver. During development, the team used Intellij's internal webserver.
+
+A quick note for the front-end is that the repository already contains a dataset for uploading, this dataset can be found in the front-end folder and is called import.json.
 
 ### Background
 Recommendator is a project created for the minor Advanced Java at NHL Stenden. This project is created with the mindset to learn more about REST API and Spring. Because of that, we were not allowed to use Spring boot.
