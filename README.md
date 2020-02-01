@@ -21,6 +21,8 @@ This project includes a front-end to demonstrate the possibilities of the REST-A
 
 A quick note for the front-end is that the repository already contains a dataset for uploading, this dataset can be found in the front-end folder and is called import.json.
 
+
+## Project 
 ### Background
 Recommendator is a project created for the minor Advanced Java at NHL Stenden. This project is created with the mindset to learn more about REST API and Spring. Because of that, we were not allowed to use Spring boot.
 
@@ -31,3 +33,7 @@ Developers can add datasets to their project that will be used for the predictio
 
 Predictions can be made with the given data and works as follows:
 The client's users like/dislike rows, given that we know which labels belong to which row we can predict which labels the user likes the most. Using the algorithm each row is given points based on the rank of how much the user will like that specific row.
+
+### Usage front-end
+When the dataset is uploaded you can navigate to the project page again and click the list-icon behind a project. This list is the recommendations when no userID is given. In order to get recommendations for a specific user, it is possible to type the userID in the text area above the recommendations table. After inserting a userID, voting buttons appear. Clicking on these buttons will change the recommendations based on the rows that are liked or disliked.
+
