@@ -114,7 +114,7 @@ public abstract class IntegrationTest {
      * @param body  containing the request body
      * @param route url to call
      * @return Request response
-     * @throws Exception
+     * @throws Exception that gets thrown by mockMVC
      */
     public MockHttpServletResponse postRequest(Object body, String route) throws Exception {
         return this.mockMvc.perform(post(route)
@@ -128,7 +128,7 @@ public abstract class IntegrationTest {
      *
      * @param route url to call
      * @return Request response
-     * @throws Exception
+     * @throws Exception that gets thrown by mockMVC
      */
     public MockHttpServletResponse getRequest(String route) throws Exception {
         return this.mockMvc.perform(get(route)
@@ -142,7 +142,7 @@ public abstract class IntegrationTest {
      *
      * @param route url to call
      * @return Request response
-     * @throws Exception
+     * @throws Exception that gets thrown by mockMVC
      */
     public MockHttpServletResponse deleteRequest(String route) throws Exception {
         return this.mockMvc.perform(delete(route)
@@ -154,9 +154,10 @@ public abstract class IntegrationTest {
     /**
      * Creates a patch request to the given route and returns the response
      *
+     * @param body  containing the request body
      * @param route url to call
      * @return Request response
-     * @throws Exception
+     * @throws Exception that gets thrown by mockMVC
      */
     public MockHttpServletResponse patchRequest(Object body, String route) throws Exception {
         return this.mockMvc.perform(patch(route)
@@ -168,9 +169,10 @@ public abstract class IntegrationTest {
     /**
      * Creates a put request to the given route and returns the response
      *
+     * @param body  containing the request body
      * @param route url to call
      * @return Request response
-     * @throws Exception
+     * @throws Exception that gets thrown by mockMVC
      */
     public MockHttpServletResponse putRequest(Object body, String route) throws Exception {
         return this.mockMvc.perform(put(route)
@@ -178,11 +180,23 @@ public abstract class IntegrationTest {
                 .content(objectMapper.writeValueAsString(body)))
                 .andReturn().getResponse();
     }
+    /**
+     * Creates a put request to the given route and returns the response
+     *
+     * @param route url to call
+     * @return Request response
+     * @throws Exception that gets thrown by mockMVC
+     */
+    public MockHttpServletResponse putRequest(String route) throws Exception {
+        return this.mockMvc.perform(put(route)
+                .headers(httpHeaders))
+                .andReturn().getResponse();
+    }
 
     /**
      * Creates a login request and sets the httpheader authentication header
      *
-     * @throws Exception
+     * @throws Exception that gets thrown by mockMVC
      */
     public void login() throws Exception {
         String bearer = mockMvc.perform(post("/login")

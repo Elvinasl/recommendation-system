@@ -3,6 +3,7 @@ package recommendator.integration;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletResponse;
 import recommendator.dto.LoginDTO;
+import recommendator.models.entities.Client;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,8 +24,8 @@ public class ClientControllerIntegrationTest extends IntegrationTest {
 
     @Test
     public void login() throws Exception {
-        // Making sure a client exist or is created
         clientService.add(client);
+        super.login();
 
         LoginDTO badClient = new LoginDTO("wrong@gmail.com", "wrongpass123");
 
@@ -36,5 +37,73 @@ public class ClientControllerIntegrationTest extends IntegrationTest {
         // Trying to login with bad credentials
         MockHttpServletResponse secondRegister = postRequest(badClient, "/login");
         assertThat(secondRegister.getStatus()).isEqualTo(401);
+    }
+
+    @Test
+    public void makeAdmin() throws Exception {
+        clientService.add(client);
+        super.login();
+        createDummyClient();
+        // Making sure a client exist or is created
+        setRole("ADMIN");
+
+        Long id = clientRepository.getByEmail("dummyUser@email.com").getId();
+        // Make client admin
+        MockHttpServletResponse request = putRequest("/admin/" + id);
+        assertThat(request.getStatus()).isEqualTo(200);
+
+        // Trying to make admin without being admin
+        setRole("USER");
+        request = putRequest(client, "/admin/" + id);
+        assertThat(request.getStatus()).isEqualTo(403);
+    }
+
+    @Test
+    public void disableUser() throws Exception {
+        clientService.add(client);
+        super.login();
+        createDummyClient();
+        setRole("ADMIN");
+
+        Long id = clientRepository.getByEmail("dummyUser@email.com").getId();
+        // Delete client admin
+        MockHttpServletResponse request = deleteRequest("/admin/" + id);
+        assertThat(request.getStatus()).isEqualTo(200);
+
+        // Trying to make delete without being admin
+        setRole("USER");
+        request = putRequest(client, "/admin/" + id);
+        assertThat(request.getStatus()).isEqualTo(403);
+    }
+
+    @Test
+    public void getAllUsers() throws Exception {
+        clientService.add(client);
+        super.login();
+        createDummyClient();
+        setRole("ADMIN");
+
+        // Get all users
+        MockHttpServletResponse request = getRequest("/admin/");
+        assertThat(request.getStatus()).isEqualTo(200);
+        assertThat(request.getContentAsString()).contains("test@gmail.com").contains("dummyUser@email.com");
+
+        // Trying to get all users without being admin
+        setRole("USER");
+        request = getRequest("/admin/");
+        assertThat(request.getStatus()).isEqualTo(403);
+    }
+
+    private void setRole(String role){
+        Client clientObj = clientRepository.getByEmail(client.getEmail());
+        clientObj.setRole(role);
+        clientRepository.update(clientObj);
+    }
+
+    private void createDummyClient(){
+        LoginDTO dummyClient = new LoginDTO();
+        dummyClient.setEmail("dummyUser@email.com");
+        dummyClient.setPassword("pass");
+        clientService.add(dummyClient);
     }
 }
