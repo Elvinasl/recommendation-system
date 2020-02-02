@@ -1,11 +1,9 @@
 package recommendator.services.algorithm.filters;
 
+import org.springframework.stereotype.Service;
 import recommendator.models.containers.RowWithPoints;
 import recommendator.models.entities.Cell;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import recommendator.services.algorithm.FiltersData;
-import recommendator.services.UserPreferenceService;
 
 /**
  * This filter takes user preference depending on a row cell and adjusts row points based on that

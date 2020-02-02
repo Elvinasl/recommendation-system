@@ -11,8 +11,6 @@ import recommendator.repositories.UserPreferenceRepository;
 
 import java.util.Arrays;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
@@ -20,9 +18,11 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 @ExtendWith(MockitoExtension.class)
 class UserPreferenceServiceTest {
 
-    @Mock UserPreferenceRepository userPreferenceRepository;
+    @Mock
+    UserPreferenceRepository userPreferenceRepository;
 
-    @InjectMocks UserPreferenceService userPreferenceService;
+    @InjectMocks
+    UserPreferenceService userPreferenceService;
 
     @Test
     void createOrAdjust() {
@@ -32,11 +32,11 @@ class UserPreferenceServiceTest {
         // Set two cells for the row, these are used to check if
         // the method's behavior is correct
         row.setCells(Arrays.asList(
-                new Cell(1L, "a",null,row, null),
-                new Cell(1L, "a",null,row, null)
+                new Cell(1L, "a", null, row, null),
+                new Cell(1L, "a", null, row, null)
         ));
 
-        Cell cell = new Cell(1L, "a",null,row, null);
+        Cell cell = new Cell(1L, "a", null, row, null);
         UserPreference userPreference = new UserPreference(1L, new User(), cell);
 
 

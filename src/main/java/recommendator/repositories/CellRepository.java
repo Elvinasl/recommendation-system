@@ -16,6 +16,7 @@ public class CellRepository extends DatabaseRepository<Cell> {
 
     /**
      * Gathers all the {@link Cell}'s from a specific row.
+     *
      * @param row to where to cells should be belonging
      * @return list of all the {@link Cell}'s
      */

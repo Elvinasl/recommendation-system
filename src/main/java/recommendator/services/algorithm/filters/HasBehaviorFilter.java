@@ -1,12 +1,12 @@
 package recommendator.services.algorithm.filters;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import recommendator.models.containers.RowWithPoints;
 import recommendator.models.entities.Project;
 import recommendator.models.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import recommendator.services.algorithm.FiltersData;
 import recommendator.repositories.RowRepository;
+import recommendator.services.algorithm.FiltersData;
 
 import java.util.List;
 

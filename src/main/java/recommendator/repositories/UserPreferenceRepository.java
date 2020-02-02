@@ -1,9 +1,9 @@
 package recommendator.repositories;
 
-import recommendator.models.entities.Cell;
-import recommendator.models.entities.UserPreference;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import recommendator.models.entities.Cell;
+import recommendator.models.entities.UserPreference;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -17,6 +17,7 @@ public class UserPreferenceRepository extends DatabaseRepository<UserPreference>
 
     /**
      * Gathers {@link UserPreference} from the database for a specific {@link Cell}
+     *
      * @param cell the {@link UserPreference} should belong to
      * @return UserPreference from the given Cell or null if nothing was found
      */
@@ -26,7 +27,7 @@ public class UserPreferenceRepository extends DatabaseRepository<UserPreference>
                 .setParameter("cell", cell);
         try {
             return (UserPreference) query.getSingleResult();
-        }catch(NoResultException e){
+        } catch (NoResultException e) {
             return null;
         }
     }

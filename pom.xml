@@ -50,7 +50,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.7</version>
+            <version>2.9.10.1</version>
         </dependency>
 
         <dependency>
@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>6.0.17.Final</version>
+            <version>6.1.0.Final</version>
         </dependency>
 
         <dependency>
@@ -220,6 +220,37 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <!--We want to deploy our web application and we're using Tomcat for that-->
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>${cargo-core-container-tomcat.version}</version>
+                <configuration>
+                    <!-- Container configuration -->
+                    <deployables>
+                        <!--The part of the project to deploy, in our case, this whole project-->
+                        <deployable>
+                            <groupId>dreamteam</groupId>
+                            <artifactId>recommendation-system</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <!--We listen to the root path-->
+                                <context>/</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                    <!--The container we want to use and what we use to install it
+                    It can do this automatically as well, but it's neat to define it-->
+                    <container>
+                        <containerId>tomcat9x</containerId>
+                        <artifactInstaller>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat</artifactId>
+                            <version>${cargo-maven2-plugin.version}</version>
+                        </artifactInstaller>
+                    </container>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -247,9 +278,6 @@
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
-                        <configuration>
-                            <wait>false</wait>
-                        </configuration>
                         <executions>
                             <execution>
                                 <id>start-server</id>

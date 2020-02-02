@@ -84,14 +84,14 @@ public class ProjectControllerIntegrationTest extends IntegrationTest {
         addProjectToDatabase("p2", "2");
 
         // Update the project name
-        MockHttpServletResponse projectRequest = patchRequest(new ProjectDTO("updated"),"/projects/1");
+        MockHttpServletResponse projectRequest = patchRequest(new ProjectDTO("updated"), "/projects/1");
         assertThat(projectRequest.getStatus()).isEqualTo(200);
         assertThat(projectRepository.getByApiKey("1").getName()).isEqualTo("updated");
         // Making sure that project 2 is not changed
         assertThat(projectRepository.getByApiKey("2").getName()).isEqualTo("p2");
         // Check if the user is not allowed to update the project name when unauthenticated
         logout();
-        projectRequest = patchRequest(new ProjectDTO("updated"),"/projects/1");
+        projectRequest = patchRequest(new ProjectDTO("updated"), "/projects/1");
         assertThat(projectRequest.getStatus()).isEqualTo(403);
     }
 
@@ -101,13 +101,13 @@ public class ProjectControllerIntegrationTest extends IntegrationTest {
         addProjectToDatabase("p2", "2");
 
         // Refreshing the api-key
-        MockHttpServletResponse projectRequest = patchRequest(new ProjectDTO("updated"),"/projects/1/refresh-key");
+        MockHttpServletResponse projectRequest = patchRequest(new ProjectDTO("updated"), "/projects/1/refresh-key");
         assertThat(projectRequest.getStatus()).isEqualTo(200);
         assertThat(projectRequest.getContentAsString()).contains("name").contains("apiKey");
 
         // Check if the user is not allowed to refresh the key when unauthenticated
         logout();
-        projectRequest = patchRequest(new ProjectDTO("updated"),"/projects/1/refresh-key");
+        projectRequest = patchRequest(new ProjectDTO("updated"), "/projects/1/refresh-key");
         assertThat(projectRequest.getStatus()).isEqualTo(403);
     }
 

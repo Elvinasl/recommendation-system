@@ -3,8 +3,8 @@ package recommendator.models.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import recommendator.models.entities.shared.Weight;
 import org.hibernate.validator.constraints.Length;
+import recommendator.models.entities.shared.Weight;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -19,7 +19,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "name", "project_id" } ) } )
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "project_id"})})
 public class ColumnName extends Weight {
 
     @Id

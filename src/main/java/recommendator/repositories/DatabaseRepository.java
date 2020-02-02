@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Defines the basic operations for each repository (database related)
+ *
  * @param <T> Object type of the repository
  */
 abstract class DatabaseRepository<T> {
@@ -77,7 +78,7 @@ abstract class DatabaseRepository<T> {
     }
 
     @Transactional
-    public T getSingleResultOrNull(Query query){
+    public T getSingleResultOrNull(Query query) {
         List results = query.getResultList();
         if (results.isEmpty()) return null;
         else if (results.size() == 1) return (T) results.get(0);
@@ -85,7 +86,7 @@ abstract class DatabaseRepository<T> {
     }
 
     @Transactional
-    public void deleteAll(){
+    public void deleteAll() {
         em.createQuery("DELETE FROM  " + type.getName())
                 .executeUpdate();
     }

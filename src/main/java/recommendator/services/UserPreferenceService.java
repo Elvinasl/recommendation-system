@@ -1,14 +1,14 @@
 package recommendator.services;
 
-import recommendator.models.entities.Behavior;
-import recommendator.models.entities.Row;
-import recommendator.models.entities.User;
-import recommendator.models.entities.UserPreference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import recommendator.models.entities.Behavior;
+import recommendator.models.entities.Row;
+import recommendator.models.entities.User;
+import recommendator.models.entities.UserPreference;
 import recommendator.repositories.UserPreferenceRepository;
 
 /**
@@ -30,15 +30,16 @@ public class UserPreferenceService {
 
     /**
      * Creates or adjusts the userPreference for a specific user.
-     * @param user to create or adjust for
-     * @param row to create or adjust the cells for
+     *
+     * @param user     to create or adjust for
+     * @param row      to create or adjust the cells for
      * @param behavior containing the liked/disliked info
      */
     @Transactional
     public void createOrAdjust(User user, Row row, Behavior behavior) {
         row.getCells().forEach(cell -> {
             UserPreference userPreference = userPreferenceRepository.getByCellOrNull(cell);
-            if(userPreference == null) {
+            if (userPreference == null) {
                 userPreference = new UserPreference();
                 userPreference.setUser(user);
                 userPreference.setCell(cell);

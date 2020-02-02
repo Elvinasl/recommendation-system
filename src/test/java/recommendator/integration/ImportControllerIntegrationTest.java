@@ -53,24 +53,25 @@ public class ImportControllerIntegrationTest extends IntegrationTest {
 
     /**
      * Creates a new column with the given data
-     * @param name of the column
+     *
+     * @param name   of the column
      * @param weight of the column
      * @return New ColumnName object
      */
-    private ColumnName createColumn(String name, int weight){
+    private ColumnName createColumn(String name, int weight) {
         ColumnName columnName = new ColumnName();
         columnName.setName(name);
         columnName.setWeight(weight);
         return columnName;
     }
 
-    private DatasetRowDTO newRow(List<DatasetCellDTO> cellDTOS){
+    private DatasetRowDTO newRow(List<DatasetCellDTO> cellDTOS) {
         DatasetRowDTO datasetRowDTO = new DatasetRowDTO();
         datasetRowDTO.setCells(cellDTOS);
         return datasetRowDTO;
     }
 
-    private DatasetCellDTO newDatasetCellDTO(String columnName, String value, int weight){
+    private DatasetCellDTO newDatasetCellDTO(String columnName, String value, int weight) {
         DatasetCellDTO datasetCellDTO = new DatasetCellDTO();
         datasetCellDTO.setColumnName(columnName);
         datasetCellDTO.setValue(value);

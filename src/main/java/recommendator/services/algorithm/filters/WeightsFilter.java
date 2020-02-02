@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import recommendator.services.algorithm.FiltersData;
 
 /**
- *  Sums upp cell, columnName (column) and row weights. After that it also takes row points into account.
+ * Sums upp cell, columnName (column) and row weights. After that it also takes row points into account.
  */
 @Service
 public class WeightsFilter implements AlgorithmFilter {

@@ -1,8 +1,8 @@
 package recommendator.repositories;
 
+import org.springframework.stereotype.Repository;
 import recommendator.models.entities.ColumnName;
 import recommendator.models.entities.Project;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
@@ -16,7 +16,8 @@ public class ColumnNameRepository extends DatabaseRepository<ColumnName> {
 
     /**
      * Gathers a {@link ColumnName} from the database that has a specific name and belongs to a specific {@link Project}.
-     * @param name of the column
+     *
+     * @param name    of the column
      * @param project the {@link ColumnName} must belong to
      * @return The found {@link ColumnName}
      * @throws NoResultException
@@ -32,7 +33,8 @@ public class ColumnNameRepository extends DatabaseRepository<ColumnName> {
 
     /**
      * Checks if the {@link ColumnName} exists for a specific {@link Project}.
-     * @param name of the column
+     *
+     * @param name    of the column
      * @param project the {@link ColumnName} should belong to
      * @return true if the {@link ColumnName} exists
      */
@@ -50,6 +52,7 @@ public class ColumnNameRepository extends DatabaseRepository<ColumnName> {
 
     /**
      * Counts the total {@link ColumnName} that a specific {@link Project} has.
+     *
      * @param project to count for
      * @return Sum of total {@link ColumnName}'s
      */

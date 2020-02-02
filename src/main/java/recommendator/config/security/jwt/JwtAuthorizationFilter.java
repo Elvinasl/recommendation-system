@@ -1,7 +1,6 @@
 package recommendator.config.security.jwt;
 
 import com.auth0.jwt.JWT;
-import recommendator.config.security.ClientPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -10,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import recommendator.config.security.ClientPrincipal;
 import recommendator.models.entities.Client;
 import recommendator.repositories.ClientRepository;
 
@@ -67,7 +67,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
      */
     private Authentication getUsernamePasswordAuthentication(HttpServletRequest request) {
         String token = request.getHeader(JwtProperties.HEADER_STRING)
-                .replace(JwtProperties.TOKEN_PREFIX,"");
+                .replace(JwtProperties.TOKEN_PREFIX, "");
 
         if (token.length() > 0) {
             // parse the token and validate it

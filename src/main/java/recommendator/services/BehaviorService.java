@@ -1,5 +1,7 @@
 package recommendator.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import recommendator.dto.BehaviorDTO;
 import recommendator.exceptions.NotFoundException;
 import recommendator.exceptions.responses.Response;
@@ -7,8 +9,6 @@ import recommendator.models.entities.Behavior;
 import recommendator.models.entities.Project;
 import recommendator.models.entities.Row;
 import recommendator.models.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import recommendator.repositories.BehaviorRepository;
 
 import java.util.List;
@@ -39,7 +39,8 @@ public class BehaviorService {
      * If the row is not existing, it also creates a row. If it exists, just references it (foreign key)
      * If the user if sending a feedback (behavior) for the first time, we also save his id.
      * It also creates (or adjusts if exists) user preferences, which later can be used for more accurate recommendation
-     * @param apiKey api key of the project
+     *
+     * @param apiKey      api key of the project
      * @param behaviorDTO
      * @return general response
      */
@@ -79,8 +80,9 @@ public class BehaviorService {
 
     /**
      * Gathers all the {@link Behavior} for a specific {@link User} and {@link Project} filtered by liked or not
-     * @param user the {@link Behavior} should belong to
-     * @param liked only return liked behavior
+     *
+     * @param user    the {@link Behavior} should belong to
+     * @param liked   only return liked behavior
      * @param project the {@link Behavior} should belong to
      * @return List of {@link Behavior}
      */
@@ -90,6 +92,7 @@ public class BehaviorService {
 
     /**
      * Gathers all the {@link Behavior}'s from a specific user.
+     *
      * @param user to get all the {@link Behavior} for
      * @return list of {@link Behavior}
      */

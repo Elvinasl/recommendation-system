@@ -1,11 +1,11 @@
 package recommendator.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import recommendator.dto.CellDTO;
 import recommendator.models.entities.Cell;
 import recommendator.models.entities.Project;
 import recommendator.models.entities.Row;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import recommendator.repositories.CellRepository;
 
 import java.util.List;
@@ -28,6 +28,7 @@ public class CellService {
 
     /**
      * Gathers all {@link Cell}s belonging to a specific row.
+     *
      * @param row to get the {@link Cell}s from
      * @return list of cells
      */
@@ -37,6 +38,7 @@ public class CellService {
 
     /**
      * Gathers a specific cell by ID
+     *
      * @param id of the cell
      * @return cell with the given id
      */
@@ -52,18 +54,19 @@ public class CellService {
      */
     public List<Cell> updateCellValues(List<CellDTO> cells) {
         return cells.stream()
-            .map(cellDTO -> {
-            Cell cell = getById(cellDTO.getId());
-            cell.setValue(cellDTO.getValue());
-            return cellRepository.update(cell);
-        }).collect(Collectors.toList());
+                .map(cellDTO -> {
+                    Cell cell = getById(cellDTO.getId());
+                    cell.setValue(cellDTO.getValue());
+                    return cellRepository.update(cell);
+                }).collect(Collectors.toList());
     }
 
     /**
      * Creates a cell and inserts it into the database
+     *
      * @param cellDTO Cell dto with values
      * @param project Project for this row
-     * @param row persisted row
+     * @param row     persisted row
      * @return Created cell
      */
     public Cell create(CellDTO cellDTO, Project project, Row row) {

@@ -1,10 +1,10 @@
 package recommendator.repositories;
 
 
-import recommendator.models.entities.Project;
-import recommendator.models.entities.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import recommendator.models.entities.Project;
+import recommendator.models.entities.User;
 
 import javax.persistence.Query;
 
@@ -17,8 +17,9 @@ public class UserRepository extends DatabaseRepository<User> {
 
     /**
      * Gathers an {@link User} from the database that match the given userId and {@link Project}.
+     *
      * @param externalUserId, the userId given by the client
-     * @param project the user belongs to
+     * @param project         the user belongs to
      * @return A user if any was found, otherwise null will be returned.
      */
     @Transactional

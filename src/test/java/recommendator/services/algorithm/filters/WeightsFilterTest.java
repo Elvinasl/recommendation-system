@@ -16,7 +16,8 @@ import static recommendator.services.algorithm.AlgorithmHelper.generateRowWithPo
 @ExtendWith(MockitoExtension.class)
 class WeightsFilterTest {
 
-    @InjectMocks WeightsFilter weightsFilter;
+    @InjectMocks
+    WeightsFilter weightsFilter;
 
     @Test
     void filter() {

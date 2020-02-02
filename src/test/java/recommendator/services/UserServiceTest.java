@@ -17,9 +17,11 @@ import static org.mockito.ArgumentMatchers.anyString;
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
-    @Mock UserRepository userRepository;
+    @Mock
+    UserRepository userRepository;
 
-    @InjectMocks UserService userService;
+    @InjectMocks
+    UserService userService;
 
     @Test
     void add() {

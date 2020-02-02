@@ -23,6 +23,7 @@ public class AlgorithmController {
 
         return new ResponseEntity<>(algorithmCore.generateRecommendation(apiKey, externalUserId, amount), HttpStatus.OK);
     }
+
     @GetMapping
     public ResponseEntity<GeneratedRecommendationDTO> getRecommendation(@RequestHeader("api-key") String apiKey, @RequestParam(value = "amount", defaultValue = "10") int amount) {
         return new ResponseEntity<>(algorithmCore.generateRecommendation(apiKey, null, amount), HttpStatus.OK);
