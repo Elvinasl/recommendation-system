@@ -91,8 +91,8 @@ public class AlgorithmCore {
     }
 
     /**
-     * Converts a {@link List<RowWithPoints>} to {@link GeneratedRecommendationDTO}. This because the filter
-     * does work with {@link List<RowWithPoints>} but the client should receive a DTO.
+     * Converts a list of {@link RowWithPoints} to {@link GeneratedRecommendationDTO}. This because the filter
+     * does work with a list of {@link RowWithPoints} but the client should receive a DTO.
      *
      * @param rows to convert
      * @return DTO containing all the rows

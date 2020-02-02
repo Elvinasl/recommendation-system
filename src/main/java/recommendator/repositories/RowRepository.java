@@ -78,7 +78,7 @@ public class RowRepository extends DatabaseRepository<Row> {
     }
 
     /**
-     * Gathers the most liked {@link Row}'s from the database and converts them into {@link List<RowWithPoints>}
+     * Gathers the most liked {@link Row}'s from the database and converts them into a list of {@link RowWithPoints}
      * containing the row and the amount of likes/dislikes.
      *
      * @param project the {@link Row}'s should belong to
@@ -104,7 +104,7 @@ public class RowRepository extends DatabaseRepository<Row> {
 
     /**
      * Gathers the most liked {@link Row}'s from the database for a specific {@link User} and converts
-     * them into {@link List<RowWithPoints>} containing the {@link Row} and the amount of likes/dislikes.
+     * them into a list of {@link RowWithPoints} containing the {@link Row} and the amount of likes/dislikes.
      *
      * @param project the {@link Row}'s should belong to
      * @param user    the {@link recommendator.models.entities.Behavior} should belong to
@@ -125,7 +125,7 @@ public class RowRepository extends DatabaseRepository<Row> {
     }
 
     /**
-     * Gathers all {@link Row}'s with the amount of likes/dislikes with it and converts it into a {@link List<RowWithPoints>}
+     * Gathers all {@link Row}'s with the amount of likes/dislikes with it and converts it into a list of {@link RowWithPoints}
      *
      * @param apiKey of the project
      * @return list of the all liked/disliked {@link Row}'s including there likes/dislike points.

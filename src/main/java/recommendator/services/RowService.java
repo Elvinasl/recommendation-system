@@ -171,8 +171,8 @@ public class RowService {
     /**
      * Creates a row
      *
-     * @param cellDTOs
-     * @param project
+     * @param cellDTOs create a project based on these cells
+     * @param project project to create a row for
      * @return saved row
      */
     public Row create(List<CellDTO> cellDTOs, Project project) {

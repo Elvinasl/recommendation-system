@@ -20,7 +20,7 @@ public class ColumnNameRepository extends DatabaseRepository<ColumnName> {
      * @param name    of the column
      * @param project the {@link ColumnName} must belong to
      * @return The found {@link ColumnName}
-     * @throws NoResultException
+     * @throws NoResultException when there is no result
      */
     @Transactional
     public ColumnName getByNameAndProject(String name, Project project) throws NoResultException {

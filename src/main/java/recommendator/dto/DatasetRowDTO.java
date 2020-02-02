@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * This DTO contains a {@link List<DatasetCellDTO>} to create a combination of cells that form a {@link recommendator.models.entities.Row}
+ * This DTO contains a list of {@link DatasetCellDTO} to create a combination of cells that form a {@link recommendator.models.entities.Row}
  */
 @Data
 @AllArgsConstructor
