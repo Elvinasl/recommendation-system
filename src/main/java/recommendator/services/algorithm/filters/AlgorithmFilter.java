@@ -9,6 +9,7 @@ public interface AlgorithmFilter {
 
     /**
      * This method gets called whenever the filter is ran by the algorithm.
+     *
      * @param filtersData current filtered data by previous filters
      * @return modified FiltersData
      */

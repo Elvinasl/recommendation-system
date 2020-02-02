@@ -1,8 +1,8 @@
 package recommendator.services.algorithm.filters;
 
-import recommendator.models.containers.RowWithPoints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import recommendator.models.containers.RowWithPoints;
 import recommendator.services.RowService;
 import recommendator.services.algorithm.FiltersData;
 
@@ -24,9 +24,18 @@ public class HasLikesFilter implements AlgorithmFilter {
 
     @Override
     public FiltersData filter(FiltersData filtersData) {
-        // Secondly we get the list of rows in the most liked order
+        // We get the list of rows in the most liked order
         // No amount, because the list is probably gonna be changed in next filters.
         List<RowWithPoints> rows = rowService.getMostLikedContentForProjectAndUser(filtersData.getProject(), filtersData.getUser());
+
+        rows.forEach(rowWithPoints -> {
+
+            // When a row is liked or disliked, subtract 2 points so it wil not be
+            // on top of the recommendations because the user has already seen it
+            if (rowWithPoints.getBehaviors() != null && rowWithPoints.getBehaviors().size() > 0) {
+                rowWithPoints.setPoints(rowWithPoints.getPoints() - 2);
+            }
+        });
 
         // Set the list of rows into the filters containers
         filtersData.setRows(rows);
@@ -34,7 +43,4 @@ public class HasLikesFilter implements AlgorithmFilter {
         // Return the filters containers
         return filtersData;
     }
-
-
-
 }

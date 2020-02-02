@@ -57,7 +57,6 @@ public class SecurityConfig {
     }
 
 
-
     @Bean
     @Profile("dev")
     WebSecurityConfigurerAdapter dev() {
@@ -95,7 +94,6 @@ public class SecurityConfig {
                 // First we configure it to allow authentication and authorization in REST
 
 
-
                 enableRESTAuthentication(http)
                         // Now let's say which requests we want to authorize
                         .authorizeRequests()
@@ -130,7 +128,7 @@ public class SecurityConfig {
                 // add jwt filters (1. authentication, 2. authorization)
                 http
                         .addFilter(new JwtAuthenticationFilter(authenticationManager(), secret))
-                        .addFilter(new JwtAuthorizationFilter(authenticationManager(),  clientRepository, secret));
+                        .addFilter(new JwtAuthorizationFilter(authenticationManager(), clientRepository, secret));
 
                 // As it's a REST API, we don't want Spring remembering sessions for users. It should be stateless.
                 http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -140,7 +138,7 @@ public class SecurityConfig {
             }
 
             @Bean
-            DaoAuthenticationProvider authenticationProvider(){
+            DaoAuthenticationProvider authenticationProvider() {
                 DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
                 daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
                 daoAuthenticationProvider.setUserDetailsService(clientPrincipalDetailsService);
@@ -157,7 +155,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Collections.singletonList("*"));
         configuration.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE", "PATCH"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "api-key", "content-type"));
         configuration.setExposedHeaders(Collections.singletonList("Authorization"));
         source.registerCorsConfiguration("/**", configuration);
 

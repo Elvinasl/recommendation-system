@@ -106,7 +106,8 @@ public class ProjectService {
 
     /**
      * Updates the name of the project with a specific api-key.
-     * @param key to identify the project
+     *
+     * @param key        to identify the project
      * @param projectDTO with the new name
      * @return updated Project information
      */
@@ -119,6 +120,7 @@ public class ProjectService {
 
     /**
      * Updates the api-key for a specific project.
+     *
      * @param key to identify the project
      * @return updated Project information
      */
@@ -161,14 +163,14 @@ public class ProjectService {
      * Seed the project with containers from the datasetDTO.
      *
      * @param datasetDTO This containers comes from the client
-     * @param project this is the project which should be seeded
+     * @param project    this is the project which should be seeded
      */
     public void seed(DatasetDTO datasetDTO, Project project) {
 
         List<ColumnName> columnNames = datasetDTO.getColumns();
         List<DatasetRowDTO> datasetRowDTOs = datasetDTO.getRows();
         // Handling the columns
-        if(columnNames != null) {
+        if (columnNames != null) {
             columnNames.forEach(columnName -> columnNameService.addOrUpdate(columnName, project));
         }
 
@@ -182,7 +184,7 @@ public class ProjectService {
     /**
      * @return currently authenticated {@link Client}
      */
-    private Client getCurrentClient(){
+    private Client getCurrentClient() {
         String clientUsername = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return clientPrincipalDetailsService.getClientByUsername(clientUsername);
     }

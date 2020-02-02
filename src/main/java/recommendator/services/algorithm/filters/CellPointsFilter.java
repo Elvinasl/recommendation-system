@@ -1,13 +1,13 @@
 package recommendator.services.algorithm.filters;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import recommendator.models.containers.CellWithPoints;
 import recommendator.models.entities.Behavior;
 import recommendator.models.entities.Cell;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import recommendator.services.BehaviorService;
 import recommendator.services.ColumnNameService;
 import recommendator.services.algorithm.FiltersData;
-import recommendator.services.BehaviorService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,14 +87,13 @@ public class CellPointsFilter implements AlgorithmFilter {
         this.uniqueCellsFromBehaviors = new HashMap<>();
         this.behaviors.forEach(behavior -> {
             behavior.getRow().getCells().forEach(cell -> {
-
-
                 CellWithPoints cellWithPoints = this.getOrAddUniqueCellWithPoints(cell);
 
                 // Get the points
                 Float points = cellWithPoints.getPoints();
 
                 // Calculate the points
+                // Calculation: ( (cell weight * column weight / 2) / nrOfcolumns ) / 10
                 points += (
                         behavior.isLiked() ? 1 : -1 // Make it positive or negative based on like
                 ) * (
@@ -141,7 +140,7 @@ public class CellPointsFilter implements AlgorithmFilter {
      * @param filtersData
      */
     private void modifyRowPointsByCellPoints(FiltersData filtersData) {
-        if(filtersData.getRows() == null) {
+        if (filtersData.getRows() == null) {
             filtersData.setRows(new ArrayList<>());
             return;
         }

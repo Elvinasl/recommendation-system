@@ -33,8 +33,8 @@ class CellServiceTest {
         // Set two cells for the row, these are used to check if
         // the method's behavior is correct
         r.setCells(Arrays.asList(
-                new Cell(1L, "a",null, r, null),
-                new Cell(2L, "b",null, r, null)
+                new Cell(1L, "a", null, r, null),
+                new Cell(2L, "b", null, r, null)
         ));
 
         // Mock the repository method

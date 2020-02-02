@@ -1,6 +1,7 @@
 package recommendator.services.algorithm;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import recommendator.dto.GeneratedRecommendationDTO;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
  * {@link FiltersData} object that keeps track of the information required for filtering.
  * Every filter gets called with that object and can modify the score for each {@link recommendator.models.entities.Row}.
  * This score defines how likely the user is going to like that specific {@link recommendator.models.entities.Row}.
- *
+ * <p>
  * At the end of filtering the list will be sorted based on the points and be converted to a {@link GeneratedRecommendationDTO}.
  */
 @Service
@@ -32,6 +33,9 @@ public class AlgorithmCore {
     private ProjectService projectService;
     private UserService userService;
     private FilterManager filterManager;
+
+    @Value("${max_number_of_recommendations}")
+    private int maxNumberOfRecommendations = 10;
 
     @Autowired
     public AlgorithmCore(ProjectService projectService,
@@ -44,17 +48,18 @@ public class AlgorithmCore {
 
     /**
      * Creates recommendations for an user from a {@link Project} with the given api-key.
-     * @param apiKey of the project to recommend for
+     *
+     * @param apiKey         of the project to recommend for
      * @param externalUserId to recommend for
-     * @param amount limit the amount of results
+     * @param amount         limit the amount of results
      * @return All the rows that are being recommended
      */
     @Transactional
     public GeneratedRecommendationDTO generateRecommendation(String apiKey, String externalUserId, int amount) {
-        if(amount < 0){
+        if (amount < 1) {
             amount = 1;
-        }else if(amount > 20){
-            amount = 20;
+        } else if (amount > this.maxNumberOfRecommendations) {
+            amount = this.maxNumberOfRecommendations;
         }
 
         Project project = projectService.getByApiKey(apiKey);
@@ -75,7 +80,7 @@ public class AlgorithmCore {
         filtersData.getRows().sort(AlgorithmPointsComparator.comparator);
 
         // eliminating possibility to get index out of bounds
-        if(filtersData.getRows().size() < amount) {
+        if (filtersData.getRows().size() < amount) {
             amount = filtersData.getRows().size();
         }
 
@@ -88,6 +93,7 @@ public class AlgorithmCore {
     /**
      * Converts a {@link List<RowWithPoints>} to {@link GeneratedRecommendationDTO}. This because the filter
      * does work with {@link List<RowWithPoints>} but the client should receive a DTO.
+     *
      * @param rows to convert
      * @return DTO containing all the rows
      */

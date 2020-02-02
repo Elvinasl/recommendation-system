@@ -2,7 +2,6 @@ package recommendator.repositories;
 
 
 import org.springframework.stereotype.Repository;
-import recommendator.dto.RowDTO;
 import recommendator.exceptions.NotFoundException;
 import recommendator.models.containers.RowWithPoints;
 import recommendator.models.entities.Project;
@@ -11,9 +10,7 @@ import recommendator.models.entities.User;
 
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class RowRepository extends DatabaseRepository<Row> {
@@ -27,7 +24,7 @@ public class RowRepository extends DatabaseRepository<Row> {
      * matching the given cells. Another requirement is that the row belongs to the given project. If all these match
      * true will be given.
      *
-     * @param project the cells belong to
+     * @param project    the cells belong to
      * @param cellValues containing the values that should all match for a specific row
      * @return true if a row exists with the given cells
      * @throws NoResultException get's thrown when there is no row found
@@ -48,14 +45,14 @@ public class RowRepository extends DatabaseRepository<Row> {
                 .setParameter("size", (long) cellValues.size())
                 .getResultList().stream().findFirst().orElseThrow(() -> new NotFoundException("Unknown row"));
 
-            return count > 0;
+        return count > 0;
     }
 
     /**
      * Finds a row based on the cell values and the project
      *
      * @param cellValues containing the values that should all match for a specific row
-     * @param project the cells belong to
+     * @param project    the cells belong to
      * @return a row if the row is found
      * @throws NoResultException get's thrown when there is no row found
      */
@@ -83,8 +80,9 @@ public class RowRepository extends DatabaseRepository<Row> {
     /**
      * Gathers the most liked {@link Row}'s from the database and converts them into {@link List<RowWithPoints>}
      * containing the row and the amount of likes/dislikes.
+     *
      * @param project the {@link Row}'s should belong to
-     * @param amount limit the total results
+     * @param amount  limit the total results
      * @return list of the most liked {@link Row}'s including there likes/dislike points.
      */
     @Transactional
@@ -94,7 +92,7 @@ public class RowRepository extends DatabaseRepository<Row> {
                 "FROM Project p " +
                 "INNER JOIN p.rows r " +
                 "INNER JOIN r.cells c " +
-                "INNER JOIN r.behaviors b " +
+                "LEFT JOIN r.behaviors b " +
                 "FETCH ALL PROPERTIES " +
                 "WHERE r.project = :project " +
                 "GROUP BY r.id " +
@@ -107,8 +105,9 @@ public class RowRepository extends DatabaseRepository<Row> {
     /**
      * Gathers the most liked {@link Row}'s from the database for a specific {@link User} and converts
      * them into {@link List<RowWithPoints>} containing the {@link Row} and the amount of likes/dislikes.
+     *
      * @param project the {@link Row}'s should belong to
-     * @param user the {@link recommendator.models.entities.Behavior} should belong to
+     * @param user    the {@link recommendator.models.entities.Behavior} should belong to
      * @return list of the most liked {@link Row}'s for a specific user including there likes/dislike points.
      */
     @Transactional
@@ -127,6 +126,7 @@ public class RowRepository extends DatabaseRepository<Row> {
 
     /**
      * Gathers all {@link Row}'s with the amount of likes/dislikes with it and converts it into a {@link List<RowWithPoints>}
+     *
      * @param apiKey of the project
      * @return list of the all liked/disliked {@link Row}'s including there likes/dislike points.
      */
@@ -137,7 +137,7 @@ public class RowRepository extends DatabaseRepository<Row> {
                 "r, " +
                 "COUNT(CASE WHEN b.liked = 1 THEN 1 ELSE NULL END) - COUNT(CASE WHEN b.liked = 0 THEN 1 ELSE NULL END)) " +
                 "FROM Row r " +
-                "INNER JOIN r.behaviors b " +
+                "LEFT JOIN r.behaviors b " +
                 "FETCH ALL PROPERTIES " +
                 "WHERE r.project.apiKey = :apiKey " +
                 "GROUP BY r ", RowWithPoints.class)

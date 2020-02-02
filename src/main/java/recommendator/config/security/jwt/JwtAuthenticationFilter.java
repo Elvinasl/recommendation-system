@@ -2,7 +2,6 @@ package recommendator.config.security.jwt;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import recommendator.config.security.ClientPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -11,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import recommendator.config.security.ClientPrincipal;
 import recommendator.dto.LoginDTO;
 
 import javax.servlet.FilterChain;
@@ -79,7 +79,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sign(HMAC512(secret.getBytes()));
 
 
-        String fullToken = JwtProperties.TOKEN_PREFIX +  token;
+        String fullToken = JwtProperties.TOKEN_PREFIX + token;
         // Add token in response
         response.addHeader(JwtProperties.HEADER_STRING, fullToken);
         response.setContentType("application/json");

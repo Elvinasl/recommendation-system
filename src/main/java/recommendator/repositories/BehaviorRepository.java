@@ -1,11 +1,11 @@
 package recommendator.repositories;
 
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import recommendator.models.entities.Behavior;
 import recommendator.models.entities.Project;
 import recommendator.models.entities.User;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,8 +19,9 @@ public class BehaviorRepository extends DatabaseRepository<Behavior> {
     /**
      * Gathers all the {@link Behavior} records from the database for a specific user and project.
      * It also filters the records by like or dislike.
-     * @param user the {@link Behavior} belongs to
-     * @param liked or disliked
+     *
+     * @param user    the {@link Behavior} belongs to
+     * @param liked   or disliked
      * @param project the {@link recommendator.models.entities.Row} belongs to
      * @return list of all the {@link Behavior}'s
      */
@@ -40,6 +41,7 @@ public class BehaviorRepository extends DatabaseRepository<Behavior> {
 
     /**
      * Gathers all the {@link Behavior} records from the database for a specific user
+     *
      * @param user the {@link Behavior} belongs to
      * @return list of all the {@link Behavior}'s
      */

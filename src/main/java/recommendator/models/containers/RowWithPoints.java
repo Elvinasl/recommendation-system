@@ -26,7 +26,8 @@ public class RowWithPoints extends Row {
      * <b>Info</b><br>
      * <i>Since this method is called from a jbql query the points need to be of type {@link Object}
      * to prevent conversion exceptions.</i>
-     * @param r row to use
+     *
+     * @param r      row to use
      * @param points containing the points
      */
     public RowWithPoints(Row r, Object points) {

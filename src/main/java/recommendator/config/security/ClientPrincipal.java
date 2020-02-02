@@ -57,4 +57,4 @@ public class ClientPrincipal implements UserDetails {
     public boolean isEnabled() {
         return this.client.isActivated();
     }
-    }
+}
