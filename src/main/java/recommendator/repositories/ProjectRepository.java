@@ -30,7 +30,7 @@ public class ProjectRepository extends DatabaseRepository<Project> {
     }
 
     /**
-     * Gathers a {@link List<Project>} from the database that belong to a specific {@link Client}.
+     * Gathers a list of {@link Project} from the database that belong to a specific {@link Client}.
      *
      * @param client the projects should belong to
      * @return all the projects from the given {@link Client}

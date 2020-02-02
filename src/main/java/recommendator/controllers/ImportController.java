@@ -40,6 +40,7 @@ public class ImportController {
      *                                              ]
      *                                          }
      *                             </pre>
+     * @return on success, it's returning json with the message 'Data has been added'
      */
     @PostMapping
     public ResponseEntity<Response> importJson(@RequestHeader("api-key") String apiKey, @RequestBody DatasetDTO data) {

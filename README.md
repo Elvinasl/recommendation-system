@@ -17,10 +17,11 @@ And change the properties.
 | Integration tests |  mvn clean install -Pintegration | - | Integrated (h2) |
 
 #### Front-end
-This project includes a front-end to demonstrate the possibilities of the REST-API. In order to run this front-end, the user should set up his/her own webserver. During development, the team used Intellij's internal webserver.
+This project includes a front-end to demonstrate the possibilities of the REST-API. The front-end can be found in the folder front-end. To run this front-end, the user should set up his/her webserver. During development, the team used Intellij's internal webserver. In Intellij, right-mouse click on the file 'front-end/index.html', select 'open with browser' and choose the browser you want. The front-end is only in HTML and JavaScript, but it needs a webserver to run because it loads HTML and JavaScript dynamically.
 
-A quick note for the front-end is that the repository already contains a dataset for uploading, this dataset can be found in the front-end folder and is called import.json.
+When the back-end server is not running on 'localhost:8080' or has some extra parameters. Then the host should be changed at the top of the file 'front-end/js/Navigator.js'.
 
+A quick note for the front-end is that the repository already contains a dataset for uploading, this dataset can be found in the front-end folder and is called 'music.json'.
 
 ## Project 
 ### Background

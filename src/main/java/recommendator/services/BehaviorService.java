@@ -41,7 +41,7 @@ public class BehaviorService {
      * It also creates (or adjusts if exists) user preferences, which later can be used for more accurate recommendation
      *
      * @param apiKey      api key of the project
-     * @param behaviorDTO
+     * @param behaviorDTO contains the data what the user gave
      * @return general response
      */
     public Response add(String apiKey, BehaviorDTO behaviorDTO) {

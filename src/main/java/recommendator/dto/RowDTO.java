@@ -20,7 +20,7 @@ public class RowDTO {
     private Integer reactions;
 
     /**
-     * Converts a {@link List<Cell>} into {@link List<CellDTO>}
+     * Converts a list of {@link Cell} into a list of {@link CellDTO}
      *
      * @param cells to convert
      */

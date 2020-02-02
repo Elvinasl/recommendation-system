@@ -137,7 +137,7 @@ public class CellPointsFilter implements AlgorithmFilter {
     /**
      * Modify the row points by the cell points
      *
-     * @param filtersData
+     * @param filtersData contains data which are filtered
      */
     private void modifyRowPointsByCellPoints(FiltersData filtersData) {
         if (filtersData.getRows() == null) {

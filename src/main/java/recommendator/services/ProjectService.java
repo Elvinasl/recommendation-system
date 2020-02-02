@@ -147,6 +147,7 @@ public class ProjectService {
      *
      * @param apiKey used to get the project
      * @param data   containing project information
+     * @return response json with the text 'Data has been added'
      */
     public Response seedDatabase(String apiKey, DatasetDTO data) {
 
